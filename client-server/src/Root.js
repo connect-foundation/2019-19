@@ -1,10 +1,11 @@
 import React from 'react';
+import './index.css';
+import Navbar from './components/Navbar';
 
 const Root = () => {
   return (
     <>
-      <h1>제발</h1>
-      <h3>Hello, React</h3>
+      <Navbar />
     </>
   );
 };
