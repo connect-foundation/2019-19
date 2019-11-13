@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BIGINT(11),
         primaryKey: true,
       },
-      user_id: DataTypes.BIGINT(11),
-      video_id: DataTypes.BIGINT(11),
+      fk_user_id: DataTypes.BIGINT(11),
+      fk_video_id: DataTypes.BIGINT(11),
     },
     {
       // options???

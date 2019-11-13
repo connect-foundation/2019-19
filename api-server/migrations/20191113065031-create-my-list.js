@@ -7,11 +7,11 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      user_id: {
+      fk_user_id: {
         type: Sequelize.BIGINT(11),
         allowNull: false,
       },
-      video_id: {
+      fk_video_id: {
         type: Sequelize.BIGINT(11),
         allowNull: false,
       },
