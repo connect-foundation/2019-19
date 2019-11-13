@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Sequelize Database 연동 관련 config 파일
+config/config.json
