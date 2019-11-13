@@ -10,10 +10,22 @@ module.exports = {
       fk_user_id: {
         type: Sequelize.BIGINT(11),
         allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'user_id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       },
       fk_video_id: {
         type: Sequelize.BIGINT(11),
         allowNull: false,
+        references: {
+          model: 'Videos',
+          key: 'video_id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       },
     });
   },

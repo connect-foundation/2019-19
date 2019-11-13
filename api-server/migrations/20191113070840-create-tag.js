@@ -9,6 +9,12 @@ module.exports = {
       },
       fk_video_id: {
         type: Sequelize.BIGINT(11),
+        references: {
+          model: 'Videos',
+          key: 'video_id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       },
       name: {
         type: Sequelize.STRING,
