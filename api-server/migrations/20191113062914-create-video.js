@@ -1,0 +1,33 @@
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('Videos', {
+      video_id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      name: {
+        type: Sequelize.STRING,
+      },
+      category: {
+        type: Sequelize.STRING,
+      },
+      likes: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      reg_date: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+      },
+      url: {
+        type: Sequelize.STRING,
+      },
+    });
+  },
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('Videos');
+  },
+};
