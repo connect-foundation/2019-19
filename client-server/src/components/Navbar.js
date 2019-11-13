@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import logo from '../../dist/logo_red.png';
 import PageBtn from './PageBtn';
 
@@ -30,14 +31,24 @@ const StyledNavRight = styled.div`
 const Navbar = () => {
   return (
     <StyledNavbarContainer>
-      <StyledLogo className="logo" src={logo} />
-      <PageBtn name="홈" />
-      <PageBtn name="최신 컨텐츠" />
-      <PageBtn name="인기 컨텐츠" />
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <StyledLogo className="logo" src={logo} />
+      </Link>
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <PageBtn name="홈" />
+      </Link>
+      <Link to="/Recent" style={{ textDecoration: 'none' }}>
+        <PageBtn name="최신 컨텐츠" />
+      </Link>
+      <Link to="/Popular" style={{ textDecoration: 'none' }}>
+        <PageBtn name="인기 컨텐츠" />
+      </Link>
       <StyledNavRight>
-        <PageBtn name="검색" />
+        <PageBtn name="🔍" />
         <PageBtn name="추천" />
-        <PageBtn name="로그인" />
+        <Link to="/Login" style={{ textDecoration: 'none' }}>
+          <PageBtn name="로그인" />
+        </Link>
       </StyledNavRight>
     </StyledNavbarContainer>
   );

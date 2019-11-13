@@ -1,13 +1,11 @@
 import React from 'react';
 import './index.css';
-import Navbar from './components/Navbar';
-import MainThumbNail from './components/MainThumbNail';
+import Routes from './components/Routes';
 
 const Root = () => {
   return (
     <>
-      <Navbar />
-      <MainThumbNail />
+      <Routes />
     </>
   );
 };
