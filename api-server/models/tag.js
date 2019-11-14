@@ -23,8 +23,17 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-  Tag.associate = function(models) {
-    // associations can be defined here
+  Tag.associate = models => {
+    Tag.belongsTo(models.Video, {
+      foreignKey: 'fk_video_id',
+      targetKey: 'video_id',
+    });
+  };
+  Tag.postTag = (fk_video_id, name) => {
+    Tag.create({
+      fk_video_id,
+      name,
+    });
   };
   return Tag;
 };

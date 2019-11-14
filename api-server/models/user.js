@@ -14,8 +14,15 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-  User.associate = function(models) {
-    // associations can be defined here
+  User.associate = models => {
+    User.hasMany(models.MyVideo, {
+      foreignKey: 'fk_user_id',
+      sourceKey: 'user_id',
+    });
+    User.hasMany(models.Like, {
+      foreignKey: 'fk_user_id',
+      sourceKey: 'user_id',
+    });
   };
   return User;
 };

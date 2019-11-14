@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const MyVideo = sequelize.define(
     'MyVideo',
     {
-      mylist_id: {
+      myVideo_id: {
         type: DataTypes.BIGINT(11),
         primaryKey: true,
       },
@@ -15,8 +15,15 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-  MyVideo.associate = function(models) {
-    // associations can be defined here
+  MyVideo.associate = models => {
+    MyVideo.belongsTo(models.User, {
+      foreignKey: 'fk_user_id',
+      targetKey: 'user_id',
+    });
+    MyVideo.belongsTo(models.Video, {
+      foreignKey: 'fk_video_id',
+      targetKey: 'video_id',
+    });
   };
   return MyVideo;
 };

@@ -24,8 +24,30 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-  Video.associate = function(models) {
-    // associations can be defined here
+  Video.associate = models => {
+    Video.hasMany(models.MyVideo, {
+      foreignKey: 'fk_video_id',
+      sourceKey: 'video_id',
+    });
+    Video.hasMany(models.Like, {
+      foreignKey: 'fk_video_id',
+      sourceKey: 'video_id',
+    });
+    Video.hasMany(models.Tag, {
+      foreignKey: 'fk_video_id',
+      sourceKey: 'video_id',
+    });
+  };
+  Video.getAllVideos = async () => {
+    const data = await Video.findAll();
+    return data;
+  };
+  Video.postVideo = async (name, category, url) => {
+    Video.create({
+      name,
+      category,
+      url,
+    });
   };
   return Video;
 };

@@ -23,8 +23,15 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-  Like.associate = function(models) {
-    // associations can be defined here
+  Like.associate = models => {
+    Like.belongsTo(models.User, {
+      foreignKey: 'fk_user_id',
+      targetKey: 'user_id',
+    });
+    Like.belongsTo(models.Video, {
+      foreignKey: 'fk_video_id',
+      targetKey: 'video_id',
+    });
   };
   return Like;
 };

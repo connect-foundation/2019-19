@@ -1,8 +1,8 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Tags', {
+    return queryInterface.createTable('tags', {
       tag_id: {
-        allowNull: false,
+        allowNull: true,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT(11),
@@ -10,7 +10,7 @@ module.exports = {
       fk_video_id: {
         type: Sequelize.BIGINT(11),
         references: {
-          model: 'Videos',
+          model: 'videos',
           key: 'video_id',
         },
         onUpdate: 'cascade',
@@ -22,6 +22,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Tags');
+    return queryInterface.dropTable('tags');
   },
 };

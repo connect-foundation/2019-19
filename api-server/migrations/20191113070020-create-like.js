@@ -1,8 +1,8 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Likes', {
+    return queryInterface.createTable('likes', {
       like_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.BIGINT(11),
         autoIncrement: true,
         primaryKey: true,
@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.BIGINT(11),
         allowNull: false,
         references: {
-          model: 'Users',
+          model: 'users',
           key: 'user_id',
         },
         onUpdate: 'cascade',
@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.BIGINT(11),
         allowNull: false,
         references: {
-          model: 'Videos',
+          model: 'videos',
           key: 'video_id',
         },
         onUpdate: 'cascade',
@@ -30,6 +30,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Likes');
+    return queryInterface.dropTable('likes');
   },
 };
