@@ -20,7 +20,7 @@ const StyledThumbNail = styled.div`
 
 const StyledButtonsContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 35%;
   margin-left: 5%;
 `;
