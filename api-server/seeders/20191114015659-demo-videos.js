@@ -19,8 +19,8 @@ const videoCategoryDomain = [
 const demoData = [];
 for (let i = 0; i < 200; i++) {
   const videoObj = {
-    video_id: i,
-    name: `Video${i}`,
+    video_id: null,
+    name: `영상 ${i}`,
     category: casual.random_element(videoCategoryDomain),
     likes: casual.integer(1, 500),
     reg_date: new Date(Date.now()),
@@ -31,10 +31,10 @@ for (let i = 0; i < 200; i++) {
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Videos', demoData, {});
+    return queryInterface.bulkInsert('videos', demoData, {});
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Videos', null, {});
+    return queryInterface.bulkDelete('videos', null, {});
   },
 };
