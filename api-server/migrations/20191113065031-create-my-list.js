@@ -1,7 +1,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('MyLists', {
-      mylist_id: {
+    return queryInterface.createTable('MyVideos', {
+      my_video_id: {
         allowNull: false,
         type: Sequelize.BIGINT(11),
         autoIncrement: true,

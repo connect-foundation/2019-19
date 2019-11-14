@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const MyList = sequelize.define(
-    'MyList',
+  const MyVideo = sequelize.define(
+    'MyVideo',
     {
       mylist_id: {
         type: DataTypes.BIGINT(11),
@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-  MyList.associate = function(models) {
+  MyVideo.associate = function(models) {
     // associations can be defined here
   };
-  return MyList;
+  return MyVideo;
 };
