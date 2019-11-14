@@ -5,10 +5,10 @@ module.exports = {
         allowNull: true,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.BIGINT(11),
+        type: Sequelize.INTEGER,
       },
       fk_video_id: {
-        type: Sequelize.BIGINT(11),
+        type: Sequelize.INTEGER,
         references: {
           model: 'videos',
           key: 'video_id',

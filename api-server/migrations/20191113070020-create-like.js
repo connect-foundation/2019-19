@@ -3,12 +3,12 @@ module.exports = {
     return queryInterface.createTable('likes', {
       like_id: {
         allowNull: true,
-        type: Sequelize.BIGINT(11),
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
       fk_user_id: {
-        type: Sequelize.BIGINT(11),
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'users',
@@ -18,7 +18,7 @@ module.exports = {
         onDelete: 'cascade',
       },
       fk_video_id: {
-        type: Sequelize.BIGINT(11),
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'videos',
