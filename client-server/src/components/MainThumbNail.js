@@ -14,7 +14,15 @@ const StyledThumbNail = styled.div`
   background-size: 100%;
   background-position: top 0px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const StyledButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 35%;
+  margin-left: 5%;
 `;
 
 const MainThumbNail = () => {
@@ -24,9 +32,11 @@ const MainThumbNail = () => {
         name="너의 결혼식"
         contents="첫눈에 반하면 뭐해, 엇갈리고 또 엇갈리는데. 고등학교 시절 첫 사랑 승희와 원치않는 이별을 한 우연"
       />
-      <MainButton name="▶  Play" />
-      <MainButton name="✅  My List" />
-      <MainButton name="ⓘ  Learn More" />
+      <StyledButtonsContainer>
+        <MainButton name="▶  Play" />
+        <MainButton name="✅  My List" />
+        <MainButton name="ⓘ  Learn More" />
+      </StyledButtonsContainer>
     </StyledThumbNail>
   );
 };

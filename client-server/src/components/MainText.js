@@ -2,9 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledText = styled.p`
-  border-width: 0;
   padding: 0.75em 2.3em;
-  height: 1.2em;
   border-radius: 0.2vw;
   box-shadow: none;
   font-size: 1.1vw;
