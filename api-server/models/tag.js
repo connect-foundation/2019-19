@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.BIGINT(11),
+        type: DataTypes.INTEGER,
       },
       fk_video_id: {
-        type: DataTypes.BIGINT(11),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       name: {

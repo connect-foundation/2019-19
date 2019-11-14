@@ -3,11 +3,11 @@ module.exports = (sequelize, DataTypes) => {
     'MyVideo',
     {
       myVideo_id: {
-        type: DataTypes.BIGINT(11),
+        type: DataTypes.INTEGER,
         primaryKey: true,
       },
-      fk_user_id: DataTypes.BIGINT(11),
-      fk_video_id: DataTypes.BIGINT(11),
+      fk_user_id: DataTypes.INTEGER,
+      fk_video_id: DataTypes.INTEGER,
     },
     {
       // options???

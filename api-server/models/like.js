@@ -4,16 +4,16 @@ module.exports = (sequelize, DataTypes) => {
     {
       like_id: {
         allowNull: false,
-        type: DataTypes.BIGINT(11),
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
       fk_user_id: {
-        type: DataTypes.BIGINT(11),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       fk_video_id: {
-        type: DataTypes.BIGINT(11),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
