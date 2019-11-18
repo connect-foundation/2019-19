@@ -5,11 +5,10 @@ const StyledBtn = styled.div`
   margin: auto 2rem;
   font-weight: 0.1rem;
   color: white;
-  //   border: solid white;
+  display: inline-block;
 
   &:hover {
     cursor: pointer;
-    border-bottom: solid white 0.05rem;
   }
 `;
 

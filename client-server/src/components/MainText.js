@@ -17,7 +17,6 @@ const MainText = ({ name, contents }) => {
   return (
     <StyledText>
       <h2>{name}</h2>
-      <p>{contents}</p>
     </StyledText>
   );
 };

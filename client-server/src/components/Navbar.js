@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import logo from '../../dist/logo_red.png';
+import logo from '../../dist/play.png';
 import PageBtn from './PageBtn';
 
 const StyledNavbarContainer = styled.div`
   display: flex;
+  align-items: center;
   color: gray;
   top: 0;
   position: sticky;
@@ -16,8 +17,9 @@ const StyledNavbarContainer = styled.div`
 const StyledLogo = styled.img`
   float: left;
   margin: auto 2rem auto 2rem;
-  width: 4rem;
-  height: 4rem;
+  padding: 0.5rem;
+  width: 3rem;
+  height: 3rem;
 
   &:hover {
     cursor: pointer;
@@ -28,25 +30,30 @@ const StyledNavRight = styled.div`
   margin: auto 0 auto auto;
 `;
 
+const StyledLink = {
+  display: 'contents',
+  textDecoration: 'none',
+};
+
 const Navbar = () => {
   return (
     <StyledNavbarContainer>
-      <Link to="/" style={{ textDecoration: 'none' }}>
+      <Link to="/" style={StyledLink}>
         <StyledLogo className="logo" src={logo} />
       </Link>
-      <Link to="/" style={{ textDecoration: 'none' }}>
+      <Link to="/" style={StyledLink}>
         <PageBtn name="홈" />
       </Link>
-      <Link to="/Recent" style={{ textDecoration: 'none' }}>
+      <Link to="/Recent" style={StyledLink}>
         <PageBtn name="최신 컨텐츠" />
       </Link>
-      <Link to="/Popular" style={{ textDecoration: 'none' }}>
+      <Link to="/Popular" style={StyledLink}>
         <PageBtn name="인기 컨텐츠" />
       </Link>
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
-        <Link to="/Login" style={{ textDecoration: 'none' }}>
+        <Link to="/Login" style={StyledLink}>
           <PageBtn name="로그인" />
         </Link>
       </StyledNavRight>

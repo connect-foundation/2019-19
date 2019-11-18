@@ -2,9 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import MainButton from './MainButton';
 import MainText from './MainText';
+const axios = require('axios');
 
-const ImgFile =
-  'https://occ-0-988-993.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABb5HRu2dtp88SpmzDcRP87WRPBfaN82JOATtZo2qN36C6qcdREWP0UtTj277Oda1GomjOdvhgVbNJmy4_8wZSlD5_yHg.webp?r=8c8';
+// Make a request for a user with a given ID
+axios
+  .get('https://picsum.photos/1600/640')
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+const ImgFile = 'https://picsum.photos/1600/640';
 
 const StyledThumbNail = styled.div`
   height: 40rem;
