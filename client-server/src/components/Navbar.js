@@ -18,8 +18,8 @@ const StyledLogo = styled.img`
   float: left;
   margin: auto 2rem auto 2rem;
   padding: 0.5rem;
-  width: 3rem;
-  height: 3rem;
+  width: 3%;
+  height: 3%;
 
   &:hover {
     cursor: pointer;
