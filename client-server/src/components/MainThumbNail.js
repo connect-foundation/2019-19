@@ -3,19 +3,9 @@ import styled from 'styled-components';
 import MainButton from './MainButton';
 import MainText from './MainText';
 const axios = require('axios');
-const apiServerURL = 'http://localhost:8000';
 import { css, jsx } from '@emotion/core';
 
 import { ClipLoader } from 'react-spinners';
-
-axios
-  .get(`${apiServerURL}/test`)
-  .then(function(response) {
-    console.log(response.data);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
 
 const ImgUrl = 'https://picsum.photos/1600/640';
 
@@ -27,6 +17,7 @@ const StyledThumbNail = styled.div`
   background-size: 100%;
   background-position: top 0px;
   display: flex;
+  opacity: ${props => props.hide};
   flex-direction: column;
   justify-content: center;
 `;
@@ -40,20 +31,26 @@ const StyledButtonsContainer = styled.div`
 
 const MainThumbNail = () => {
   const [onLoading, setOnLoading] = useState(true);
-  const [hideThumbNail, setHideThumbNail] = useState(true);
+  const [thumbNailImg, setThumbNailImg] = useState(null);
+  const [hide, setHide] = useState(0);
 
   useEffect(() => {
     axios
-      .get(ImgUrl)
+      .get(ImgUrl, { responseType: 'arraybuffer' })
       .then(response => {
+        const blob = new Blob([response.data], {
+          type: response.headers['content-type'],
+        });
+        const thumbNailImg = URL.createObjectURL(blob);
         setOnLoading(false);
-        setHideThumbNail(false);
+        setThumbNailImg(thumbNailImg);
+        setHide(1);
       })
       .catch(err => console.log(err));
   }, []);
 
-  if (onLoading)
-    return (
+  return (
+    <>
       <ClipLoader
         css={css`
           margin: 20% 48%;
@@ -63,20 +60,18 @@ const MainThumbNail = () => {
         color={'lightgray'}
         loading={onLoading}
       />
-    );
-
-  return (
-    <StyledThumbNail bg={ImgUrl}>
-      <MainText
-        name="너의 결혼식"
-        contents="첫눈에 반하면 뭐해, 엇갈리고 또 엇갈리는데. 고등학교 시절 첫 사랑 승희와 원치않는 이별을 한 우연"
-      />
-      <StyledButtonsContainer>
-        <MainButton name="▶  Play" />
-        <MainButton name="✅  My List" />
-        <MainButton name="ⓘ  Learn More" />
-      </StyledButtonsContainer>
-    </StyledThumbNail>
+      <StyledThumbNail bg={thumbNailImg} hide={hide}>
+        <MainText
+          name="너의 결혼식"
+          contents="첫눈에 반하면 뭐해, 엇갈리고 또 엇갈리는데. 고등학교 시절 첫 사랑 승희와 원치않는 이별을 한 우연"
+        />
+        <StyledButtonsContainer>
+          <MainButton name="▶  Play" />
+          <MainButton name="✅  My List" />
+          <MainButton name="ⓘ  Learn More" />
+        </StyledButtonsContainer>
+      </StyledThumbNail>
+    </>
   );
 };
 
