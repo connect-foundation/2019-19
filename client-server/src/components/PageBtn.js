@@ -9,6 +9,7 @@ const StyledBtn = styled.div`
 
   &:hover {
     cursor: pointer;
+    color: lightgray;
   }
 `;
 
