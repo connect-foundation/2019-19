@@ -53,9 +53,9 @@ const Navbar = () => {
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
-        <Link to="/Login" style={StyledLink}>
+        <a href={'http://localhost:8000/oauth/google'} style={StyledLink}>
           <PageBtn name="로그인" />
-        </Link>
+        </a>
       </StyledNavRight>
     </StyledNavbarContainer>
   );
