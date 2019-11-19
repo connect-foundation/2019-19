@@ -20,11 +20,13 @@ const demoData = [];
 for (let i = 0; i < 200; i++) {
   const videoObj = {
     video_id: null,
-    name: `영상 ${i}`,
+    name: casual.title,
     category: casual.random_element(videoCategoryDomain),
     likes: casual.integer(1, 500),
     reg_date: new Date(Date.now()),
-    url: 'https:www.naver.com',
+    thumbnail_img_url: `https://picsum.photos/${i}/1600/640`,
+    thumbnai_video_url: null,
+    streaming_url: null,
   };
   demoData.push(videoObj);
 }
