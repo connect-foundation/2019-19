@@ -18,13 +18,14 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: '/node_modules',
+        exclude: "/node_modules",
         use: ['babel-loader'],
       },
       {
         test: /\.html$/,
         use: [
           {
+
             loader: 'html-loader',
             options: { minimize: true },
           },
@@ -42,7 +43,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './dist/index.html', // public/index.html 파일을 읽는다.
+      template: './dist/index.html', // dist/index.html 파일을 읽는다.
       filename: 'index.html', // output으로 출력할 파일은 index.html 이다.
     }),
     new MiniCssExtractPlugin({
@@ -50,3 +51,4 @@ module.exports = {
     }),
   ],
 };
+
