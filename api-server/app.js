@@ -7,6 +7,7 @@ const passport = require('./middleware/passport');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const oauthRouter = require('./routes/oauth');
+const videoRouter = require('./routes/video');
 
 const cors = require('cors');
 
@@ -23,5 +24,6 @@ app.use(passport.initialize());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/oauth', oauthRouter);
+app.use('/video', videoRouter);
 
 module.exports = app;
