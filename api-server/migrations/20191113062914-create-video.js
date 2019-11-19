@@ -22,7 +22,13 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
       },
-      url: {
+      thumbnail_img_url: {
+        type: Sequelize.STRING,
+      },
+      thumbnai_video_url: {
+        type: Sequelize.STRING,
+      },
+      streaming_url: {
         type: Sequelize.STRING,
       },
     });
