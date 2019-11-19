@@ -13,19 +13,18 @@ module.exports = {
     index: 'index.html',
     port: 3000,
   },
-  mode: 'none', // production 은 최적화되어 빌드되어지는 특징을 가지고 있고 development 는 빠르게 빌드하는 특징
+  mode: 'production', // production 은 최적화되어 빌드되어지는 특징을 가지고 있고 development 는 빠르게 빌드하는 특징
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: "/node_modules",
+        exclude: '/node_modules',
         use: ['babel-loader'],
       },
       {
         test: /\.html$/,
         use: [
           {
-
             loader: 'html-loader',
             options: { minimize: true },
           },
@@ -51,4 +50,3 @@ module.exports = {
     }),
   ],
 };
-
