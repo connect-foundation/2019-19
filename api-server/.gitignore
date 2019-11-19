@@ -118,3 +118,6 @@ dist
 # Sequelize Database 연동 관련 config 파일
 config/config.json
 
+# .env
+.env
+
