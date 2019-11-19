@@ -24,4 +24,11 @@ router.get(
   },
 );
 
+// jwt 해석
+router.post('/google/verify', function(req, res, next) {
+  console.log(req.body.userToken);
+  if (req.body.userToken) return res.json(jwt.decodeJwt(req.body.userToken));
+  return res.json({});
+});
+
 module.exports = router;
