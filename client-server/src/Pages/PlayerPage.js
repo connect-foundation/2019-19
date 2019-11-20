@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import { NavbarContext } from '../contexts/NavbarContext';
 
 const titleStyle = {
   color: 'white',
 };
 
 const Player = ({ match }) => {
+  const { setShowNav } = useContext(NavbarContext);
+
+  useEffect(() => {
+    setShowNav(false);
+  }, []);
+
   return (
     <>
       <h2 style={titleStyle}>
