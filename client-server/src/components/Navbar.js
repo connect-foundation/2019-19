@@ -50,6 +50,9 @@ const Navbar = () => {
       <Link to="/Popular" style={StyledLink}>
         <PageBtn name="인기 컨텐츠" />
       </Link>
+      <Link to="/Player/1" style={StyledLink}>
+        <PageBtn name="플레이어" />
+      </Link>
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />

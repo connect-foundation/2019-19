@@ -9,11 +9,11 @@ module.exports = {
     path: path.resolve(`${__dirname}/build`),
   },
   devServer: {
-    contentBase: path.resolve('./build'),
+    contentBase: './dist',
     index: 'index.html',
     port: 3000,
   },
-  mode: 'production', // production 은 최적화되어 빌드되어지는 특징을 가지고 있고 development 는 빠르게 빌드하는 특징
+  mode: 'development', // production 은 최적화되어 빌드되어지는 특징을 가지고 있고 development 는 빠르게 빌드하는 특징
   module: {
     rules: [
       {
