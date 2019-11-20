@@ -1,5 +1,5 @@
-import React from "react";
-import "./Mark.scss";
+import React from 'react';
+import './Mark.scss';
 
 const Mark = () => <div className="mark" />;
 
