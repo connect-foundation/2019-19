@@ -16,7 +16,7 @@ passport.use(
         defaults: {
           name: profile.displayName,
         },
-      }).then(([user, created]) => {
+      }).then(([user]) => {
         return done(null, user);
       });
     },

@@ -44,11 +44,10 @@ const Navbar = () => {
 
   useEffect(() => {
     axios
-      .post(serverURL + '/oauth/google/verify', {
+      .post(`${serverURL}/oauth/google/verify`, {
         userToken: Cookies.get('user_info'),
       })
       .then(response => {
-        console.log(response);
         setUserInfo(response.data.userName);
       })
       .catch(err => console.log(err));
@@ -81,7 +80,7 @@ const Navbar = () => {
             <PageBtn name={`${userInfo} 로그아웃`} />
           </a>
         ) : (
-          <a href={'http://localhost:8000/oauth/google'} style={StyledLink}>
+          <a href="http://localhost:8000/oauth/google" style={StyledLink}>
             <PageBtn name="로그인" />
           </a>
         )}

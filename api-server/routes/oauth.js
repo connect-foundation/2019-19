@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('../middleware/passport');
 const jwt = require('../util/jwt');
+
 const router = express.Router();
 
 require('dotenv').config();
@@ -25,8 +26,7 @@ router.get(
 );
 
 // jwt 해석
-router.post('/google/verify', function(req, res, next) {
-  console.log(req.body.userToken);
+router.post('/google/verify', function(req, res) {
   if (req.body.userToken) return res.json(jwt.decodeJwt(req.body.userToken));
   return res.json({});
 });

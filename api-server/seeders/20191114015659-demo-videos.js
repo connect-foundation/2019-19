@@ -17,7 +17,7 @@ const videoCategoryDomain = [
 ];
 
 const demoData = [];
-for (let i = 0; i < 200; i++) {
+for (let i = 0; i < 200; i += 1) {
   const videoObj = {
     video_id: null,
     name: casual.title,
@@ -32,11 +32,11 @@ for (let i = 0; i < 200; i++) {
 }
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: queryInterface => {
     return queryInterface.bulkInsert('videos', demoData, {});
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.bulkDelete('videos', null, {});
   },
 };

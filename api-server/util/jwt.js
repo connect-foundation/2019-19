@@ -4,7 +4,6 @@ require('dotenv').config();
 module.exports = {
   issueNewToken(req, res) {
     const userInfo = req.user;
-    console.log(userInfo);
     const token = jwt.sign(
       {
         userId: userInfo.user_id,
@@ -17,7 +16,7 @@ module.exports = {
     });
   },
   decodeUserToken(req) {
-    req.cookies.user_info
+    return req.cookies.user_info
       ? jwt.verify(req.cookies.user_info, process.env.JWT_SECRET_KEY)
       : null;
   },
