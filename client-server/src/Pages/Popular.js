@@ -6,9 +6,9 @@ const ImgUrlWebp = id => `https://picsum.photos/id/${id}/848/477`;
 
 const movies = [
   {
-    id: 10,
-    image: ImgUrlJpg(10),
-    imageBg: ImgUrlWebp(10),
+    id: 20,
+    image: ImgUrlJpg(20),
+    imageBg: ImgUrlWebp(20),
     title: 'Black mirror',
   },
   {
@@ -153,7 +153,7 @@ const Popular = () => {
       <Slider>
         {movies.map(movie => (
           <Slider.Item movie={movie} key={movie.id}>
-            item1
+            item2
           </Slider.Item>
         ))}
       </Slider>

@@ -22,4 +22,8 @@ const PageBtn = ({ name }) => {
   );
 };
 
+PageBtn.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
 export default PageBtn;

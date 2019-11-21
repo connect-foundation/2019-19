@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Recent from '../Pages/RecentPage';
-import Login from '../Pages/LoginPage';
-import Home from '../Pages/HomePage';
-import Popular from '../Pages/PopularPage';
+import Recent from '../Pages/Recent';
+import Login from '../Pages/Login';
+import Home from '../Pages/Home';
+import Popular from '../Pages/Popular';
 // eslint-disable-next-line import/no-cycle
 import Navbar from './Navbar';
 

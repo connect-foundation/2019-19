@@ -11,7 +11,7 @@ const useSliding = (elementWidth, countElements) => {
   const [totalInViewport, setTotalInViewport] = useState(0); //
   const [viewed, setViewed] = useState(0);
   const [value, setValue] = useState(0);
-
+  console.log(elementWidth);
   if (elementWidth !== 0 && distance === 0) setDistance(-elementWidth);
 
   useEffect(() => {

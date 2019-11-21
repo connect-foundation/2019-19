@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 const useSizeElement = () => {
   const elementRef = useRef(null);
@@ -6,7 +6,7 @@ const useSizeElement = () => {
 
   useEffect(() => {
     setWidth(elementRef.current.clientWidth);
-  }, [elementRef.current]);
+  });
 
   return { width, elementRef };
 };

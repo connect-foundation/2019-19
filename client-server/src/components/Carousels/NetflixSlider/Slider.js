@@ -17,7 +17,6 @@ const Slider = ({ children, activeSlide }) => {
     handlePrev,
     handleNext,
     slideProps,
-    slideInit,
     containerRef,
     hasNext,
     hasPrev,

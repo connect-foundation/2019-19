@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledButton = styled.button`
   background-color: rgba(51, 51, 51, 0.4);
@@ -20,6 +21,10 @@ const StyledButton = styled.button`
 
 const MainButton = ({ name }) => {
   return <StyledButton>{name}</StyledButton>;
+};
+
+MainButton.propTypes = {
+  name: PropTypes.string.isRequired,
 };
 
 export default MainButton;

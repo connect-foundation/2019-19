@@ -9,7 +9,7 @@ module.exports = {
     path: path.resolve(`${__dirname}/build`),
   },
   devServer: {
-    contentBase: path.resolve('./build'),
+    contentBase: path.resolve('./dist'),
     index: 'index.html',
     port: 3000,
   },
