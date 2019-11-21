@@ -69,9 +69,9 @@ const movies = [
     title: '1983',
   },
   {
-    id: 12,
-    image: ImgUrlJpg(12),
-    imageBg: ImgUrlWebp(12),
+    id: 34,
+    image: ImgUrlJpg(34),
+    imageBg: ImgUrlWebp(34),
     title: 'Russian doll',
   },
   {
@@ -88,7 +88,7 @@ const movies = [
   },
   {
     id: 15,
-    image: ImgUrlJpg(1),
+    image: ImgUrlJpg(15),
     imageBg: ImgUrlWebp(15),
     title: 'Elite',
   },
