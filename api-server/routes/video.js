@@ -3,8 +3,8 @@ const { Video } = require('../models');
 
 const router = express.Router();
 
-router.get('/ten-random-popular-videos', async (req, res) => {
-  const data = await Video.getTenPopularVideos();
+router.get('/five-random-popular-videos', async (req, res) => {
+  const data = await Video.getTopFivePopularVideos();
   return res.json(data);
 });
 

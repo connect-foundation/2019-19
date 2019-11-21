@@ -65,9 +65,9 @@ module.exports = (sequelize, DataTypes) => {
     return data;
   };
   Video.getRandomPopularVideo = async () => {
-    const tenPopularVideos = await Video.getTopFivePopularVideos();
+    const fivePopularVideos = await Video.getTopFivePopularVideos();
     const data =
-      tenPopularVideos[Math.floor(Math.random() * tenPopularVideos.length)];
+      fivePopularVideos[Math.floor(Math.random() * fivePopularVideos.length)];
     return data;
   };
   return Video;
