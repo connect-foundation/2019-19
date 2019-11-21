@@ -61,10 +61,7 @@ const MainThumbNail = () => {
         loading={onLoading}
       />
       <StyledThumbNail bg={thumbNailImg} hide={hide}>
-        <MainText
-          name="너의 결혼식"
-          contents="첫눈에 반하면 뭐해, 엇갈리고 또 엇갈리는데. 고등학교 시절 첫 사랑 승희와 원치않는 이별을 한 우연"
-        />
+        <MainText name="너의 결혼식" />
         <StyledButtonsContainer>
           <MainButton name="▶  Play" />
           <MainButton name="✅  My List" />
