@@ -1,4 +1,3 @@
-
 .slider {
   display: flex;
   position: relative;
@@ -6,12 +5,17 @@
   &__container {
     display: flex;
     padding: 0 55px;
-    transition: transform 300ms ease 100ms;
+    transition: transform 600ms ease 100ms;
     z-index: 3;
     width: 100%;
   }
 
   &:not(&--open) .item:hover .show-details-button {
+    opacity: 1;
+  }
+
+  &:not(&--open) .item:hover .content-info {
+    transition: all 1000ms ease 300ms;
     opacity: 1;
   }
 

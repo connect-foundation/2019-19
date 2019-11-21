@@ -41,6 +41,60 @@ const movies = [
     imageBg: ImgUrlWebp(6),
     title: 'Black mirror',
   },
+  {
+    id: 7,
+    image: ImgUrlJpg(7),
+    imageBg: ImgUrlWebp(7),
+    title: '1983',
+  },
+  {
+    id: 8,
+    image: ImgUrlJpg(8),
+    imageBg: ImgUrlWebp(8),
+    title: 'Russian doll',
+  },
+  {
+    id: 9,
+    image: ImgUrlJpg(9),
+    imageBg: ImgUrlWebp(9),
+    title: 'The rain',
+  },
+  {
+    id: 10,
+    image: ImgUrlJpg(10),
+    imageBg: ImgUrlWebp(10),
+    title: 'Sex education',
+  },
+  {
+    id: 11,
+    image: ImgUrlJpg(11),
+    imageBg: ImgUrlWebp(11),
+    title: '1983',
+  },
+  {
+    id: 12,
+    image: ImgUrlJpg(12),
+    imageBg: ImgUrlWebp(12),
+    title: 'Russian doll',
+  },
+  //   {
+  //     id: 13,
+  //     image: ImgUrlJpg(13),
+  //     imageBg: ImgUrlWebp(13),
+  //     title: 'The rain',
+  //   },
+  //   {
+  //     id: 14,
+  //     image: ImgUrlJpg(14),
+  //     imageBg: ImgUrlWebp(14),
+  //     title: 'Sex education',
+  //   },
+  //   {
+  //     id: 16,
+  //     image: ImgUrlJpg(16),
+  //     imageBg: ImgUrlWebp(16),
+  //     title: 'Elite',
+  //   },
 ];
 
 const Popular = () => {
