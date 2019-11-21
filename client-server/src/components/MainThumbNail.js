@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { css } from '@emotion/core';
+import styled from 'styled-components';
 import { ClipLoader } from 'react-spinners';
 import MainButton from './MainButton';
 import MainText from './MainText';
@@ -41,9 +41,9 @@ const MainThumbNail = () => {
         const blob = new Blob([response.data], {
           type: response.headers['content-type'],
         });
-        const thumbNailImgs = URL.createObjectURL(blob);
+        const thumbNailImage = URL.createObjectURL(blob);
         setOnLoading(false);
-        setThumbNailImg(thumbNailImgs);
+        setThumbNailImg(thumbNailImage);
         setHide(1);
       })
       .catch(err => console.log(err));

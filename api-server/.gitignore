@@ -1,4 +1,4 @@
-
+정
 # Created by https://www.gitignore.io/api/node
 # Edit at https://www.gitignore.io/?templates=node
 
@@ -117,4 +117,7 @@ dist
 
 # Sequelize Database 연동 관련 config 파일
 config/config.json
+
+# .env
+.env
 

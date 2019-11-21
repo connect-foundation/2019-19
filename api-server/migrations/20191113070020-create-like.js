@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
       },
       fk_user_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'users',

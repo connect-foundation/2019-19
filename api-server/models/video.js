@@ -16,7 +16,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE(3),
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP(3)'),
       },
-      url: DataTypes.STRING,
+      thumbnail_img_url: {
+        type: DataTypes.STRING,
+      },
+      thumbnai_video_url: {
+        type: DataTypes.STRING,
+      },
+      streaming_url: {
+        type: DataTypes.STRING,
+      },
     },
     {
       // options???
@@ -48,6 +56,19 @@ module.exports = (sequelize, DataTypes) => {
       category,
       url,
     });
+  };
+  Video.getTopFivePopularVideos = async () => {
+    const data = await Video.findAll({
+      order: [['likes', 'DESC']],
+      limit: 5,
+    });
+    return data;
+  };
+  Video.getRandomPopularVideo = async () => {
+    const fivePopularVideos = await Video.getTopFivePopularVideos();
+    const data =
+      fivePopularVideos[Math.floor(Math.random() * fivePopularVideos.length)];
+    return data;
   };
   return Video;
 };
