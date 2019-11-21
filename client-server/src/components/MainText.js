@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledText = styled.p`
   padding: 0.75em 2.3em;
@@ -13,12 +14,16 @@ const StyledText = styled.p`
   margin-left: 5%;
 `;
 
-const MainText = ({ name, contents }) => {
+const MainText = ({ name }) => {
   return (
     <StyledText>
       <h2>{name}</h2>
     </StyledText>
   );
+};
+
+MainText.propTypes = {
+  name: PropTypes.string.isRequired,
 };
 
 export default MainText;

@@ -12,7 +12,7 @@ export default () => (
     <Navbar />
     <Route path="/Popular" component={Popular} />
     <Route path="/Recent" component={Recent} />
-    <Route path="/Login" component={Login} />
+    <Route path="/Login" />
     <Route exact path="/" component={Home} />
   </Router>
 );

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { css } from '@emotion/core';
 import styled from 'styled-components';
+import { ClipLoader } from 'react-spinners';
 import MainButton from './MainButton';
 import MainText from './MainText';
-const axios = require('axios');
-import { css, jsx } from '@emotion/core';
 
-import { ClipLoader } from 'react-spinners';
+const axios = require('axios');
 
 const ImgUrl = 'https://picsum.photos/1600/640';
 
@@ -41,9 +41,9 @@ const MainThumbNail = () => {
         const blob = new Blob([response.data], {
           type: response.headers['content-type'],
         });
-        const thumbNailImg = URL.createObjectURL(blob);
+        const thumbNailImage = URL.createObjectURL(blob);
         setOnLoading(false);
-        setThumbNailImg(thumbNailImg);
+        setThumbNailImg(thumbNailImage);
         setHide(1);
       })
       .catch(err => console.log(err));
@@ -55,9 +55,9 @@ const MainThumbNail = () => {
         css={css`
           margin: 20% 48%;
         `}
-        sizeUnit={'rem'}
+        sizeUnit="rem"
         size={5}
-        color={'lightgray'}
+        color="lightgray"
         loading={onLoading}
       />
       <StyledThumbNail bg={thumbNailImg} hide={hide}>
