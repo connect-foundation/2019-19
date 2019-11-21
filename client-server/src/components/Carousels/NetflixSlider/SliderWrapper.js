@@ -7,7 +7,7 @@ const SliderWrapper = ({ children }) => (
 );
 
 SliderWrapper.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.any.isRequired,
 };
 
 export default SliderWrapper;

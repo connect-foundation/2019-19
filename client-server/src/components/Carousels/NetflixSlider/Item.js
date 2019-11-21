@@ -4,17 +4,14 @@ import PropTypes from 'prop-types';
 import SliderContext from './context';
 import ShowDetailsButton from './ShowDetailsButton';
 import Mark from './Mark';
-import useHover from './useHover';
 import './Item.scss';
 
 const Item = ({ movie }) => {
   const [hover, setHover] = useState(false);
-
   return (
     <SliderContext.Consumer>
       {({ onSelectSlide, currentSlide, elementRef }) => {
         const isActive = currentSlide && currentSlide.id === movie.id;
-
         return (
           <div
             ref={elementRef}
@@ -39,7 +36,7 @@ const Item = ({ movie }) => {
             ) : (
               <img src={movie.image} /> // thumbnail_img_url
             )}
-            <ShowDetailsButton onClick={() => onSelectSlide(movie.id)} />
+            <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
             {isActive && <Mark />}
           </div>
         );
@@ -49,7 +46,7 @@ const Item = ({ movie }) => {
 };
 
 Item.propTypes = {
-  movie: PropTypes.string.isRequired,
+  movie: PropTypes.any.isRequired,
 };
 
 export default Item;

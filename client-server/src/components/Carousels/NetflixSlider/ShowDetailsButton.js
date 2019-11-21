@@ -13,7 +13,7 @@ const ShowDetailsButton = ({ onClick }) => (
 );
 
 ShowDetailsButton.propTypes = {
-  onClick: PropTypes.string.isRequired,
+  onClick: PropTypes.any.isRequired,
 };
 
 export default ShowDetailsButton;

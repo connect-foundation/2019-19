@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import { useState, useRef, useEffect } from 'react';
-import movies from '../data/movie';
 
 const PADDINGS = 110;
 
@@ -41,16 +40,6 @@ const useSliding = (elementWidth, countElements) => {
       setDistance(-containerWidth);
     }
   };
-  console.log(slideProps);
-  // const slideInit = {
-  //   style: {
-  //     transform: `translate3d(${value}px, 0, 0)`,
-  //     transition: `transform 0`,
-  //   },
-  // };
-
-  // const hasPrev = distance < 0;
-  // const hasNext = viewed + totalInViewport < countElements;
 
   const hasNext = 1; // 버튼 표시 유무
   const hasPrev = 1;

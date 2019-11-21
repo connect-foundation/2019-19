@@ -54,8 +54,8 @@ const Slider = ({ children, activeSlide }) => {
 };
 
 Slider.propTypes = {
-  children: PropTypes.string.isRequired,
-  activeSlide: PropTypes.string.isRequired,
+  children: PropTypes.any.isRequired,
+  activeSlide: PropTypes.any,
 };
 
 export default Slider;

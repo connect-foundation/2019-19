@@ -13,8 +13,8 @@ const SlideButton = ({ onClick, type }) => (
 );
 
 SlideButton.propTypes = {
-  onClick: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  onClick: PropTypes.any.isRequired,
+  type: PropTypes.any.isRequired,
 };
 
 export default SlideButton;
