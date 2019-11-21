@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import { useState, useRef, useEffect } from 'react';
-import { element } from 'prop-types';
+import movies from '../data/movie';
 
 const PADDINGS = 110;
 
@@ -10,45 +10,38 @@ const useSliding = (elementWidth, countElements) => {
   const [distance, setDistance] = useState(0); // 이동 거리
   const [totalInViewport, setTotalInViewport] = useState(0); //
   const [viewed, setViewed] = useState(0);
-  const [value, setValue] = useState(0);
-  console.log(elementWidth);
-  if (elementWidth !== 0 && distance === 0) setDistance(-elementWidth);
 
   useEffect(() => {
     const containerWidth = containerRef.current.clientWidth - PADDINGS;
+    if (elementWidth !== 0 && distance === 0) setDistance(-2 * containerWidth); // 초기 밀어줌
 
     setContainerWidth(containerWidth);
     setTotalInViewport(Math.floor(containerWidth / elementWidth));
   }, [containerRef.current]); // containerRef.current가 변경될 때만 함수 실행
 
+  const slideProps = {
+    style: {
+      transform: `translate3d(${distance}px, 0, 0)`,
+      transition: `transform 300ms ease 100ms`,
+    },
+  };
+
   const handlePrev = () => {
     setViewed(viewed - totalInViewport);
     setDistance(distance + containerWidth);
-    if (distance === -elementWidth) {
-      setDistance(-containerWidth * 3 - elementWidth);
-      // setValue(-containerWidth * 3 - elementWidth);
+    if (distance === -containerWidth) {
+      setDistance(-containerWidth * 4);
     }
-    // else {
-    //   setValue(0);
-    // }
   };
 
   const handleNext = () => {
     setViewed(viewed + totalInViewport);
     setDistance(distance - containerWidth);
-    if (distance === -containerWidth * 3 - elementWidth) {
-      setDistance(-elementWidth);
-      // setValue(-elementWidth);
+    if (distance === -containerWidth * 4) {
+      setDistance(-containerWidth);
     }
-    //  else {
-    //   setValue(0);
-    // }
   };
-
-  const slideProps = {
-    style: { transform: `translate3d(${distance}px, 0, 0)` },
-  };
-
+  console.log(slideProps);
   // const slideInit = {
   //   style: {
   //     transform: `translate3d(${value}px, 0, 0)`,
@@ -66,7 +59,6 @@ const useSliding = (elementWidth, countElements) => {
     handlePrev,
     handleNext,
     slideProps,
-    // slideInit,
     containerRef,
     hasPrev,
     hasNext,
