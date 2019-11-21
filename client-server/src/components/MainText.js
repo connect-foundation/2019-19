@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const StyledText = styled.p`
+const StyledText = styled.div`
   padding: 0.75em 2.3em;
   border-radius: 0.2vw;
   box-shadow: none;
