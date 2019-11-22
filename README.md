@@ -1,6 +1,6 @@
-# 안봐도 비디오
+# <center> 안봐도 비디오 </center>
 
-<img src="https://i.imgur.com/Zogwm5Y.png">
+<center><img src="https://i.imgur.com/Zogwm5Y.png"></center>
 
 ### 소개
 > #### Netflix clone project
@@ -66,11 +66,14 @@ PRESET720ID=
 - 비디오 플레이어
 
 #### api-server
-- 추가 예정
+- 컨텐츠 정보에 대한 API 응답
 
 #### elastic-server
-- 추가 예정
-
+- elastic search 검색엔진을 사용, DSL쿼리 적용
+- logstash로 로그수집 및 분석가능 
+- shell script, crontab schedule으로 벌크로 가져온 데이터 1분마다 sync
+- (추후 가능하면 Kibana로 데이터 시각화)
+- API 호출로 해당 쿼리의 JSON 파일 응답 
 #### segmenter-server
 - 원본 영상 업로드
 - nCloud VOD Transcoder를 통한 트랜스코딩(360, 480, 720p)
