@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
-      fk_user_id: DataTypes.INTEGER,
+      fk_user_id: DataTypes.STRING,
       fk_video_id: DataTypes.INTEGER,
     },
     {
