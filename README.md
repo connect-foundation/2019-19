@@ -1,3 +1,7 @@
+# 안봐도 비디오
+
+<img src="https://i.imgur.com/Zogwm5Y.png">
+
 ### 소개
 > #### Netflix clone project
 > 컨텐츠 맞춤 추천을 기반으로 세상 모든 비디오를 스트리밍하는 서비스입니다.
