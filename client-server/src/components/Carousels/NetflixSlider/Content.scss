@@ -1,6 +1,6 @@
 .content {
   position: relative;
-  height: 37vw;
+  height: 35rem;
   margin-top: -40px;
   &__background,
   &__background__shadow,
@@ -46,23 +46,35 @@
     display: flex;
     align-items: center;
     &__container {
-      padding: 30px 70px;
-      color: wheat;
+      border: solid 0.1rem red;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: space-between;
+      height: 60%;
     }
   }
   &__title {
-    font-size: 45px;
+    border: solid 0.1rem white;
+    font-size: 4rem;
     color: #fff;
     font-weight: 700;
   }
   &__description {
+    border: solid 0.1rem white;
     font-size: 18px;
     color: #999;
-    margin-top: 20px;
-    max-width: 500px;
+    max-width: 30rem;
+  }
+  &__btns__container {
+    height: 3rem;
+    width: 100%;
+    border: solid white 0.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
   }
   &__close {
     color: #fff;
@@ -74,7 +86,5 @@
     position: absolute;
     top: 30px;
     right: 30px;
-  }
-  video {
   }
 }

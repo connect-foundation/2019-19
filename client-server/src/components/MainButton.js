@@ -12,6 +12,7 @@ const StyledButton = styled.button`
   color: white;
   height: 100%;
   max-width: 15rem;
+  margin: auto;
   &:hover {
     cursor: pointer;
     background-color: lightgray;

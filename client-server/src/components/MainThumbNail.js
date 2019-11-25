@@ -27,6 +27,7 @@ const StyledButtonsContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 35%;
+  height: 8%;
   margin-left: 5%;
 `;
 
@@ -70,9 +71,9 @@ const MainThumbNail = () => {
       <StyledThumbNail bg={thumbNailImg} hide={hide}>
         <MainText name={thumbNailTitle} />
         <StyledButtonsContainer>
-          <MainButton name="▶  Play" />
-          <MainButton name="✅  My List" />
-          <MainButton name="ⓘ  Learn More" />
+          <MainButton name="▶  재생" />
+          <MainButton name="✅+  내가 찜한 컨텐츠" />
+          <MainButton name="좋아요" />
         </StyledButtonsContainer>
       </StyledThumbNail>
     </>
