@@ -19,22 +19,26 @@ const Item = ({ movie }) => {
               'item--open': isActive,
             })}
             onMouseOver={() => setHover(true)}
+            onFocus={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
+            onBlur={() => setHover(false)}
           >
             {hover ? (
               <>
-                <div className={'content-info'}>{'hello'}</div>
                 <video
-                  src={
-                    'https://connect.or.kr/connectfoundation_/video/home_bg.mp4'
-                  } // thumbnail_video_url
+                  src="https://connect.or.kr/connectfoundation_/video/home_bg.mp4" // thumbnail_video_url
                   alt="thumbnail-video"
-                  poster={movie.image} // thumbnail_img_url | poster 속성에 이미지 넣어둬야 부드럽게 전환
-                  autoPlay={true}
-                />
+                  poster={movie.image}
+                  autoPlay
+                >
+                  <track kind="captions" />
+                </video>
               </>
             ) : (
-              <img src={movie.image} /> // thumbnail_img_url
+              <>
+                <div className="content-info">{movie.title}</div>
+                <img src={movie.image} alt={movie.title} />
+              </>
             )}
             <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
             {isActive && <Mark />}
@@ -46,7 +50,7 @@ const Item = ({ movie }) => {
 };
 
 Item.propTypes = {
-  movie: PropTypes.any.isRequired,
+  movie: PropTypes.object.isRequired,
 };
 
 export default Item;

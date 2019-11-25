@@ -9,15 +9,13 @@ const Content = ({ movie, onClose }) => {
     <div className="content">
       <div className="content__background">
         <div className="content__background__shadow" />
-        {/* <div
-        className="content__background__image"
-        style={{ 'background-image': `url(${movie.imageBg})` }}
-      /> */}
         <video
-          src={'https://connect.or.kr/connectfoundation_/video/home_bg.mp4'}
+          src="https://connect.or.kr/connectfoundation_/video/home_bg.mp4"
           className="content__background__image"
-          autoPlay={true}
-        />
+          autoPlay
+        >
+          <track kind="captions" />
+        </video>
       </div>
       <div className="content__area">
         <div className="content__area__container">
@@ -37,10 +35,8 @@ const Content = ({ movie, onClose }) => {
     </div>
   );
 };
-
 Content.propTypes = {
-  movie: PropTypes.any.isRequired,
-  onClose: PropTypes.any.isRequired,
+  movie: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
-
 export default Content;
