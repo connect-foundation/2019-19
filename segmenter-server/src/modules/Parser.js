@@ -1,18 +1,18 @@
 const path = require('path');
 
 const Parser = {
-  isVideo: (fileName) => {
-    const extension = fileName.slice(fileName.length-3);
-    const regExp = new RegExp("(mp4|avi|mkv|flv$)", 'i');
+  isVideo: fileName => {
+    const extension = fileName.slice(fileName.length - 3);
+    const regExp = new RegExp('(mp4|avi|mkv|flv$)', 'i');
     return regExp.test(extension);
   },
 
-  removeExtension: (fileName) => {
-    return fileName.slice(0, fileName.length-4)
+  removeExtension: fileName => {
+    return fileName.slice(0, fileName.length - 4);
   },
 
-  createStoragePath: (fileName) => {
-    return "/videos/" + fileName;
+  createStoragePath: fileName => {
+    return `/videos/${fileName}`;
   },
 
   createLocalDirPath: (videosDir, name) => {
@@ -21,9 +21,9 @@ const Parser = {
       acc.push(path.resolve(videosDir, name, val));
       return acc;
     }, []);
-    
+
     return list;
-  }
-}
+  },
+};
 
 module.exports = Parser;

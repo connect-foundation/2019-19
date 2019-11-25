@@ -1,14 +1,17 @@
-const fs = require("fs");
-const path = require("path");
-require("dotenv").config();
+const fs = require('fs');
+const path = require('path');
+require('dotenv').config();
 
-const Storage = require("../modules/Storage");
-const LocalStorage = require("../modules/LocalStorage");
-const Transcoder = require("../modules/Transcoder");
-const Parser = require("../modules/Parser");
-const Segmenter = require("../modules/Segmenter");
+const Storage = require('../modules/Storage');
+const LocalStorage = require('../modules/LocalStorage');
+const Transcoder = require('../modules/Transcoder');
+const Parser = require('../modules/Parser');
+const Segmenter = require('../modules/Segmenter');
+const Video = require('../models/Video');
 
-const videoNames = ["360p.mp4", "480p.mp4", "720p.mp4"];
+const VideoModel = new Video();
+
+const RESOLUTIONS = ['360p.mp4', '480p.mp4', '720p.mp4'];
 
 const StreamScript = {
   // Object storage에 영상들 업로드하는 함수
@@ -16,7 +19,7 @@ const StreamScript = {
     // Upload 작업의 Promise 배열 만들기
     const uploads = files.reduce((acc, fileName) => {
       if (Parser.isVideo(fileName) === false) {
-        console.log("There is non-video file!");
+        console.log('There is non-video file!');
         return acc;
       }
 
@@ -71,11 +74,11 @@ const StreamScript = {
   downloadVideos: async files => {
     const totalDownloads = files.reduce((acc, fileName) => {
       const dirName = Parser.removeExtension(fileName);
-      const bucketPath = process.env.BUCKET_NAME + "/transcoded/" + dirName;
+      const bucketPath = `${process.env.BUCKET_NAME}/transcoded/${dirName}`;
 
       // downloadVideo 작업들을 push
-      videoNames.forEach(videoName => {
-        acc.push(Storage.downloadVideo(dirName, videoName, bucketPath));
+      RESOLUTIONS.forEach(RESOLUTION => {
+        acc.push(Storage.downloadVideo(dirName, RESOLUTION, bucketPath));
       });
       return acc;
     }, []);
@@ -88,12 +91,12 @@ const StreamScript = {
   downloadVideo: async fileName => {
     const totalDownloads = [];
     const dirName = Parser.removeExtension(fileName);
-    const bucketPath = process.env.BUCKET_NAME + "/transcoded/" + dirName;
+    const bucketPath = `${process.env.BUCKET_NAME}/transcoded/${dirName}`;
 
     // downloadVideo 작업들을 push
-    videoNames.forEach(videoName => {
+    RESOLUTIONS.forEach(RESOLUTION => {
       totalDownloads.push(
-        Storage.downloadVideo(dirName, videoName, bucketPath)
+        Storage.downloadVideo(dirName, RESOLUTION, bucketPath),
       );
     });
 
@@ -111,7 +114,7 @@ const StreamScript = {
   },
 
   uploadSegments: async (videosDir, files) => {
-    let uploads = [];
+    const uploads = [];
 
     files.forEach(fileName => {
       const fileDir = `${videosDir}/${Parser.removeExtension(fileName)}`;
@@ -126,7 +129,24 @@ const StreamScript = {
 
     // Upload 작업 병렬 처리
     await Promise.all(uploads);
-  }
+  },
+
+  insertURLtoDB: files => {
+    files.forEach(fileName => {
+      // TODO: adaptive bit streaming 어떻게?
+      const nameWithoutExt = Parser.removeExtension(fileName);
+      const URL = `${process.env.CDN_URL}/videos/${nameWithoutExt}/720p.mp4`;
+      VideoModel.create({
+        name: nameWithoutExt,
+        category: '테스트', // TODO: 카테고리 변경
+        likes: 0,
+        reg_date: Date.now(),
+        thumbnail_img_url: null, // TODO: 썸네일 이미지
+        thumbnai_video_url: null,
+        streaming_url: URL,
+      });
+    });
+  },
 };
 
 module.exports = StreamScript;
