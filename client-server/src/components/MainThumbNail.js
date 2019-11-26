@@ -10,7 +10,7 @@ import MylistBtn from './like/mylist';
 
 const axios = require('axios');
 
-// const ImgUrl = 'https://picsum.photos/1600/640';
+const ImgUrl = 'https://picsum.photos/1600/640';
 const apiServer = 'http://localhost:8000';
 
 const StyledThumbNail = styled.div`
@@ -65,7 +65,6 @@ const MainThumbNail = () => {
         userToken: Cookies.get('user_info'),
       })
       .then(response => {
-        console.log('유저 : ', response.data);
         setUserId(response.data.userId);
       })
       .catch(err => console.log(err));

@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-const MylistBtn = () => {
+const axios = require('axios');
+
+const apiServer = 'http://localhost:8000';
+const PostData = ({ userId, thumbNailImg, URL }) => {
+  axios.post(`${apiServer}/${URL}`, {
+    params: {
+      userId: `${userId}`,
+      thumbNailImg: `${thumbNailImg}`,
+    },
+  });
+};
+const MylistBtn = ({ userId, thumbNailImg }) => {
   const [mylist, setMylist] = useState(false);
-
   const contentText = mylist ? '✅' : '✚';
-  //   useEffect(() => {
-  //     axios.post('https://test.com/', {
-  //       params: {
-  //         user: `${user}`,
-  //         content: `${name}`,
-  //         ...
-  //       },
-  //     });
-  //   }, [Like]);
+
+  useEffect(() => {
+    if (thumbNailImg && userId) {
+      if (mylist) {
+        PostData(userId, thumbNailImg, 'like-video');
+      } else {
+        PostData(userId, thumbNailImg, 'unlike-video');
+      }
+    }
+  }, [userId, thumbNailImg, mylist]);
 
   return (
     <div>
@@ -43,6 +55,7 @@ const CheckBoxLabel = styled.label`
   margin-bottom: 0.75em;
   color: white;
   max-width: 15rem;
+  margin: auto;
   &:hover {
     cursor: pointer;
     background-color: lightgray;
@@ -56,5 +69,10 @@ const CheckBox = styled.input`
     background: #4fbe79;
   }
 `;
+
+MylistBtn.propTypes = {
+  userId: PropTypes.string.isRequired,
+  thumbNailImg: PropTypes.string.isRequired,
+};
 
 export default MylistBtn;

@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import IconCross from './iconSvg';
 
 const axios = require('axios');
 
 const apiServer = 'http://localhost:8000';
 
+const PostData = ({ userId, thumbNailImg, URL }) => {
+  axios.post(`${apiServer}/${URL}`, {
+    params: {
+      userId: `${userId}`,
+      thumbNailImg: `${thumbNailImg}`,
+    },
+  });
+};
+
 const LikeBtn = ({ userId, thumbNailImg }) => {
   const [Like, setLike] = useState(false);
 
   useEffect(() => {
     if (thumbNailImg && userId) {
-      axios.post(`${apiServer}/`, {
-        params: {
-          userId: `${userId}`,
-          thumbNailImg: `${thumbNailImg}`,
-        },
-      });
+      if (Like) {
+        PostData(userId, thumbNailImg, 'like-video');
+      } else {
+        PostData(userId, thumbNailImg, 'unlike-video');
+      }
     }
-  }, [userId, thumbNailImg]);
+  }, [userId, thumbNailImg, Like]);
 
   return (
     <div>
@@ -58,5 +67,10 @@ const CheckBox = styled.input`
     background: #4fbe79;
   }
 `;
+
+LikeBtn.propTypes = {
+  userId: PropTypes.string.isRequired,
+  thumbNailImg: PropTypes.string.isRequired,
+};
 
 export default LikeBtn;

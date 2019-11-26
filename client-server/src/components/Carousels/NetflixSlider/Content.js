@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IconCross from '../Icons/IconCross';
 import MainButton from '../../MainButton';
+import LikeBtn from '../../like/like';
+import MylistBtn from '../../like/mylist';
 import './Content.scss';
 
 const Content = ({ movie, onClose }) => {
@@ -29,9 +31,9 @@ const Content = ({ movie, onClose }) => {
             Praesent sollicitudin
           </div>
           <div className="content__btns__container">
-            <MainButton name="▶  Play" />
-            <MainButton name="✅  My List" />
-            <MainButton name="좋아요" />
+            <MainButton name="▶  재생" />
+            <LikeBtn />
+            <MylistBtn />
           </div>
         </div>
         <button className="content__close" onClick={onClose}>
