@@ -10,19 +10,19 @@ Model Schema
   streaming_url varchar(255)
 */
 
-const dbPool = require('../modules/dbPool');
+const dbPool = require("../modules/dbPool");
 
 class Video {
   constructor() {
-    this.TABLE_NAME = 'videos';
+    this.TABLE_NAME = "videos";
     this.ATTRIBUTE_LIST = [
-      'name',
-      'category',
-      'likes',
-      'reg_date',
-      'thumbnail_img_url',
-      'thumbnai_video_url',
-      'streaming_url',
+      "name",
+      "category",
+      "likes",
+      "reg_date",
+      "thumbnail_img_url",
+      "thumbnai_video_url",
+      "streaming_url"
     ];
     this.ATTRIBUTE_NUMBERS = this.ATTRIBUTE_LIST.length;
   }
@@ -32,9 +32,9 @@ class Video {
     try {
       let insertQuery = `INSERT INTO ${this.TABLE_NAME} (${this.ATTRIBUTE_LIST}) VALUES (`;
       for (let i = 0; i < this.ATTRIBUTE_NUMBERS - 1; i += 1) {
-        insertQuery += '?,';
+        insertQuery += "?,";
       }
-      insertQuery += '?)';
+      insertQuery += "?)";
 
       const insertValue = [];
       Object.keys(params).forEach(key => {

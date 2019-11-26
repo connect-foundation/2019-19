@@ -1,83 +1,177 @@
-const fs = require('fs');
+const fs = require("fs");
+const path = require("path");
+const moment = require("moment");
+require("dotenv").config();
 
-const StreamScript = require('./StreamScript');
-const Transcoder = require('../modules/Transcoder');
+const Storage = require("../modules/Storage");
+const Transcoder = require("../modules/Transcoder");
+const Parser = require("../modules/Parser");
+const Segmenter = require("../modules/Segmenter");
+const Video = require("../models/Video");
+
+const VideoModel = new Video();
+
+const RESOLUTIONS = ["360p.mp4", "480p.mp4", "720p.mp4"];
 
 const StreamController = {
-  uploadVideos: async () => {
-    // video directory는 서버의 최상위에 존재하는 디렉토리여야 한다.
-    const files = fs.readdirSync('videos');
-
-    // Storage에 videos 디렉토리 내의 원본 영상 업로드
-    console.log('업로드 시작!');
-    await StreamScript.uploadVideos('videos', files);
-    console.log('업로드 완료!\n');
-
-    // nCloud Transcoder API에 Job 생성을 요청한다.
-    console.log('Transcode Job생성 요청!');
-    try {
-      await StreamScript.requestJobs(files);
-      console.log('Transcoder Job생성 요청완료!\n');
-      return true;
-    } catch (err) {
-      console.log(`Transcoder Job생성 요청실패!\n${err}\n`);
-      return false;
-    }
-  },
-
-  createStream: async jobId => {
-    try {
-      // 현재 Job에 대한 fileName 조회
-      const fileName = await Transcoder.getFileNameOfJob(jobId);
-
-      // fileName 조회를 할 수 없다면, 실패
-      if (fileName === false) {
-        throw new Error('fileName이 없는 콜백!');
+  // Object storage에 영상들 업로드하는 함수
+  uploadVideos: async (videosDir, files) => {
+    // Upload 작업의 Promise 배열 만들기
+    const uploads = files.reduce((acc, fileName) => {
+      if (Parser.isVideo(fileName) === false) {
+        console.log("There is non-video file!");
+        return acc;
       }
 
-      const files = [fileName];
+      const localFilePath = path.resolve(videosDir, fileName);
+      acc.push(Storage.uploadVideo(localFilePath, fileName));
+      return acc;
+    }, []);
 
-      // 현재 Job이 완성되었다는 응답값을 받으면 해당 영상을 다운로드한다.
-      console.log('Segmenter 서버에 해당 영상 다운로드!');
-      await StreamScript.downloadVideos(files);
-      console.log('Segmenter 서버에 영상 다운로드 완료!');
+    // Upload 작업 병렬 처리
+    await Promise.all(uploads);
 
-      // 트랜스코딩된 영상들을 스트림 데이터로 분할하기
-      console.log('Segmeneter 서버에서 분할 작업 시작!');
-      await StreamScript.createSegments('videos', files);
-      console.log('Segmeneter 서버에서 분할 작업 완료!');
+    // 파일 목록 반환
+    return files;
+  },
 
-      // 360/480/720p 원본영상 삭제하기
-      console.log('360/480/720 원본영상 삭제 시작!');
-      StreamScript.removeVideos('videos', files);
-      console.log('360/480/720 원본영상 삭제 완료!');
+  // Object Storage에서 분할할 비디오를 다운로드하는 함수
+  downloadVideos: async (videosDir, files) => {
+    const totalDownloads = files.reduce((acc, fileName) => {
+      const fileNameWithoutExt = Parser.removeExtension(fileName);
+      const localDirPath = path.resolve(videosDir, fileNameWithoutExt);
+      const bucketPath = `${process.env.BUCKET_NAME}/transcoded/${fileNameWithoutExt}`;
 
-      // 스트림 데이터 스토리지에 업로드하기
-      console.log('Segmenter 서버에서 분할 파일 업로드 시작!');
-      await StreamScript.uploadSegments('videos', files);
-      console.log('Segmenter 서버에서 분할 파일 업로드 완료!');
+      // downloadVideo 작업들을 push
+      RESOLUTIONS.forEach(RESOLUTION => {
+        acc.push(Storage.downloadVideo(localDirPath, RESOLUTION, bucketPath));
+      });
+      return acc;
+    }, []);
 
-      // TODO: 스트림 데이터 DB에 연동하기
-      console.log('Segmenter 서버에서 DB연동 시작!');
-      StreamScript.insertURLtoDB(files);
-      console.log('Segmenter 서버에서 DB연동 완료!');
+    // downloadVideo 작업 병렬 처리
+    await Promise.all(totalDownloads);
+  },
 
-      // 스트림 데이터 삭제하고 디렉토리까지 지우기
-      console.log('Segmenter 서버에서 스트림 데이터 삭제 시작!');
-      StreamScript.removeSegments('videos', files);
-      console.log('Segmenter 서버에서 스트림 데이터 삭제 완료!');
+  // Transcoder API에 다수의 Job 생성 요청 보내는 함수
+  requestJobs: async files => {
+    // requestJob 작업의 Promise 배열 만들기
+    const requests = files.map(fileName => {
+      return Transcoder.requestJob(fileName);
+    });
 
-      // 원본 영상 삭제하기
-      console.log('원본영상 삭제 시작!');
-      StreamScript.removeOriginalVideos('videos');
-      console.log('원본영상 삭제 완료!\n');
+    // requestJob 작업 병렬 처리
+    await Promise.all(requests);
+  },
 
-      return true;
+  // 다운로드받은 360/480/720p 영상들을 분할하는 함수
+  createSegments: async (videosDir, files) => {
+    const segments = [];
+    files.forEach(fileName => {
+      segments.push(Segmenter.createSegment(videosDir, fileName));
+    });
+
+    await Promise.all(segments);
+  },
+
+  // 분할한 스트리밍 데이터를 업로드하는 함수
+  uploadSegments: async (videosDir, files) => {
+    const uploads = [];
+
+    files.forEach(fileName => {
+      const fileNameWithoutExt = Parser.removeExtension(fileName);
+      const productsDir = `${videosDir}/${fileNameWithoutExt}`;
+      const products = fs.readdirSync(productsDir);
+
+      // Upload 작업의 Promise 배열 만들기
+      products.some(productName => {
+        if (Parser.isVideo(productName)) {
+          return false;
+        }
+
+        const localFilePath = path.resolve(productsDir, productName);
+        uploads.push(
+          Storage.uploadVideo(localFilePath, productName, productsDir, {
+            ACL: "public-read"
+          })
+        );
+        return false;
+      });
+    });
+
+    // Upload 작업 병렬 처리
+    await Promise.all(uploads);
+  },
+
+  insertURLtoDB: async files => {
+    const inserts = [];
+    try {
+      files.forEach(fileName => {
+        // TODO: adaptive bit streaming 어떻게?
+        const nameWithoutExt = Parser.removeExtension(fileName);
+        const streamingURL = `${process.env.CDN_URL}/videos/${nameWithoutExt}/360p.stream.m3u8`; // FIXME: abs를 위해 수정할 것!
+        const thumbnailImgURL = `${process.env.CDN_URL}/thumbnails/${nameWithoutExt}/${nameWithoutExt}_000005.png`;
+        const datetime = moment().format("YYYY-MM-DD HH:mm:ss");
+        inserts.push(
+          VideoModel.create({
+            name: nameWithoutExt,
+            category: "테스트", // TODO: 카테고리 변경
+            likes: 0,
+            reg_date: datetime,
+            thumbnail_img_url: thumbnailImgURL,
+            thumbnai_video_url: null,
+            streaming_url: streamingURL
+          })
+        );
+      });
+      await Promise.all(inserts);
     } catch (err) {
-      console.log(err);
-      return false;
+      console.log(`DB insert 에러:${err}`);
     }
   },
+
+  removeVideos: files => {
+    files.forEach(fileName => {
+      // 1. 원본삭제-videos/Food.mp4
+      const originalParams = {
+        Bucket: process.env.BUCKET_NAME,
+        Delete: {
+          Objects: [],
+          Quiet: false
+        }
+      };
+      const originalKey = `videos/${fileName}`;
+      originalParams.Delete.Objects.push({ Key: originalKey });
+      Storage.deleteObjects(originalParams);
+
+      // 2. 중간산출물삭제-transcoded/Food/360,480,720.mp4
+      const fileNameWithoutExt = Parser.removeExtension(fileName);
+      const transcodedParams = {
+        Bucket: process.env.BUCKET_NAME,
+        Delete: {
+          Objects: [],
+          Quiet: false
+        }
+      };
+      RESOLUTIONS.forEach(RESOLUTION => {
+        const transcodedKey = `transcoded/${fileNameWithoutExt}/${RESOLUTION}`;
+        transcodedParams.Delete.Objects.push({ Key: transcodedKey });
+      });
+      Storage.deleteObjects(transcodedParams);
+
+      // 3. 중간산출물폴더삭제-transcoded/Food
+      const transcodedDirParams = {
+        Bucket: process.env.BUCKET_NAME,
+        Delete: {
+          Objects: [],
+          Quiet: false
+        }
+      };
+      const transcodedDirKey = `transcoded/${fileNameWithoutExt}/`;
+      transcodedDirParams.Delete.Objects.push({ Key: transcodedDirKey });
+      Storage.deleteObjects(transcodedDirParams);
+    });
+  }
 };
 
 module.exports = StreamController;

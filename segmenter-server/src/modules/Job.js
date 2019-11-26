@@ -18,7 +18,7 @@ const Job = {
       thumbnailBucketName: inputBucketName,
       thumbnailFilePath: `/thumbnails/${inputFileName}`,
       thumbnailFileFormat: "PNG",
-      thumbnailAccessControl: "PRIVATE",
+      thumbnailAccessControl: "PUBLIC-READ",
       outputFiles: [
         {
           presetId: "9b3b91bb-04c9-11e8-8379-00505685080f",

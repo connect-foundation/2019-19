@@ -1,6 +1,6 @@
 // import library
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+const mysql = require("mysql2/promise");
+require("dotenv").config();
 
 // MySQL create pool
 const dbPool = {
@@ -11,8 +11,8 @@ const dbPool = {
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE_NAME,
     connectionLimit: 20,
-    waitForConnections: true,
-  }),
+    waitForConnections: true
+  })
 };
 
 module.exports = dbPool;
