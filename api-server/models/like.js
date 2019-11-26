@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         fk_video_id: videoId,
       },
     });
-    return user, _userLiked;
+    return [user, _userLiked];
   };
   Like.registerLike = async (userId, videoId) => {
     const [_user, created] = await Like.findOrCreate({
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         fk_video_id: videoId,
       },
     });
-    return _user, created;
+    return created;
   };
   Like.deregisterLike = async (userId, videoId) => {
     const data = await Like.destroy({
