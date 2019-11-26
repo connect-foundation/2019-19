@@ -3,15 +3,21 @@ const { Like, Video } = require('../models');
 
 const router = express.Router();
 
-router.get('/like-video', async (req, res) => {
-  const data = await Like.registerLike();
-  const data2 = await Video.increaseLike();
+router.post('/like-video', async (req, res) => {
+  const reqData = req.body.params;
+  const { userId } = reqData;
+  const { videoId } = reqData;
+  const data = await Like.registerLike(userId, videoId);
+  const data2 = await Video.increaseLike(videoId);
   return res.json(data, data2);
 });
 
-router.get('/unlike-video', async (req, res) => {
-  const data = await Like.deregisterLike();
-  const data2 = await Video.decreaseLike();
+router.post('/unlike-video', async (req, res) => {
+  const reqData = req.body.params;
+  const { userId } = reqData;
+  const { videoId } = reqData;
+  const data = await Like.deregisterLike(userId, videoId);
+  const data2 = await Video.decreaseLike(videoId);
   return res.json(data, data2);
 });
 

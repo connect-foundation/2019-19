@@ -7,27 +7,28 @@ const axios = require('axios');
 
 const apiServer = 'http://localhost:8000';
 
-const PostData = ({ userId, thumbNailImg, URL }) => {
+const PostData = (userId, thumbNailId, URL) => {
   axios.post(`${apiServer}/${URL}`, {
     params: {
       userId: `${userId}`,
-      thumbNailImg: `${thumbNailImg}`,
+      videoId: thumbNailId,
     },
   });
 };
 
-const LikeBtn = ({ userId, thumbNailImg }) => {
+const LikeBtn = ({ userId, thumbNailId }) => {
   const [Like, setLike] = useState(false);
 
   useEffect(() => {
-    if (thumbNailImg && userId) {
+    if (thumbNailId && userId) {
       if (Like) {
-        PostData(userId, thumbNailImg, 'like-video');
+        console.log('like!');
+        PostData(userId, thumbNailId, 'like/like-video');
       } else {
-        PostData(userId, thumbNailImg, 'unlike-video');
+        PostData(userId, thumbNailId, 'like/unlike-video');
       }
     }
-  }, [userId, thumbNailImg, Like]);
+  }, [userId, thumbNailId, Like]);
 
   return (
     <div>
@@ -70,7 +71,7 @@ const CheckBox = styled.input`
 
 LikeBtn.propTypes = {
   userId: PropTypes.string.isRequired,
-  thumbNailImg: PropTypes.string.isRequired,
+  thumbNailId: PropTypes.number.isRequired,
 };
 
 export default LikeBtn;

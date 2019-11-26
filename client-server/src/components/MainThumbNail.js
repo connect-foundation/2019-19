@@ -39,10 +39,12 @@ const MainThumbNail = () => {
   const [thumbNailImg, setThumbNailImg] = useState(null);
   const [hide, setHide] = useState(0);
   const [thumbNailTitle, setThumbNailTitle] = useState('로딩중');
+  const [thumbNailId, setThumbNailId] = useState(null);
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
+      setThumbNailId(thumbNailData.data.video_id);
       setThumbNailTitle(thumbNailData.data.name);
       axios
         .get(thumbNailData.data.thumbnail_img_url, {
@@ -85,7 +87,11 @@ const MainThumbNail = () => {
         <MainText name={thumbNailTitle} />
         <StyledButtonsContainer>
           <MainButton name="▶  재생" />
-          <LikeBtn userId={userId} thumbNailImg={thumbNailImg} />
+          <LikeBtn
+            userId={userId}
+            thumbNailId={thumbNailId}
+            thumbNailImg={thumbNailImg}
+          />
           <MylistBtn userId={userId} thumbNailImg={thumbNailImg} />
         </StyledButtonsContainer>
       </StyledThumbNail>

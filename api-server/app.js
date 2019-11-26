@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const oauthRouter = require('./routes/oauth');
 const videoRouter = require('./routes/video');
+const likeRouter = require('./routes/like');
 
 const app = express();
 app.use(cors());
@@ -24,5 +25,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/oauth', oauthRouter);
 app.use('/video', videoRouter);
+app.use('/like', likeRouter);
 
 module.exports = app;
