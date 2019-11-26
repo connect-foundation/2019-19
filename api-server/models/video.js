@@ -70,5 +70,17 @@ module.exports = (sequelize, DataTypes) => {
       fivePopularVideos[Math.floor(Math.random() * fivePopularVideos.length)];
     return data;
   };
+  Video.increaseLike = async videoId => {
+    const data = await Video.increment('likes', {
+      where: { video_id: videoId },
+    });
+    return data;
+  };
+  Video.decreaseLike = async videoId => {
+    const data = await Video.decrement('likes', {
+      where: { video_id: videoId },
+    });
+    return data;
+  };
   return Video;
 };
