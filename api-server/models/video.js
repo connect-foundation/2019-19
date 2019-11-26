@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
   Video.associate = models => {
-    Video.hasMany(models.MyVideo, {
+    Video.hasMany(models.Myvideos, {
       foreignKey: 'fk_video_id',
       sourceKey: 'video_id',
     });
