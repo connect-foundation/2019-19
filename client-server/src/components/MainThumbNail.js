@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import { css } from '@emotion/core';
 import styled from 'styled-components';
 import { ClipLoader } from 'react-spinners';
 import MainButton from './MainButton';
 import MainText from './MainText';
+import LikeBtn from './like/like';
+import MylistBtn from './like/mylist';
 
 const axios = require('axios');
 
-const ImgUrl = 'https://picsum.photos/1600/640';
+// const ImgUrl = 'https://picsum.photos/1600/640';
 const apiServer = 'http://localhost:8000';
 
 const StyledThumbNail = styled.div`
@@ -36,6 +39,7 @@ const MainThumbNail = () => {
   const [thumbNailImg, setThumbNailImg] = useState(null);
   const [hide, setHide] = useState(0);
   const [thumbNailTitle, setThumbNailTitle] = useState('로딩중');
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
@@ -55,6 +59,16 @@ const MainThumbNail = () => {
         })
         .catch(err => console.log(err));
     });
+
+    axios
+      .post(`${apiServer}/oauth/google/verify`, {
+        userToken: Cookies.get('user_info'),
+      })
+      .then(response => {
+        console.log('유저 : ', response.data);
+        setUserId(response.data.userId);
+      })
+      .catch(err => console.log(err));
   }, []);
 
   return (
@@ -72,8 +86,8 @@ const MainThumbNail = () => {
         <MainText name={thumbNailTitle} />
         <StyledButtonsContainer>
           <MainButton name="▶  재생" />
-          <MainButton name="✅+  내가 찜한 컨텐츠" />
-          <MainButton name="좋아요" />
+          <LikeBtn userId={userId} thumbNailImg={thumbNailImg} />
+          <MylistBtn userId={userId} thumbNailImg={thumbNailImg} />
         </StyledButtonsContainer>
       </StyledThumbNail>
     </>
