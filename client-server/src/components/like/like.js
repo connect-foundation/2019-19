@@ -8,16 +8,17 @@ const apiServer = 'http://localhost:8000';
 
 const LikeBtn = ({ userId, thumbNailImg }) => {
   const [Like, setLike] = useState(false);
-  console.log(userId, thumbNailImg);
 
   useEffect(() => {
-    axios.post(`${apiServer}/`, {
-      params: {
-        userId: `${userId}`,
-        thumbNailImg: `${thumbNailImg}`,
-      },
-    });
-  }, [Like]);
+    if (thumbNailImg && userId) {
+      axios.post(`${apiServer}/`, {
+        params: {
+          userId: `${userId}`,
+          thumbNailImg: `${thumbNailImg}`,
+        },
+      });
+    }
+  }, [userId, thumbNailImg]);
 
   return (
     <div>

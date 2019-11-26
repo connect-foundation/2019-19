@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      // options???
       underscored: true,
       timestamps: false,
     },
@@ -32,6 +31,34 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'fk_video_id',
       targetKey: 'video_id',
     });
+  };
+  Like.didUserLiked = async (userId, videoId) => {
+    const { user, _userLiked } = await Like.findAll({
+      where: {
+        fk_user_id: userId,
+        fk_video_id: videoId,
+      },
+    });
+    return user, _userLiked;
+  };
+  Like.registerLike = async (userId, videoId) => {
+    const [_user, created] = await Like.findOrCreate({
+      where: { fk_user_id: userId, fk_video_id: videoId },
+      defaults: {
+        fk_user_id: userId,
+        fk_video_id: videoId,
+      },
+    });
+    return _user, created;
+  };
+  Like.deregisterLike = async (userId, videoId) => {
+    const data = await Like.destroy({
+      where: {
+        fk_user_id: userId,
+        fk_video_id: videoId,
+      },
+    });
+    return data;
   };
   return Like;
 };
