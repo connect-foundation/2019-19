@@ -39,7 +39,8 @@ module.exports = (sequelize, DataTypes) => {
         fk_video_id: videoId,
       },
     });
-    return data;
+    if (data) return data.dataValues;
+    return null;
   };
   Like.registerLike = async (userId, videoId) => {
     const [_user, created] = await Like.findOrCreate({
