@@ -24,6 +24,7 @@
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-player": "^1.14.2",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
@@ -33,7 +34,6 @@
   "dependencies": {
     "axios": "^0.19.0",
     "prop-types": "^15.7.2",
-    "react-player": "^1.14.1",
     "react-router-dom": "^5.1.2",
     "react-spinners": "^0.6.1",
     "styled-components": "4.4.0"
