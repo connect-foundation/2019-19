@@ -8,7 +8,7 @@ const axios = require('axios');
 const apiServer = 'http://localhost:8000';
 
 const PostData = (userId, thumbNailId, URL) => {
-  axios.post(`${apiServer}/${URL}`, {
+  axios.post(`${apiServer}/like/${URL}`, {
     params: {
       userId: `${userId}`,
       videoId: thumbNailId,
@@ -18,14 +18,30 @@ const PostData = (userId, thumbNailId, URL) => {
 
 const LikeBtn = ({ userId, thumbNailId }) => {
   const [Like, setLike] = useState(false);
+  useEffect(() => {
+    if (thumbNailId && userId) {
+      axios
+        .post(`${apiServer}/like/isLiked`, {
+          params: {
+            userId,
+            videoId: thumbNailId,
+          },
+        })
+        .then(res => {
+          if (res.data.length) {
+            setLike(true);
+            document.getElementById('checkbox').checked = true;
+          }
+        });
+    }
+  }, [userId, thumbNailId]);
 
   useEffect(() => {
     if (thumbNailId && userId) {
       if (Like) {
-        console.log('like!');
-        PostData(userId, thumbNailId, 'like/like-video');
+        PostData(userId, thumbNailId, 'like-video');
       } else {
-        PostData(userId, thumbNailId, 'like/unlike-video');
+        PostData(userId, thumbNailId, 'unlike-video');
       }
     }
   }, [userId, thumbNailId, Like]);

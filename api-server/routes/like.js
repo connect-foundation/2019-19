@@ -21,4 +21,12 @@ router.post('/unlike-video', async (req, res) => {
   return res.json(data, data2);
 });
 
+router.post('/isLiked', async (req, res) => {
+  const reqData = req.body.params;
+  const { userId } = reqData;
+  const { videoId } = reqData;
+  const data = await Like.didUserLiked(userId, videoId);
+  return res.json(data);
+});
+
 module.exports = router;

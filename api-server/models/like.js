@@ -33,13 +33,13 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
   Like.didUserLiked = async (userId, videoId) => {
-    const { user, _userLiked } = await Like.findAll({
+    const data = await Like.findAll({
       where: {
         fk_user_id: userId,
         fk_video_id: videoId,
       },
     });
-    return [user, _userLiked];
+    return data;
   };
   Like.registerLike = async (userId, videoId) => {
     const [_user, created] = await Like.findOrCreate({
