@@ -92,7 +92,7 @@ const MainThumbNail = () => {
             thumbNailId={thumbNailId}
             thumbNailImg={thumbNailImg}
           />
-          <MylistBtn userId={userId} thumbNailImg={thumbNailImg} />
+          <MylistBtn userId={userId} thumbNailId={thumbNailId} />
         </StyledButtonsContainer>
       </StyledThumbNail>
     </>
