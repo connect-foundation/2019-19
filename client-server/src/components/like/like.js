@@ -17,7 +17,9 @@ const PostData = (userId, thumbNailId, URL) => {
 };
 
 const LikeBtn = ({ userId, thumbNailId }) => {
+  const [Clicked, setClicked] = useState(false);
   const [Like, setLike] = useState(false);
+
   useEffect(() => {
     if (thumbNailId && userId) {
       axios
@@ -28,7 +30,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
           },
         })
         .then(res => {
-          if (res.data.length) {
+          if (res.data.like_id) {
             setLike(true);
             document.getElementById('checkbox').checked = true;
           }
@@ -37,18 +39,18 @@ const LikeBtn = ({ userId, thumbNailId }) => {
   }, [userId, thumbNailId]);
 
   useEffect(() => {
-    if (thumbNailId && userId) {
-      if (Like) {
-        PostData(userId, thumbNailId, 'like-video');
-      } else {
-        PostData(userId, thumbNailId, 'unlike-video');
-      }
-    }
-  }, [userId, thumbNailId, Like]);
+    if (Like && Clicked) PostData(userId, thumbNailId, 'like-video');
+    if (!Like && Clicked) PostData(userId, thumbNailId, 'unlike-video');
+  }, [Like]);
+
+  const handleLikeClicked = () => {
+    if (!Clicked) setClicked(true);
+    setLike(!Like);
+  };
 
   return (
     <div>
-      <CheckBox id="checkbox" type="checkbox" onClick={() => setLike(!Like)} />
+      <CheckBox id="checkbox" type="checkbox" onClick={handleLikeClicked} />
       <CheckBoxLabel htmlFor="checkbox">
         <IconCross />
       </CheckBoxLabel>

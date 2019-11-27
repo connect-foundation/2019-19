@@ -26,6 +26,7 @@ router.post('/isLiked', async (req, res) => {
   const { userId } = reqData;
   const { videoId } = reqData;
   const data = await Like.didUserLiked(userId, videoId);
+  if (!data) return res.json({});
   return res.json(data);
 });
 
