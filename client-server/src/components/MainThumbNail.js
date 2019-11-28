@@ -79,12 +79,8 @@ const MainThumbNail = () => {
         <StyledButtonsContainer>
           <MainButton name="▶  재생" />
           {userInfo && [
-            <LikeBtn
-              userId={userInfo}
-              thumbNailId={thumbNailId}
-              thumbNailImg={thumbNailImg}
-            />,
-            <MylistBtn userId={userInfo} thumbNailImg={thumbNailImg} />,
+            <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
+            <MylistBtn userId={userInfo} thumbNailId={thumbNailId} />,
           ]}
         </StyledButtonsContainer>
       </StyledThumbNail>

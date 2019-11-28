@@ -1,15 +1,27 @@
 /* eslint-disable react/button-has-type */
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Cookies from 'js-cookie';
 import IconCross from '../Icons/IconCross';
 import MainButton from '../../MainButton';
 import LikeBtn from '../../like/like';
 import MylistBtn from '../../like/mylist';
+import LoginContext from '../../../loginContextApi/context';
 import './Content.scss';
 
+const axios = require('axios');
+
+const apiServer = 'http://localhost:8000';
+
 const Content = ({ movie, onClose }) => {
-  console.log(Cookies.get());
+  const { userInfo } = useContext(LoginContext);
+  const [thumbNailId, setThumbNailId] = useState(null);
+
+  useEffect(() => {
+    axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
+      setThumbNailId(thumbNailData.data.video_id);
+    });
+  }, []);
+
   return (
     <div className="content">
       <div className="content__background">
@@ -34,8 +46,10 @@ const Content = ({ movie, onClose }) => {
           </div>
           <div className="content__btns__container">
             <MainButton name="▶  재생" />
-            <LikeBtn />
-            <MylistBtn />
+            {userInfo && [
+              <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
+              <MylistBtn userId={userInfo} thumbNaild={thumbNailId} />,
+            ]}
           </div>
         </div>
         <button className="content__close" onClick={onClose}>
