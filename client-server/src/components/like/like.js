@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import IconCross from './iconSvg';
+import CheckBoxLabel from '../StyledComponents/CheckBoxLabel';
+import CheckBox from '../StyledComponents/CheckBox';
 
 const axios = require('axios');
 
@@ -19,6 +20,7 @@ const PostData = (userId, thumbNailId, URL) => {
 const LikeBtn = ({ userId, thumbNailId }) => {
   const [Clicked, setClicked] = useState(false);
   const [Like, setLike] = useState(false);
+  const contentText = Like ? '취소' : '';
 
   useEffect(() => {
     if (thumbNailId && userId) {
@@ -32,7 +34,8 @@ const LikeBtn = ({ userId, thumbNailId }) => {
         .then(res => {
           if (res.data.like_id) {
             setLike(true);
-            document.getElementById('checkbox').checked = true;
+            // 나중엔 컨텐츠 고유 id 갖다 넣고 갖다 넣어야댐
+            document.getElementById('like').checked = true;
           }
         });
     }
@@ -50,42 +53,14 @@ const LikeBtn = ({ userId, thumbNailId }) => {
 
   return (
     <div>
-      <CheckBox id="checkbox" type="checkbox" onClick={handleLikeClicked} />
-      <CheckBoxLabel htmlFor="checkbox">
+      <CheckBox id="like" type="checkbox" onClick={handleLikeClicked} />
+      <CheckBoxLabel htmlFor="like">
         <IconCross />
+        &nbsp; 좋아요 {contentText}
       </CheckBoxLabel>
     </div>
   );
 };
-
-const CheckBoxLabel = styled.label`
-  background-color: gray;
-  display: flex;
-  margin-left: 10px;
-  margin-right: 10px;
-  justify-content: center;
-  align-items: center;
-  padding: 0.25em 1.5em;
-  border-radius: 0.2vw;
-  box-shadow: none;
-  font-size: 1.1vw;
-  margin-bottom: 0.75em;
-  color: white;
-  max-width: 15rem;
-  margin: auto;
-  &:hover {
-    cursor: pointer;
-    background-color: lightgray;
-    color: black;
-  }
-`;
-const CheckBox = styled.input`
-  opacity: 0;
-  background-color: white;
-  &:checked + ${CheckBoxLabel} {
-    background: #4fbe79;
-  }
-`;
 
 LikeBtn.propTypes = {
   userId: PropTypes.string.isRequired,

@@ -67,13 +67,11 @@
     max-width: 30rem;
   }
   &__btns__container {
-    height: 3rem;
+    height: 5rem;
     width: 100%;
     border: solid white 0.1rem;
     display: flex;
-    justify-content: center;
     align-items: center;
-    display: flex;
     justify-content: space-evenly;
   }
   &__close {

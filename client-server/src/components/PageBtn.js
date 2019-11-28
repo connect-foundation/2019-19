@@ -14,9 +14,9 @@ const StyledBtn = styled.div`
   }
 `;
 
-const PageBtn = ({ name }) => {
+const PageBtn = ({ name, onClick }) => {
   return (
-    <StyledBtn>
+    <StyledBtn onClick={onClick}>
       <p>{name}</p>
     </StyledBtn>
   );
@@ -24,6 +24,11 @@ const PageBtn = ({ name }) => {
 
 PageBtn.propTypes = {
   name: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+};
+
+PageBtn.defaultProps = {
+  onClick() {},
 };
 
 export default PageBtn;

@@ -10,7 +10,6 @@ import MylistBtn from './like/mylist';
 
 const axios = require('axios');
 
-const ImgUrl = 'https://picsum.photos/1600/640';
 const apiServer = 'http://localhost:8000';
 
 const StyledThumbNail = styled.div`
@@ -28,7 +27,8 @@ const StyledThumbNail = styled.div`
 
 const StyledButtonsContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
   width: 35%;
   height: 8%;
   margin-left: 5%;
@@ -87,12 +87,14 @@ const MainThumbNail = () => {
         <MainText name={thumbNailTitle} />
         <StyledButtonsContainer>
           <MainButton name="▶  재생" />
-          <LikeBtn
-            userId={userId}
-            thumbNailId={thumbNailId}
-            thumbNailImg={thumbNailImg}
-          />
-          <MylistBtn userId={userId} thumbNailImg={thumbNailImg} />
+          {userId && [
+            <LikeBtn
+              userId={userId}
+              thumbNailId={thumbNailId}
+              thumbNailImg={thumbNailImg}
+            />,
+            <MylistBtn userId={userId} thumbNailImg={thumbNailImg} />,
+          ]}
         </StyledButtonsContainer>
       </StyledThumbNail>
     </>

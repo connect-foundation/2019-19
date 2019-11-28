@@ -56,6 +56,7 @@ const Navbar = () => {
   const Logout = () => {
     Cookies.remove('user_info');
     setUserInfo(null);
+    window.location.reload();
   };
 
   return (
@@ -76,9 +77,7 @@ const Navbar = () => {
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
         {userInfo ? (
-          <a onClick={Logout} style={StyledLink}>
-            <PageBtn name={`${userInfo} 로그아웃`} />
-          </a>
+          <PageBtn name={`${userInfo} 로그아웃`} onClick={Logout} />
         ) : (
           <a href="http://localhost:8000/oauth/google" style={StyledLink}>
             <PageBtn name="로그인" />
