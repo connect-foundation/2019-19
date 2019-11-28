@@ -1,46 +1,27 @@
-const fs = require('fs');
-const path = require('path');
-const Parser = require('../modules/Parser');
+const fs = require("fs");
+const Parser = require("../modules/Parser");
 
 const LocalStorage = {
-  removeVideo: (localVideoDir) => {
-    const files = fs.readdirSync(localVideoDir);
-    files.forEach((fileName) => {
-      if (Parser.isVideo(fileName)){
-        const filePath = `${localVideoDir}/${fileName}`;
-        if (fs.existsSync(filePath)){
-          fs.unlinkSync(filePath, (err) => {
+  removeVideos: (videosDir, files) => {
+    files.forEach(fileName => {
+      const fileNameWithoutExt = Parser.removeExtension(fileName);
+      const productsPath = `${videosDir}/${fileNameWithoutExt}`;
+      const products = fs.readdirSync(productsPath);
+      products.forEach(productName => {
+        const productPath = `${productsPath}/${productName}`;
+        if (fs.existsSync(productPath)) {
+          fs.unlinkSync(productPath, err => {
             if (err) {
-              console.log(`${filePath} 파일 삭제 에러~${err}`)
+              console.log(`${productPath} 파일 삭제 에러~${err}`);
             }
           });
         }
-      }
-    })
-  },
+      });
 
-  removeSegment: (localVideoDir) => {
-    const files = fs.readdirSync(localVideoDir);
-    files.forEach((fileName) => {
-      const filePath = `${localVideoDir}/${fileName}`;
-      if (fs.existsSync(filePath)){
-        fs.unlinkSync(filePath, (err) => {
-          if (err) {
-            console.log(`${filePath} 파일 삭제 에러~${err}`)
-          }
-        });
+      if (fs.existsSync(productsPath)) {
+        fs.rmdirSync(productsPath);
       }
-    })
-  },
-
-  removeVideoDir: (localVideoDir) => {
-    if (fs.existsSync(localVideoDir)){
-      try {
-        fs.rmdirSync(localVideoDir);
-      } catch(err) {
-        console.log(`${localVideoDir} 디렉토리 삭제 에러~${err}`);
-      }
-    }
+    });
   }
 };
 
