@@ -1,6 +1,7 @@
 import React, { createRef, useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
+import screenfull from 'screenfull';
 import { NavbarContext } from '../contexts/NavbarContext';
 import Time from '../utils/Time';
 
@@ -77,6 +78,13 @@ const Player = ({ match }) => {
     setVolume(parseFloat(e.target.value));
   };
 
+  // Fullscreen Button
+  const handleClickFullscreen = () => {
+    if (screenfull.isEnabled) {
+      screenfull.request(player.current.getInternalPlayer());
+    }
+  };
+
   /* Render */
   return (
     <>
@@ -100,6 +108,9 @@ const Player = ({ match }) => {
       </button>
       <button type="button" onClick={handleSeekForward}>
         10초후
+      </button>
+      <button type="button" onClick={handleClickFullscreen}>
+        전체화면
       </button>
       <WhiteDiv>[남은시간]</WhiteDiv>
       <WhiteDiv id="totalTime" className="total_time">
