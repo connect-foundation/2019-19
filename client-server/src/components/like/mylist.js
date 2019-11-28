@@ -6,27 +6,29 @@ import CheckBox from '../StyledComponents/CheckBox';
 const axios = require('axios');
 
 const apiServer = 'http://localhost:8000';
-const PostData = ({ userId, thumbNailImg, URL }) => {
-  axios.post(`${apiServer}/${URL}`, {
+
+const PostData = (userId, videoId, URL) => {
+  axios.post(`${apiServer}/mylist/${URL}`, {
     params: {
       userId: `${userId}`,
-      thumbNailImg: `${thumbNailImg}`,
+      videoId,
     },
   });
 };
-const MylistBtn = ({ userId, thumbNailImg }) => {
+const MylistBtn = ({ userId, thumbNailId }) => {
+  const [Clicked, setClicked] = useState(false);
   const [mylist, setMylist] = useState(false);
   const contentText = mylist ? '✔ 찜한 컨텐츠 취소' : '✚ 내가 찜한 컨텐츠';
 
   useEffect(() => {
-    if (thumbNailImg && userId) {
-      if (mylist) {
-        PostData(userId, thumbNailImg, 'like-video');
-      } else {
-        PostData(userId, thumbNailImg, 'unlike-video');
-      }
-    }
-  }, [userId, thumbNailImg, mylist]);
+    if (mylist && Clicked) PostData(userId, thumbNailId, 'mylist-video');
+    if (!mylist && Clicked) PostData(userId, thumbNailId, 'unMylist-video');
+  }, [mylist]);
+
+  const handleMylistClicked = () => {
+    if (!Clicked) setClicked(true);
+    setMylist(!mylist);
+  };
 
   return (
     <div>
@@ -38,7 +40,7 @@ const MylistBtn = ({ userId, thumbNailImg }) => {
 
 MylistBtn.propTypes = {
   userId: PropTypes.string.isRequired,
-  thumbNailImg: PropTypes.string.isRequired,
+  thumbNailId: PropTypes.string.isRequired,
 };
 
 export default MylistBtn;
