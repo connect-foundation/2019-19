@@ -1,4 +1,5 @@
 import React, { createRef, useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
@@ -16,7 +17,15 @@ const WhiteDiv = styled.div`
 
 const Player = ({ match }) => {
   /* Context */
-  const { setShowNav } = useContext(NavbarContext);
+  const { showNav, setShowNav } = useContext(NavbarContext);
+
+  /* History */
+  const history = useHistory();
+  history.listen((newLocation, action) => {
+    if (showNav === false) {
+      setShowNav(true);
+    }
+  });
 
   /* Reference */
   const player = createRef();
@@ -29,6 +38,7 @@ const Player = ({ match }) => {
   const [volume, setVolume] = useState(0.8);
 
   /* Lifecycle method */
+  // Hide, Show Navbar
   useEffect(() => {
     setShowNav(false);
   }, []);
@@ -37,6 +47,11 @@ const Player = ({ match }) => {
   // Initialize duration of video
   const handleDuration = dur => {
     setDuration(dur);
+  };
+
+  // History Back Button
+  const handleHistoryBack = () => {
+    history.goBack();
   };
 
   // Play(Pause) Button
@@ -111,6 +126,9 @@ const Player = ({ match }) => {
       </button>
       <button type="button" onClick={handleClickFullscreen}>
         전체화면
+      </button>
+      <button type="button" onClick={handleHistoryBack}>
+        뒤로가기
       </button>
       <WhiteDiv>[남은시간]</WhiteDiv>
       <WhiteDiv id="totalTime" className="total_time">

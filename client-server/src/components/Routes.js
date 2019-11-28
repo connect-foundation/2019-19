@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
 import Recent from '../Pages/RecentPage';
 import Login from '../Pages/LoginPage';
 import Home from '../Pages/HomePage';
@@ -10,7 +10,7 @@ import Player from '../Pages/PlayerPage';
 import { NavbarContext } from '../contexts/NavbarContext';
 
 const Routes = () => {
-  const { showNav } = useContext(NavbarContext);
+  const { showNav, setShowNav } = useContext(NavbarContext);
 
   return (
     <Router>
@@ -18,8 +18,8 @@ const Routes = () => {
       <Route path="/Popular" component={Popular} />
       <Route path="/Recent" component={Recent} />
       <Route path="/Login" component={Login} />
-      {/* <Route exact path="/" component={Home} /> FIXME: 임시로 변경 */}
-      <Route exact path="/" component={Player} />
+      <Route exact path="/" component={Home} />
+      {/* <Route exact path="/" component={Player} /> */}
       <Route path="/Player/:videoId" component={Player} />
     </Router>
   );
