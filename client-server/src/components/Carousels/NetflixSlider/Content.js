@@ -34,12 +34,8 @@ const Content = ({ movie, onClose }) => {
           </div>
           <div className="content__btns__container">
             <MainButton name="▶  재생" />
-            <LikeBtn
-              userId={userId}
-              thumbNailId={thumbNailId}
-              thumbNailImg={thumbNailImg}
-            />
-            <MylistBtn userId={userId} thumbNailId={thumbNailId} />
+            <LikeBtn />
+            <MylistBtn />
           </div>
         </div>
         <button className="content__close" onClick={onClose}>
