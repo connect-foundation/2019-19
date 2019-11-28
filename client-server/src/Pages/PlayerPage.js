@@ -25,6 +25,7 @@ const Player = ({ match }) => {
   const [playing, setPlaying] = useState(false);
   const [played, setPlayed] = useState(0); // played는 0 ~ duration 사이의 값
   const [seeking, setSeeking] = useState(false);
+  const [volume, setVolume] = useState(0.8);
 
   /* Lifecycle method */
   useEffect(() => {
@@ -32,12 +33,14 @@ const Player = ({ match }) => {
   }, []);
 
   /* Event handler */
-  const handlePlayAndPause = () => {
-    setPlaying(!playing);
-  };
-
+  // Initialize duration of video
   const handleDuration = dur => {
     setDuration(dur);
+  };
+
+  // Play(Pause) Button
+  const handlePlayAndPause = () => {
+    setPlaying(!playing);
   };
 
   // Seeking Slider
@@ -69,6 +72,11 @@ const Player = ({ match }) => {
     player.current.seekTo(played);
   };
 
+  // Volume Slider
+  const handleVolumeChange = e => {
+    setVolume(parseFloat(e.target.value));
+  };
+
   /* Render */
   return (
     <>
@@ -79,6 +87,7 @@ const Player = ({ match }) => {
         height="100vh"
         url="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
         playing={playing}
+        volume={volume}
         onDuration={handleDuration}
         // onProgress={onPro}
         // onSeek={onSek}
@@ -109,6 +118,14 @@ const Player = ({ match }) => {
       />
       <progress max={duration} value={played} />
       <WhiteDiv>[볼륨]</WhiteDiv>
+      <input
+        type="range"
+        min={0}
+        max={1}
+        step="any"
+        value={volume}
+        onChange={handleVolumeChange}
+      />
     </>
   );
 };
