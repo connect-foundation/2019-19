@@ -23,7 +23,7 @@ const Player = ({ match }) => {
   /* State */
   const [duration, setDuration] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [played, setPlayed] = useState(0); // played는 0-1 사이의 값
+  const [played, setPlayed] = useState(0); // played는 0 ~ duration 사이의 값
   const [seeking, setSeeking] = useState(false);
 
   /* Lifecycle method */
@@ -32,20 +32,12 @@ const Player = ({ match }) => {
   }, []);
 
   /* Event handler */
-  const playAndPause = () => {
+  const handlePlayAndPause = () => {
     setPlaying(!playing);
   };
 
-  const setDurationTime = inputDuration => {
-    setDuration(inputDuration);
-  };
-
-  const onPro = state => {
-    console.log('onProg:', state);
-  };
-
-  const onSek = e => {
-    console.log('onSek:', e);
+  const handleDuration = dur => {
+    setDuration(dur);
   };
 
   // Seeking Slider
@@ -54,55 +46,69 @@ const Player = ({ match }) => {
   };
 
   const handleSeekChange = e => {
-    setPlayed(parseFloat(e.target.value));
+    setPlayed(e.target.value);
   };
 
   const handleSeekMouseUp = e => {
     setSeeking(false);
-    player.current.seekTo(parseFloat(e.target.value));
+    player.current.seekTo(e.target.value);
   };
 
   // Seeking Button
-  const seekBefore = () => {};
-  const seekAfter = () => {};
+  const handleSeekBackward = () => {
+    setSeeking(true);
+    setPlayed(played - 10);
+    setSeeking(false);
+    player.current.seekTo(played);
+  };
+
+  const handleSeekForward = () => {
+    setSeeking(true);
+    setPlayed(played + 10);
+    setSeeking(false);
+    player.current.seekTo(played);
+  };
 
   /* Render */
   return (
     <>
       <Title>비디오ID URL파라미터로 받기 - {match.params.videoId}</Title>
       <ReactPlayer
+        ref={player}
         width="100%"
         height="100vh"
         url="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
         playing={playing}
-        onDuration={setDurationTime}
+        onDuration={handleDuration}
         // onProgress={onPro}
         // onSeek={onSek}
-        ref={player}
       />
-      <button type="button" onClick={playAndPause}>
+      <button type="button" onClick={handlePlayAndPause}>
         {playing ? 'pause' : 'play'}
       </button>
-      <button type="button" onClick={seekBefore}>
+      <button type="button" onClick={handleSeekBackward}>
         10초전
       </button>
-      <button type="button" onClick={seekAfter}>
+      <button type="button" onClick={handleSeekForward}>
         10초후
       </button>
+      <WhiteDiv>[남은시간]</WhiteDiv>
       <WhiteDiv id="totalTime" className="total_time">
-        Remaining타임 = {Time.convertToTime(duration * (1 - played))}
+        {Time.convertToTime(duration - played)}
       </WhiteDiv>
+      <WhiteDiv>[탐색바]</WhiteDiv>
       <input
         type="range"
         min={0}
-        max={1}
+        max={duration}
         step="any"
         value={played}
         onMouseDown={handleSeekMouseDown}
         onChange={handleSeekChange}
         onMouseUp={handleSeekMouseUp}
       />
-      <progress max={1} value={played} />
+      <progress max={duration} value={played} />
+      <WhiteDiv>[볼륨]</WhiteDiv>
     </>
   );
 };
