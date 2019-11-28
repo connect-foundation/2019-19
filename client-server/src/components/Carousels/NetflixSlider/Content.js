@@ -1,6 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import PropTypes from 'prop-types';
+import Cookies from 'js-cookie';
 import IconCross from '../Icons/IconCross';
 import MainButton from '../../MainButton';
 import LikeBtn from '../../like/like';
@@ -8,6 +9,7 @@ import MylistBtn from '../../like/mylist';
 import './Content.scss';
 
 const Content = ({ movie, onClose }) => {
+  console.log(Cookies.get());
   return (
     <div className="content">
       <div className="content__background">
@@ -32,8 +34,12 @@ const Content = ({ movie, onClose }) => {
           </div>
           <div className="content__btns__container">
             <MainButton name="▶  재생" />
-            <LikeBtn />
-            <MylistBtn />
+            <LikeBtn
+              userId={userId}
+              thumbNailId={thumbNailId}
+              thumbNailImg={thumbNailImg}
+            />
+            <MylistBtn userId={userId} thumbNailId={thumbNailId} />
           </div>
         </div>
         <button className="content__close" onClick={onClose}>

@@ -19,7 +19,6 @@ const PostData = (userId, thumbNailId, URL) => {
 const LikeBtn = ({ userId, thumbNailId }) => {
   const [Clicked, setClicked] = useState(false);
   const [Like, setLike] = useState(false);
-
   useEffect(() => {
     if (thumbNailId && userId) {
       axios
@@ -32,7 +31,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
         .then(res => {
           if (res.data.like_id) {
             setLike(true);
-            document.getElementById('checkbox').checked = true;
+            document.getElementById(`${thumbNailId}`).checked = true;
           }
         });
     }
@@ -50,8 +49,12 @@ const LikeBtn = ({ userId, thumbNailId }) => {
 
   return (
     <div>
-      <CheckBox id="checkbox" type="checkbox" onClick={handleLikeClicked} />
-      <CheckBoxLabel htmlFor="checkbox">
+      <CheckBox
+        id={`${thumbNailId}`}
+        type="checkbox"
+        onClick={handleLikeClicked}
+      />
+      <CheckBoxLabel htmlFor={`${thumbNailId}`}>
         <IconCross />
       </CheckBoxLabel>
     </div>
@@ -88,8 +91,8 @@ const CheckBox = styled.input`
 `;
 
 LikeBtn.propTypes = {
-  userId: PropTypes.string.isRequired,
-  thumbNailId: PropTypes.number.isRequired,
+  userId: PropTypes.string,
+  thumbNailId: PropTypes.number,
 };
 
 export default LikeBtn;
