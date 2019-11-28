@@ -1,21 +1,23 @@
 const ffmpeg = require("fluent-ffmpeg");
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+
 ffmpeg.setFfmpegPath(ffmpegPath);
 
-const Parser = require('./Parser');
+const Parser = require("./Parser");
 
 const Segmenter = {
   createSegment: async (videosDir, fileName) => {
     // 비디오 정보
-    fileName = Parser.removeExtension(fileName);
-    const resolutionFilePathList = Parser.createLocalDirPath(videosDir, fileName);
+    const fileNameWithoutExt = Parser.removeExtension(fileName);
+    const resolutionFilePathList = Parser.createLocalDirPath(
+      videosDir,
+      fileNameWithoutExt
+    );
 
-    const listSize = resolutionFilePathList.length;
-    for (let i=0; i<listSize; i++){
-      const resolutionFilePath = resolutionFilePathList[i];
+    const resolutions = [];
+    resolutionFilePathList.forEach(resolutionFilePath => {
       const resolutionFilename = Parser.removeExtension(resolutionFilePath);
-      console.log(resolutionFilename)
-      
+
       console.log(`${resolutionFilePath} ffmpeg encoding 시작!`);
       const segmenter = ffmpeg(resolutionFilePath, { timeout: 432000 })
         .addOptions([
@@ -28,22 +30,26 @@ const Segmenter = {
           "-f hls" // HLS format
         ])
         .output(`${resolutionFilename}.stream.m3u8`);
-        
-      await new Promise((resolve, reject) => {
-        segmenter.run();
-        
-        segmenter.on("end", function() {
-          console.log("성공!")
-          resolve();
+
+      resolutions.push(
+        new Promise((resolve, reject) => {
+          segmenter.run();
+
+          segmenter.on("end", function() {
+            console.log("성공!");
+            resolve();
+          });
+
+          segmenter.on("error", function(err) {
+            console.error("Error while ffmpeg processing:", err);
+            reject();
+          });
         })
-        
-        segmenter.on("error", function(err) {
-          console.error("Error while ffmpeg processing:", err);
-          reject();
-        })
-      });
-    }
+      );
+    });
+
+    await Promise.all(resolutions);
   }
-}
+};
 
 module.exports = Segmenter;
