@@ -15,13 +15,18 @@ const WhiteDiv = styled.div`
   color: white;
 `;
 
+let seeking = false; // seeking slider를 움직이는 중인지?
+const toggleSeeking = () => {
+  seeking = !seeking;
+};
+
 const Player = ({ match }) => {
   /* Context */
   const { showNav, setShowNav } = useContext(NavbarContext);
 
   /* History */
   const history = useHistory();
-  history.listen((newLocation, action) => {
+  history.listen(() => {
     if (showNav === false) {
       setShowNav(true);
     }
@@ -31,10 +36,10 @@ const Player = ({ match }) => {
   const player = createRef();
 
   /* State */
-  const [duration, setDuration] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [played, setPlayed] = useState(0); // played는 0 ~ duration 사이의 값
-  const [seeking, setSeeking] = useState(false);
+  const [duration, setDuration] = useState(0); // 영상의 총 길이
+  const [playing, setPlaying] = useState(false); // 재생중 여부
+  const [playedSeconds, setPlayedSeconds] = useState(0); // playedSeconds는 0 ~ duration 사이의 값
+  const [loadedSeconds, setLoadedSeconds] = useState(0); // loadedSeconds는 0 ~ duration 사이의 값
   const [volume, setVolume] = useState(0.8);
 
   /* Lifecycle method */
@@ -59,33 +64,42 @@ const Player = ({ match }) => {
     setPlaying(!playing);
   };
 
+  // Progress Slider
+  const handleProgress = progress => {
+    // We only want to update time slider if we are not currently seeking
+    if (!seeking) {
+      setPlayedSeconds(progress.playedSeconds);
+      setLoadedSeconds(progress.loadedSeconds);
+    }
+  };
+
   // Seeking Slider
-  const handleSeekMouseDown = e => {
-    setSeeking(true);
+  const handleSeekSliderMouseDown = () => {
+    toggleSeeking();
   };
 
-  const handleSeekChange = e => {
-    setPlayed(e.target.value);
+  const handleSeekSliderChange = e => {
+    setPlayedSeconds(e.target.value);
   };
 
-  const handleSeekMouseUp = e => {
-    setSeeking(false);
+  const handleSeekSliderMouseUp = e => {
     player.current.seekTo(e.target.value);
+    toggleSeeking();
   };
 
   // Seeking Button
-  const handleSeekBackward = () => {
-    setSeeking(true);
-    setPlayed(played - 10);
-    setSeeking(false);
-    player.current.seekTo(played);
+  const handleSeekButtonBackward = () => {
+    toggleSeeking();
+    player.current.seekTo(playedSeconds - 10);
+    setPlayedSeconds(playedSeconds - 10);
+    toggleSeeking();
   };
 
-  const handleSeekForward = () => {
-    setSeeking(true);
-    setPlayed(played + 10);
-    setSeeking(false);
-    player.current.seekTo(played);
+  const handleSeekButtonForward = () => {
+    toggleSeeking();
+    setPlayedSeconds(playedSeconds + 10);
+    player.current.seekTo(playedSeconds + 10);
+    toggleSeeking();
   };
 
   // Volume Slider
@@ -112,16 +126,15 @@ const Player = ({ match }) => {
         playing={playing}
         volume={volume}
         onDuration={handleDuration}
-        // onProgress={onPro}
-        // onSeek={onSek}
+        onProgress={handleProgress}
       />
       <button type="button" onClick={handlePlayAndPause}>
         {playing ? 'pause' : 'play'}
       </button>
-      <button type="button" onClick={handleSeekBackward}>
+      <button type="button" onClick={handleSeekButtonBackward}>
         10초전
       </button>
-      <button type="button" onClick={handleSeekForward}>
+      <button type="button" onClick={handleSeekButtonForward}>
         10초후
       </button>
       <button type="button" onClick={handleClickFullscreen}>
@@ -132,7 +145,7 @@ const Player = ({ match }) => {
       </button>
       <WhiteDiv>[남은시간]</WhiteDiv>
       <WhiteDiv id="totalTime" className="total_time">
-        {Time.convertToTime(duration - played)}
+        {Time.convertToTime(duration - playedSeconds)}
       </WhiteDiv>
       <WhiteDiv>[탐색바]</WhiteDiv>
       <input
@@ -140,12 +153,12 @@ const Player = ({ match }) => {
         min={0}
         max={duration}
         step="any"
-        value={played}
-        onMouseDown={handleSeekMouseDown}
-        onChange={handleSeekChange}
-        onMouseUp={handleSeekMouseUp}
+        value={playedSeconds}
+        onMouseDown={handleSeekSliderMouseDown}
+        onChange={handleSeekSliderChange}
+        onMouseUp={handleSeekSliderMouseUp}
       />
-      <progress max={duration} value={played} />
+      <progress max={duration} value={playedSeconds} />
       <WhiteDiv>[볼륨]</WhiteDiv>
       <input
         type="range"

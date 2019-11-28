@@ -10,7 +10,7 @@ import Player from '../Pages/PlayerPage';
 import { NavbarContext } from '../contexts/NavbarContext';
 
 const Routes = () => {
-  const { showNav, setShowNav } = useContext(NavbarContext);
+  const { showNav } = useContext(NavbarContext);
 
   return (
     <Router>
@@ -19,7 +19,6 @@ const Routes = () => {
       <Route path="/Recent" component={Recent} />
       <Route path="/Login" component={Login} />
       <Route exact path="/" component={Home} />
-      {/* <Route exact path="/" component={Player} /> */}
       <Route path="/Player/:videoId" component={Player} />
     </Router>
   );
