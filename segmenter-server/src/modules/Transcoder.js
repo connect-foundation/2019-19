@@ -41,7 +41,7 @@ const Transcoder = {
     console.log(`${fileName}요청상태: ${result.error.message}`);
   },
 
-  getFileNameOfJob: async jobId => {
+  getJobInfo: async jobId => {
     const URL = `https://vodtranscoder.apigw.ntruss.com/api/v2/jobs/${jobId}`;
     const timestamp = Date.now();
 
@@ -67,15 +67,10 @@ const Transcoder = {
     });
     const result = await data.json();
 
-    // 트랜스코딩이 실패하거나 진행중이라면 함수수행X
+    // 상태와 파일네임 반환
     const { status } = result.jobs[0];
-    if (status !== "SUCCESS") {
-      return false;
-    }
-
-    // 트랜스코딩잇 성공했다면, 해당 fileName 반환
     const { fileName } = result.jobs[0].inputs[0].metadata;
-    return fileName;
+    return { status, fileName };
   }
 };
 
