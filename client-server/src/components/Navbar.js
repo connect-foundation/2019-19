@@ -16,7 +16,7 @@ const StyledNavbarContainer = styled.div`
   position: sticky;
   font-family: 'Nanum Gothic', sans-serif;
   background-color: rgb(20, 20, 20);
-  z-index: 1;
+  z-index: 10;
 `;
 const StyledLogo = styled.img`
   float: left;

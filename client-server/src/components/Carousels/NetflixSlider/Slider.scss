@@ -9,6 +9,10 @@
     z-index: 3;
     width: 100%;
   }
+  &__title {
+    margin: 0 0 0 2%;
+    color: white;
+  }
 
   &:not(&--open) .item:hover .show-details-button {
     opacity: 1;

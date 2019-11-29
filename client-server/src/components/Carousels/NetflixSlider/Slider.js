@@ -10,7 +10,7 @@ import useSliding from './useSliding';
 import useSizeElement from './useSizeElement';
 import './Slider.scss';
 
-const Slider = ({ children, activeSlide }) => {
+const Slider = ({ categoryName, children, activeSlide }) => {
   const [currentSlide, setCurrentSlide] = useState(activeSlide);
   const { width, elementRef } = useSizeElement();
   const {
@@ -38,24 +38,34 @@ const Slider = ({ children, activeSlide }) => {
   };
 
   return (
-    <SliderContext.Provider value={contextValue}>
-      <SliderWrapper>
-        <div className={cx('slider', { 'slider--open': currentSlide != null })}>
-          <div ref={containerRef} className="slider__container" {...slideProps}>
-            {children}
+    <div style={{ marginTop: '2rem' }}>
+      <SliderContext.Provider value={contextValue}>
+        <h2 className="slider__title">{categoryName}</h2>
+        <SliderWrapper>
+          <div
+            className={cx('slider', { 'slider--open': currentSlide != null })}
+          >
+            <div
+              ref={containerRef}
+              className="slider__container"
+              {...slideProps}
+            >
+              {children}
+            </div>
           </div>
-        </div>
-        {hasPrev && <SlideButton onClick={handlePrev} type="prev" />}
-        {hasNext && <SlideButton onClick={handleNext} type="next" />}
-      </SliderWrapper>
-      {currentSlide && <Content movie={currentSlide} onClose={handleClose} />}
-    </SliderContext.Provider>
+          {hasPrev && <SlideButton onClick={handlePrev} type="prev" />}
+          {hasNext && <SlideButton onClick={handleNext} type="next" />}
+        </SliderWrapper>
+        {currentSlide && <Content movie={currentSlide} onClose={handleClose} />}
+      </SliderContext.Provider>
+    </div>
   );
 };
 
 Slider.propTypes = {
   children: PropTypes.any.isRequired,
   activeSlide: PropTypes.any,
+  categoryName: PropTypes.string.isRequired,
 };
 
 export default Slider;

@@ -12,7 +12,7 @@ const useSliding = (elementWidth, countElements) => {
 
   useEffect(() => {
     const containerWidth = containerRef.current.clientWidth - PADDINGS;
-    if (elementWidth !== 0 && distance === 0) setDistance(-2 * containerWidth); // 초기 밀어줌
+    if (elementWidth !== 0 && distance === 0) setDistance(0); // 초기 밀어줌
 
     setContainerWidth(containerWidth);
     setTotalInViewport(Math.floor(containerWidth / elementWidth));
@@ -41,8 +41,8 @@ const useSliding = (elementWidth, countElements) => {
     }
   };
 
-  const hasNext = 1; // 버튼 표시 유무
-  const hasPrev = 1;
+  const hasNext = countElements === 25 ? 1 : 0; // 버튼 표시 유무
+  const hasPrev = countElements === 25 ? 1 : 0;
 
   return {
     handlePrev,

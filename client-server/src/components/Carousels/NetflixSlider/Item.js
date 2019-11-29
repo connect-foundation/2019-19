@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import SliderContext from './context';
 import ShowDetailsButton from './ShowDetailsButton';
 import Mark from './Mark';
 import './Item.scss';
+import Axios from 'axios';
 
 const Item = ({ movie }) => {
   const [hover, setHover] = useState(false);
+  const [imageUrl, setImageUrl] = useState(
+    'https://picsum.photos/id/0/1600/640',
+  );
+
+  useEffect(() => {
+    Axios.get(movie.thumbnail_img_url).then(() => {
+      setImageUrl(movie.thumbnail_img_url);
+    });
+  }, []);
   return (
     <SliderContext.Consumer>
       {({ onSelectSlide, currentSlide, elementRef }) => {
@@ -28,7 +38,7 @@ const Item = ({ movie }) => {
                 <video
                   src="https://connect.or.kr/connectfoundation_/video/home_bg.mp4" // thumbnail_video_url
                   alt="thumbnail-video"
-                  poster={movie.image}
+                  poster={movie.thumbnail_img_url}
                   autoPlay
                 >
                   <track kind="captions" />
@@ -36,8 +46,8 @@ const Item = ({ movie }) => {
               </>
             ) : (
               <>
-                <div className="content-info">{movie.title}</div>
-                <img src={movie.image} alt={movie.title} />
+                <div className="content-info">{movie.name}</div>
+                <img src={imageUrl} alt="" />
               </>
             )}
             <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
