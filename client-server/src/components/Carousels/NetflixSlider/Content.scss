@@ -1,0 +1,85 @@
+.content {
+  position: relative;
+  height: 35rem;
+  margin-top: -40px;
+  &__background,
+  &__background__shadow,
+  &__background__image,
+  &__area {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+  &__background {
+    left: 0;
+    right: 0;
+    &__shadow {
+      left: 0;
+      right: 0;
+      background: #000;
+      width: 40%;
+      z-index: 2;
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        background-image: linear-gradient(to right, #000, transparent);
+        top: 0;
+        bottom: 0;
+        left: 100%;
+        width: 275px;
+      }
+    }
+    &__image {
+      height: 100%;
+      background-position: center 10%;
+      background-size: cover;
+      z-index: 1;
+      right: 0;
+    }
+  }
+  &__area {
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    &__container {
+      min-width: 35%;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 60%;
+    }
+  }
+  &__title {
+    font-size: 4rem;
+    color: #fff;
+    font-weight: 700;
+  }
+  &__description {
+    font-size: 18px;
+    color: #999;
+    max-width: 30rem;
+  }
+  &__btns__container {
+    height: 5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  &__close {
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    outline: none;
+    border: none;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+  }
+}

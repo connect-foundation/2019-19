@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { css } from '@emotion/core';
 import styled from 'styled-components';
 import { ClipLoader } from 'react-spinners';
 import MainButton from './MainButton';
 import MainText from './MainText';
+import LikeBtn from './like/like';
+import MylistBtn from './like/mylist';
+import LoginContext from '../loginContextApi/context';
 
 const axios = require('axios');
 
-const ImgUrl = 'https://picsum.photos/1600/640';
+const apiServer = 'http://localhost:8000';
 
 const StyledThumbNail = styled.div`
   height: 40rem;
@@ -24,8 +27,10 @@ const StyledThumbNail = styled.div`
 
 const StyledButtonsContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
   width: 35%;
+  height: 8%;
   margin-left: 5%;
 `;
 
@@ -33,20 +38,29 @@ const MainThumbNail = () => {
   const [onLoading, setOnLoading] = useState(true);
   const [thumbNailImg, setThumbNailImg] = useState(null);
   const [hide, setHide] = useState(0);
+  const [thumbNailTitle, setThumbNailTitle] = useState('로딩중');
+  const [thumbNailId, setThumbNailId] = useState(null);
+  const { userInfo } = useContext(LoginContext);
 
   useEffect(() => {
-    axios
-      .get(ImgUrl, { responseType: 'arraybuffer' })
-      .then(response => {
-        const blob = new Blob([response.data], {
-          type: response.headers['content-type'],
-        });
-        const thumbNailImage = URL.createObjectURL(blob);
-        setOnLoading(false);
-        setThumbNailImg(thumbNailImage);
-        setHide(1);
-      })
-      .catch(err => console.log(err));
+    axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
+      setThumbNailId(thumbNailData.data.video_id);
+      setThumbNailTitle(thumbNailData.data.name);
+      axios
+        .get(thumbNailData.data.thumbnail_img_url, {
+          responseType: 'arraybuffer',
+        })
+        .then(img => {
+          const blob = new Blob([img.data], {
+            type: img.headers['content-type'],
+          });
+          const thumbNailImage = URL.createObjectURL(blob);
+          setOnLoading(false);
+          setThumbNailImg(thumbNailImage);
+          setHide(1);
+        })
+        .catch(err => console.log(err));
+    });
   }, []);
 
   return (
@@ -61,14 +75,13 @@ const MainThumbNail = () => {
         loading={onLoading}
       />
       <StyledThumbNail bg={thumbNailImg} hide={hide}>
-        <MainText
-          name="너의 결혼식"
-          contents="첫눈에 반하면 뭐해, 엇갈리고 또 엇갈리는데. 고등학교 시절 첫 사랑 승희와 원치않는 이별을 한 우연"
-        />
+        <MainText name={thumbNailTitle} />
         <StyledButtonsContainer>
-          <MainButton name="▶  Play" />
-          <MainButton name="✅  My List" />
-          <MainButton name="ⓘ  Learn More" />
+          <MainButton name="▶  재생" />
+          {userInfo && [
+            <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
+            <MylistBtn userId={userInfo} thumbNailId={thumbNailId} />,
+          ]}
         </StyledButtonsContainer>
       </StyledThumbNail>
     </>
