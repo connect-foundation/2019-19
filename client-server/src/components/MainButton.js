@@ -1,25 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const StyledButton = styled.button`
-  background-color: rgba(51, 51, 51, 0.4);
-  padding: 0.25em 1.5em;
-  border-radius: 0.2vw;
-  box-shadow: none;
-  font-size: 1.1vw;
-  margin-bottom: 0.75em;
-  color: white;
-  height: 100%;
-  max-width: 15rem;
-  &:hover {
-    cursor: pointer;
-    background-color: lightgray;
-    color: black;
-  }
-`;
+import PropTypes from 'prop-types';
+import PlayBtn from './StyledComponents/CheckBoxLabel';
+import CheckBox from './StyledComponents/CheckBox';
 
 const MainButton = ({ name }) => {
-  return <StyledButton>{name}</StyledButton>;
+  return (
+    <div>
+      <CheckBox />
+      <PlayBtn>{name}</PlayBtn>
+    </div>
+  );
+};
+
+MainButton.propTypes = {
+  name: PropTypes.string.isRequired,
 };
 
 export default MainButton;
