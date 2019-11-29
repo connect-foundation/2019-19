@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
+import React, { useState, useEffect, useContext } from 'react';
 import { css } from '@emotion/core';
 import styled from 'styled-components';
 import { ClipLoader } from 'react-spinners';
@@ -7,6 +6,7 @@ import MainButton from './MainButton';
 import MainText from './MainText';
 import LikeBtn from './like/like';
 import MylistBtn from './like/mylist';
+import LoginContext from '../loginContextApi/context';
 
 const axios = require('axios');
 
@@ -40,7 +40,7 @@ const MainThumbNail = () => {
   const [hide, setHide] = useState(0);
   const [thumbNailTitle, setThumbNailTitle] = useState('로딩중');
   const [thumbNailId, setThumbNailId] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const { userInfo } = useContext(LoginContext);
 
   useEffect(() => {
     axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
@@ -61,15 +61,6 @@ const MainThumbNail = () => {
         })
         .catch(err => console.log(err));
     });
-
-    axios
-      .post(`${apiServer}/oauth/google/verify`, {
-        userToken: Cookies.get('user_info'),
-      })
-      .then(response => {
-        setUserId(response.data.userId);
-      })
-      .catch(err => console.log(err));
   }, []);
 
   return (
@@ -87,13 +78,9 @@ const MainThumbNail = () => {
         <MainText name={thumbNailTitle} />
         <StyledButtonsContainer>
           <MainButton name="▶  재생" />
-          {userId && [
-            <LikeBtn
-              userId={userId}
-              thumbNailId={thumbNailId}
-              thumbNailImg={thumbNailImg}
-            />,
-            <MylistBtn userId={userId} thumbNailImg={thumbNailImg} />,
+          {userInfo && [
+            <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
+            <MylistBtn userId={userInfo} thumbNailId={thumbNailId} />,
           ]}
         </StyledButtonsContainer>
       </StyledThumbNail>

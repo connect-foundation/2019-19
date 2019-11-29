@@ -34,8 +34,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
         .then(res => {
           if (res.data.like_id) {
             setLike(true);
-            // 나중엔 컨텐츠 고유 id 갖다 넣고 갖다 넣어야댐
-            document.getElementById('like').checked = true;
+            document.getElementById(`${thumbNailId}`).checked = true;
           }
         });
     }
@@ -53,8 +52,12 @@ const LikeBtn = ({ userId, thumbNailId }) => {
 
   return (
     <div>
-      <CheckBox id="like" type="checkbox" onClick={handleLikeClicked} />
-      <CheckBoxLabel htmlFor="like">
+      <CheckBox
+        id={`${thumbNailId}`}
+        type="checkbox"
+        onClick={handleLikeClicked}
+      />
+      <CheckBoxLabel htmlFor={`${thumbNailId}`}>
         <IconCross />
         &nbsp; 좋아요 {contentText}
       </CheckBoxLabel>
@@ -63,8 +66,8 @@ const LikeBtn = ({ userId, thumbNailId }) => {
 };
 
 LikeBtn.propTypes = {
-  userId: PropTypes.string.isRequired,
-  thumbNailId: PropTypes.number.isRequired,
+  userId: PropTypes.string,
+  thumbNailId: PropTypes.number,
 };
 
 export default LikeBtn;

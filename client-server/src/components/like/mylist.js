@@ -32,8 +32,14 @@ const MylistBtn = ({ userId, thumbNailId }) => {
 
   return (
     <div>
-      <CheckBox id="zzim" type="checkbox" onClick={() => setMylist(!mylist)} />
-      <CheckBoxLabel htmlFor="zzim">{contentText}</CheckBoxLabel>
+      <CheckBox
+        id={`${thumbNailId}jjim`}
+        type="checkbox"
+        onClick={handleMylistClicked}
+      />
+      <CheckBoxLabel htmlFor={`${thumbNailId}jjim`}>
+        {contentText}
+      </CheckBoxLabel>
     </div>
   );
 };

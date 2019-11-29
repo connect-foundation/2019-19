@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logo from '../../dist/play.png';
 import PageBtn from './PageBtn';
-
-const serverURL = 'http://localhost:8000';
+import LoginContext from '../loginContextApi/context';
 
 const StyledNavbarContainer = styled.div`
   display: flex;
@@ -40,22 +38,11 @@ const StyledLink = {
 };
 
 const Navbar = () => {
-  const [userInfo, setUserInfo] = useState();
-
-  useEffect(() => {
-    axios
-      .post(`${serverURL}/oauth/google/verify`, {
-        userToken: Cookies.get('user_info'),
-      })
-      .then(response => {
-        setUserInfo(response.data.userName);
-      })
-      .catch(err => console.log(err));
-  }, []);
+  const { username, setUsername } = useContext(LoginContext);
 
   const Logout = () => {
     Cookies.remove('user_info');
-    setUserInfo(null);
+    setUsername(null);
     window.location.reload();
   };
 
@@ -76,8 +63,8 @@ const Navbar = () => {
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
-        {userInfo ? (
-          <PageBtn name={`${userInfo} 로그아웃`} onClick={Logout} />
+        {username ? (
+          <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (
           <a href="http://localhost:8000/oauth/google" style={StyledLink}>
             <PageBtn name="로그인" />
