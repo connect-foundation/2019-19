@@ -7,10 +7,11 @@ import MainText from './MainText';
 import LikeBtn from './like/like';
 import MylistBtn from './like/mylist';
 import LoginContext from '../loginContextApi/context';
+import ENV from '../../env';
 
 const axios = require('axios');
 
-const apiServer = 'http://localhost:8000';
+const apiServer = ENV.apiServer;
 
 const StyledThumbNail = styled.div`
   height: 40rem;

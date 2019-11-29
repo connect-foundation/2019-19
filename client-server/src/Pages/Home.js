@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MainThumbNail from '../components/MainThumbNail';
 import Slider from '../components/Carousels/NetflixSlider';
+import ENV from '../../env';
 
-const apiServer = 'http://localhost:8000';
+const apiServer = ENV.apiServer;
 
 const Home = () => {
   const requestCategories = [

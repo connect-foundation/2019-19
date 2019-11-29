@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../dist/play.png';
 import PageBtn from './PageBtn';
 import LoginContext from '../loginContextApi/context';
+import ENV from '../../env';
 
 const StyledNavbarContainer = styled.div`
   display: flex;
@@ -66,7 +67,7 @@ const Navbar = () => {
         {username ? (
           <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (
-          <a href="http://localhost:8000/oauth/google" style={StyledLink}>
+          <a href={`${ENV.apiServer}/oauth/google`} style={StyledLink}>
             <PageBtn name="로그인" />
           </a>
         )}
