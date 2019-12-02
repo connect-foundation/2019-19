@@ -27,7 +27,7 @@ const Content = ({ movie, onClose }) => {
       <div className="content__background">
         <div className="content__background__shadow" />
         <video
-          src="https://connect.or.kr/connectfoundation_/video/home_bg.mp4"
+          src={movie.thumbnail_video_url}
           className="content__background__image"
           autoPlay
         >

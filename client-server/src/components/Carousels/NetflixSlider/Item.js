@@ -10,9 +10,8 @@ import Axios from 'axios';
 const Item = ({ movie }) => {
   const [hover, setHover] = useState(false);
   const [imageUrl, setImageUrl] = useState(
-    'https://picsum.photos/id/0/1600/640',
+    'https://mir-s3-cdn-cf.behance.net/project_modules/disp/b6e0b072897469.5bf6e79950d23.gif',
   );
-
   useEffect(() => {
     Axios.get(movie.thumbnail_img_url).then(() => {
       setImageUrl(movie.thumbnail_img_url);

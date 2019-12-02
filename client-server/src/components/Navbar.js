@@ -60,6 +60,12 @@ const Navbar = () => {
       <Link to="/popular" style={StyledLink}>
         <PageBtn name="인기 컨텐츠" />
       </Link>
+      {username ? (
+        <Link to="/my-videos" style={StyledLink}>
+          <PageBtn name="내가 찜한 컨텐츠" />
+        </Link>
+      ) : null}
+
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
