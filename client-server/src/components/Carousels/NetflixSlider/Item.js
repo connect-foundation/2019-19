@@ -36,7 +36,7 @@ const Item = ({ movie }) => {
             {hover ? (
               <>
                 <video
-                  src="https://connect.or.kr/connectfoundation_/video/home_bg.mp4" // thumbnail_video_url
+                  src={movie.thumbnail_video_url} // thumbnail_video_url
                   alt="thumbnail-video"
                   poster={movie.thumbnail_img_url}
                   autoPlay

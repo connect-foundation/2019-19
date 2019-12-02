@@ -27,6 +27,7 @@ const Home = () => {
 
   useEffect(() => {
     axios.get(`${apiServer}/video/스포츠`).then(sportsResponse => {
+      console.log(sportsResponse);
       setSportsContents(sportsResponse.data);
       axios.get(`${apiServer}/video/교육`).then(eduResponse => {
         setEduContents(eduResponse.data);

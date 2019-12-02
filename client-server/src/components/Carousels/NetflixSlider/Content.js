@@ -15,7 +15,7 @@ const apiServer = 'http://localhost:8000';
 const Content = ({ movie, onClose }) => {
   const { userInfo } = useContext(LoginContext);
   const [thumbNailId, setThumbNailId] = useState(null);
-
+  console.log(movie);
   useEffect(() => {
     axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
       setThumbNailId(thumbNailData.data.video_id);
