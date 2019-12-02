@@ -6,6 +6,7 @@ import screenfull from 'screenfull';
 import { NavbarContext } from '../contexts/NavbarContext';
 import Time from '../utils/Time';
 
+/* Styled Component */
 const Title = styled.h2`
   color: white;
   display: none;
@@ -14,6 +15,16 @@ const Title = styled.h2`
 const WhiteDiv = styled.div`
   color: white;
 `;
+
+/* Constant */
+const enterCode = 13;
+const spaceCode = 32;
+const leftArrowCode = 37;
+const upArrodCode = 38;
+const rightArrowCode = 39;
+const downArrowCode = 40;
+const fCode = 70;
+const mCode = 77;
 
 let seeking = false; // seeking slider를 움직이는 중인지?
 const toggleSeeking = () => {
@@ -27,7 +38,7 @@ const Player = ({ match }) => {
   /* History */
   const history = useHistory();
   history.listen(() => {
-    if (showNav === false) {
+    if (!showNav) {
       setShowNav(true);
     }
   });
@@ -41,6 +52,7 @@ const Player = ({ match }) => {
   const [playedSeconds, setPlayedSeconds] = useState(0); // playedSeconds는 0 ~ duration 사이의 값
   const [loadedSeconds, setLoadedSeconds] = useState(0); // loadedSeconds는 0 ~ duration 사이의 값
   const [volume, setVolume] = useState(0.8);
+  const [prevVolume, setPrevVolume] = useState(0);
 
   /* Lifecycle method */
   // Hide, Show Navbar
@@ -48,7 +60,7 @@ const Player = ({ match }) => {
     setShowNav(false);
   }, []);
 
-  /* Event handler */
+  /* Click Event handler */
   // Initialize duration of video
   const handleDuration = dur => {
     setDuration(dur);
@@ -107,6 +119,19 @@ const Player = ({ match }) => {
     setVolume(parseFloat(e.target.value));
   };
 
+  const handleVolumeUp = () => {
+    setVolume(volume + 0.1);
+  };
+
+  const handleVolumeDown = () => {
+    setVolume(volume - 0.1);
+  };
+
+  const handleMute = () => {
+    setPrevVolume(volume);
+    setVolume(prevVolume);
+  };
+
   // Fullscreen Button
   const handleClickFullscreen = () => {
     if (screenfull.isEnabled) {
@@ -114,15 +139,45 @@ const Player = ({ match }) => {
     }
   };
 
+  /* Keyboard Event Handler */
+  const handleKeyEvent = e => {
+    console.log(e.keyCode);
+    switch (e.keyCode) {
+      case leftArrowCode:
+        handleSeekButtonBackward();
+        break;
+      case rightArrowCode:
+        handleSeekButtonForward();
+        break;
+      case upArrodCode:
+        handleVolumeUp();
+        break;
+      case downArrowCode:
+        handleVolumeDown();
+        break;
+      case enterCode:
+      case spaceCode:
+        handlePlayAndPause();
+        break;
+      case fCode:
+        handleClickFullscreen();
+        break;
+      case mCode:
+        handleMute();
+        break;
+      default:
+    }
+  };
+
   /* Render */
   return (
-    <>
+    <WhiteDiv onKeyDown={handleKeyEvent}>
       <Title>비디오ID URL파라미터로 받기 - {match.params.videoId}</Title>
       <ReactPlayer
         ref={player}
         width="100%"
         height="100vh"
-        url="https://saltsyffjqrf3006180.cdn.ntruss.com/videos/Beef-11704/Beef-11704.m3u8"
+        url="	https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
         playing={playing}
         volume={volume}
         onDuration={handleDuration}
@@ -168,7 +223,7 @@ const Player = ({ match }) => {
         value={volume}
         onChange={handleVolumeChange}
       />
-    </>
+    </WhiteDiv>
   );
 };
 
