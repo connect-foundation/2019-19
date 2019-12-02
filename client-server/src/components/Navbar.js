@@ -54,10 +54,10 @@ const Navbar = () => {
       <Link to="/" style={StyledLink}>
         <PageBtn name="홈" />
       </Link>
-      <Link to="/Recent" style={StyledLink}>
+      <Link to="/recent" style={StyledLink}>
         <PageBtn name="최신 컨텐츠" />
       </Link>
-      <Link to="/Popular" style={StyledLink}>
+      <Link to="/popular" style={StyledLink}>
         <PageBtn name="인기 컨텐츠" />
       </Link>
       <StyledNavRight>
