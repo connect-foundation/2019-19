@@ -10,6 +10,7 @@ import PlayerForward from '../components/Player/PlayerForward';
 import PlayerBackward from '../components/Player/PlayerBackward';
 import PlayerVolume from '../components/Player/PlayerVolume';
 import PlayerFullscreen from '../components/Player/PlayerFullscreen';
+import BackButton from '../components/BackButton';
 import Time from '../utils/Time';
 import KeyCode from '../utils/KeyCode';
 
@@ -212,7 +213,7 @@ const Player = ({ match }) => {
           hoverName={hoverName}
           setHoverName={setHoverName}
         >
-          뒤로가기
+          <BackButton />
         </PlayerButton>
         <BottomControllerWrapper>
           <BottomProgress>
