@@ -25,7 +25,7 @@ module.exports = {
       thumbnail_img_url: {
         type: Sequelize.STRING,
       },
-      thumbnai_video_url: {
+      thumbnail_video_url: {
         type: Sequelize.STRING,
       },
       streaming_url: {

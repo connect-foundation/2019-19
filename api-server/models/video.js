@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       thumbnail_img_url: {
         type: DataTypes.STRING,
       },
-      thumbnai_video_url: {
+      thumbnail_video_url: {
         type: DataTypes.STRING,
       },
       streaming_url: {

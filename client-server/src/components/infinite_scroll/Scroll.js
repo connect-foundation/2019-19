@@ -8,13 +8,12 @@ import Slider from '../Carousels/NetflixSlider';
 const apiServer = 'http://localhost:8000';
 
 const InfinityScroll = ({ categoryList }) => {
-  let currentScroll = 0;
-  let presentView = 0;
-  const sliceamount = 3;
+  let currentScroll = 0; // 현재 스크롤 위치
+  let presentView = 0; // 현재까지 보여진 케로셀 갯수
+  const sliceamount = 3; // 새로 만들 케로셀 갯수
 
   const [curList, setCurList] = useState([]);
-  const [flag, setFlag] = useState(false);
-  const [flag2, setFlag2] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
   const [arr2, setArr2] = useState({});
 
@@ -22,10 +21,9 @@ const InfinityScroll = ({ categoryList }) => {
     if (isEnd) return;
     if (
       window.innerHeight + document.documentElement.scrollTop >
-      document.documentElement.offsetHeight - 100 // 숫자 100 수정하자.
+      document.documentElement.offsetHeight - 100 // 스크롤 여유
     ) {
       currentScroll = document.documentElement.scrollTop; // 데이터 요청후 스크롤바 위치 조정
-      console.log('loading~~');
       const sliceCategory = categoryList.slice(
         presentView,
         presentView + sliceamount,
@@ -36,7 +34,7 @@ const InfinityScroll = ({ categoryList }) => {
           setArr2(prevState => {
             return { ...prevState, [e]: response.data };
           });
-          if (i === sliceCategory.length - 1) setFlag2(true);
+          if (i === sliceCategory.length - 1) setLoading(true);
           setCurList(preState => [...preState, e]);
         });
       });
@@ -44,7 +42,6 @@ const InfinityScroll = ({ categoryList }) => {
       if (categoryList.slice(presentView, presentView + sliceamount) === [])
         setIsEnd(true);
       presentView += sliceamount;
-      setFlag(true);
       document.documentElement.scrollTop = currentScroll;
     }
   }, 1000);
@@ -58,7 +55,7 @@ const InfinityScroll = ({ categoryList }) => {
 
   return (
     <>
-      {flag && flag2 ? (
+      {loading ? (
         <div>
           {curList.map((e, i) => {
             return (
