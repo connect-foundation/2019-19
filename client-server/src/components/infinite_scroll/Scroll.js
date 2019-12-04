@@ -1,32 +1,22 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
-import movies from '../Carousels/data/movie';
 import Slider from '../Carousels/NetflixSlider';
 
-function Hi1() {
+const apiServer = 'http://localhost:8000';
+
+const InfinityScroll = ({ categoryList }) => {
   let currentScroll = 0;
   let presentView = 0;
-  const more = 3;
-  const categoryList = [
-    '스포츠',
-    '음악',
-    '교육',
-    '영화/애니메이션',
-    '과학기술',
-    '엔터테인먼트',
-    '코미디',
-    '뷰티/패션',
-    '여행',
-    '노하우/스타일',
-    '뉴스/정치',
-    '애완동물/동물',
-  ];
-  let currentList = [];
+  const sliceamount = 3;
 
+  const [curList, setCurList] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [flag2, setFlag2] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
-  const [arr, setArr] = useState([]);
+  const [arr2, setArr2] = useState({});
 
   const handleInfinity = debounce(() => {
     if (isEnd) return;
@@ -36,26 +26,24 @@ function Hi1() {
     ) {
       currentScroll = document.documentElement.scrollTop; // 데이터 요청후 스크롤바 위치 조정
       console.log('loading~~');
-      // axios.get(bookAPI).then(res => {
-      //   const result = res.data.slice(preItems, items);
-      //   console.log(result);
-      //   document.documentElement.scrollTop = currentScroll;
-      //   // setPreItems(items);
-      //   // setItems(items + 20);
-      //   preItems = items;
-      //   items += 20;
-
-      //   console.log(items);
-      //   return result;
-      // });
-
-      currentList = currentList.concat(
-        categoryList.slice(presentView, presentView + more),
+      const sliceCategory = categoryList.slice(
+        presentView,
+        presentView + sliceamount,
       );
-      setArr(currentList);
-      if (categoryList.slice(presentView, presentView + more) === [])
+
+      sliceCategory.forEach((e, i) => {
+        axios.get(`${apiServer}/video/${sliceCategory[i]}`).then(response => {
+          setArr2(prevState => {
+            return { ...prevState, [e]: response.data };
+          });
+          if (i === sliceCategory.length - 1) setFlag2(true);
+          setCurList(preState => [...preState, e]);
+        });
+      });
+
+      if (categoryList.slice(presentView, presentView + sliceamount) === [])
         setIsEnd(true);
-      presentView += more;
+      presentView += sliceamount;
       setFlag(true);
       document.documentElement.scrollTop = currentScroll;
     }
@@ -70,13 +58,16 @@ function Hi1() {
 
   return (
     <>
-      {flag ? (
+      {flag && flag2 ? (
         <div>
-          {arr.map(() => {
+          {curList.map((e, i) => {
             return (
-              <Slider>
-                {movies.map(movie => (
-                  <Slider.Item movie={movie} key={movie.id} />
+              <Slider categoryName={e}>
+                {Object.values(arr2)[i].map(content => (
+                  <Slider.Item
+                    movie={content._source}
+                    key={content._source.video_id}
+                  />
                 ))}
               </Slider>
             );
@@ -87,5 +78,10 @@ function Hi1() {
       )}
     </>
   );
-}
-export default Hi1;
+};
+
+InfinityScroll.propTypes = {
+  categoryList: PropTypes.array.isRequired,
+};
+
+export default InfinityScroll;

@@ -9,15 +9,12 @@ const apiServer = 'http://localhost:8000';
 
 const Home = () => {
   const requestCategories = [
-    '스포츠',
-    '음악',
-    '교육',
-    // '영화/애니메이션',
     '과학기술',
     '엔터테인먼트',
     '코미디',
-    // '뷰티/패션',
     '여행',
+    // '뷰티/패션',
+    // '영화/애니메이션',
     // '노하우/스타일',
     // '뉴스/정치',
     // '애완동물/동물',
@@ -61,7 +58,7 @@ const Home = () => {
           <Slider.Item movie={content._source} key={content._source.video_id} />
         ))}
       </Slider>
-      <Scroll />
+      <Scroll categoryList={requestCategories} />
     </>
   );
 };
