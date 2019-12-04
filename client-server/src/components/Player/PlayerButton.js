@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import '../../styles/css/playerButton.css';
 
 const ControlButton = styled.button`
-  width: 4em;
-  height: 4em;
+  width: 3em;
+  height: 3em;
   background-color: transparent;
   border: none;
   padding: 0;

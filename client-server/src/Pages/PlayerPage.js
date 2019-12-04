@@ -6,6 +6,8 @@ import screenfull from 'screenfull';
 import PropTypes from 'prop-types';
 import { NavbarContext } from '../contexts/NavbarContext';
 import PlayerButton from '../components/Player/PlayerButton';
+import PlayerPlay from '../components/Player/PlayerPlay';
+import PlayerPause from '../components/Player/PlayerPause';
 import PlayerForward from '../components/Player/PlayerForward';
 import PlayerBackward from '../components/Player/PlayerBackward';
 import PlayerVolume from '../components/Player/PlayerVolume';
@@ -119,15 +121,17 @@ const Player = ({ match }) => {
   // Seeking Button
   const handleSeekButtonBackward = () => {
     toggleSeeking();
-    player.current.seekTo(playedSeconds - 10);
-    setPlayedSeconds(playedSeconds - 10);
+    const next = playedSeconds - 10 <= 0 ? 0 : playedSeconds - 10;
+    player.current.seekTo(next);
+    setPlayedSeconds(next);
     toggleSeeking();
   };
 
   const handleSeekButtonForward = () => {
     toggleSeeking();
-    setPlayedSeconds(playedSeconds + 10);
-    player.current.seekTo(playedSeconds + 10);
+    const next = playedSeconds + 10 >= duration ? duration : playedSeconds + 10;
+    setPlayedSeconds(next);
+    player.current.seekTo(next);
     toggleSeeking();
   };
 
@@ -234,12 +238,12 @@ const Player = ({ match }) => {
           </BottomProgress>
           <BottomButtons>
             <PlayerButton
-              name="play"
+              name={playing ? 'pause' : 'play'}
               onClick={handlePlayAndPause}
               hoverName={hoverName}
               setHoverName={setHoverName}
             >
-              <polygon points="8 22 8 6 22.0043763 14" />
+              {playing ? <PlayerPause /> : <PlayerPlay />}
             </PlayerButton>
             <PlayerButton
               name="backward"
