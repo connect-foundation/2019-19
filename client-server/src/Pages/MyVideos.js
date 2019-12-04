@@ -32,7 +32,8 @@ const MyVideos = () => {
     <GridContainer>
       {myVideoList.length
         ? myVideoList.map(content => (
-            <ContentBox
+          <ContentBox
+              videoId={content.video_id}
               title={content.name}
               thumbnailImg={content.thumbnail_img_url}
               thumbnailVideo={content.thumbnail_video_url}
@@ -40,12 +41,6 @@ const MyVideos = () => {
             />
           ))
         : null}
-      <ContentBox
-        title="간다라마ㅏ"
-        thumbnailImg="https://picsum.photos/id/22/1600/640"
-        thumbnailVideo="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
-        streamingLink="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
-      />
       {/* <ContentBox />
       <ContentBox />
       <ContentBox />

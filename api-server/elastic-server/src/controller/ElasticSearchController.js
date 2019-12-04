@@ -30,6 +30,7 @@ const ElasticSearch = {
         categoryList,
       );
     }
+    console.log(resp);
     return resp;
   },
 };

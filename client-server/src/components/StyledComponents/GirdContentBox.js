@@ -2,35 +2,32 @@ import styled from 'styled-components';
 
 const GridContentBox = styled.div`
   display: block;
-  margin: 1rem 0;
-  width: 16.1rem;
-  height: 10rem;
-  transition: 500ms;
-  box-sizing: border-box
-  line-height: 1.4;
+  width: 17.7rem;
+  height: 11rem;
   background-image: url(${props => props.imgUrl});
   background-size: 100% 100%;
-  opacity: ${props => props.opacity};
+  transition: 500ms;
+  object-fit: fill;
+  padding: 0;
+  border: solid rgb(20, 20, 20, 1) 0.01rem;
 
   .content-title {
-    position: absolute;
-    background-color: rgba(0,0,0,0.4);
-    margin-left:1rem;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.4);
+    margin-left: 1rem;
     color: white;
-    max-width: 50%;
+    max-width: 70%;
   }
 
   &:hover {
-    z-index: 4;
+    z-index: 5;
     cursor: pointer;
     transform: scale(1.4);
-    transition-delay: 0.3s;
+    opacity: 0;
+    // transition-delay: 0.3s;
   }
-
-  video {
-      width: 16.1rem;
-      height: 10rem;
-      transform: scale(1.4);
+  &:hover + .content-title {
+    opaticy: 0;
   }
 `;
 
