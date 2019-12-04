@@ -3,8 +3,14 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
+import PropTypes from 'prop-types';
 import { NavbarContext } from '../contexts/NavbarContext';
+import PlayerButton from '../components/Player/PlayerButton';
+import PlayerForward from '../components/Player/PlayerForward';
+import PlayerBackward from '../components/Player/PlayerBackward';
+import PlayerVolume from '../components/Player/PlayerVolume';
 import Time from '../utils/Time';
+import KeyCode from '../utils/KeyCode';
 
 /* Styled Component */
 const Title = styled.h2`
@@ -16,21 +22,29 @@ const WhiteDiv = styled.div`
   color: white;
 `;
 
-/* Constant */
-const enterCode = 13;
-const spaceCode = 32;
-const leftArrowCode = 37;
-const upArrodCode = 38;
-const rightArrowCode = 39;
-const downArrowCode = 40;
-const fCode = 70;
-const mCode = 77;
+const ControllerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+`;
 
+const BottomControllerWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+`;
+
+const BottomProgress = styled.div``;
+
+const BottomButtons = styled.div``;
+
+/* Seeking Variable */
 let seeking = false; // seeking slider를 움직이는 중인지?
 const toggleSeeking = () => {
   seeking = !seeking;
 };
 
+/* Component */
 const Player = ({ match }) => {
   /* Context */
   const { showNav, setShowNav } = useContext(NavbarContext);
@@ -120,11 +134,13 @@ const Player = ({ match }) => {
   };
 
   const handleVolumeUp = () => {
-    setVolume(volume + 0.1);
+    if (volume + 0.1 >= 1) setVolume(1);
+    else setVolume(volume + 0.1);
   };
 
   const handleVolumeDown = () => {
-    setVolume(volume - 0.1);
+    if (volume - 0.1 <= 0) setVolume(0);
+    else setVolume(volume - 0.1);
   };
 
   const handleMute = () => {
@@ -141,28 +157,30 @@ const Player = ({ match }) => {
 
   /* Keyboard Event Handler */
   const handleKeyEvent = e => {
-    console.log(e.keyCode);
+    e.preventDefault();
     switch (e.keyCode) {
-      case leftArrowCode:
+      case KeyCode.leftArrowCode:
         handleSeekButtonBackward();
         break;
-      case rightArrowCode:
+      case KeyCode.rightArrowCode:
         handleSeekButtonForward();
         break;
-      case upArrodCode:
+      case KeyCode.upArrodCode:
         handleVolumeUp();
         break;
-      case downArrowCode:
+      case KeyCode.downArrowCode:
         handleVolumeDown();
         break;
-      case enterCode:
-      case spaceCode:
+      case KeyCode.enterCode:
         handlePlayAndPause();
         break;
-      case fCode:
+      case KeyCode.spaceCode:
+        handlePlayAndPause();
+        break;
+      case KeyCode.fCode:
         handleClickFullscreen();
         break;
-      case mCode:
+      case KeyCode.mCode:
         handleMute();
         break;
       default:
@@ -171,60 +189,87 @@ const Player = ({ match }) => {
 
   /* Render */
   return (
-    <WhiteDiv onKeyDown={handleKeyEvent}>
+    <WhiteDiv onKeyUp={handleKeyEvent}>
       <Title>비디오ID URL파라미터로 받기 - {match.params.videoId}</Title>
       <ReactPlayer
+        id="test"
         ref={player}
         width="100%"
         height="100vh"
-        url="	https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+        style={{ display: 'flex', position: 'relative' }}
+        url="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
         playing={playing}
         volume={volume}
         onDuration={handleDuration}
         onProgress={handleProgress}
       />
-      <button type="button" onClick={handlePlayAndPause}>
-        {playing ? 'pause' : 'play'}
-      </button>
-      <button type="button" onClick={handleSeekButtonBackward}>
-        10초전
-      </button>
-      <button type="button" onClick={handleSeekButtonForward}>
-        10초후
-      </button>
-      <button type="button" onClick={handleClickFullscreen}>
-        전체화면
-      </button>
-      <button type="button" onClick={handleHistoryBack}>
-        뒤로가기
-      </button>
-      <WhiteDiv>[남은시간]</WhiteDiv>
-      <WhiteDiv id="totalTime" className="total_time">
-        {Time.convertToTime(duration - playedSeconds)}
-      </WhiteDiv>
-      <WhiteDiv>[탐색바]</WhiteDiv>
-      <input
-        type="range"
-        min={0}
-        max={duration}
-        step="any"
-        value={playedSeconds}
-        onMouseDown={handleSeekSliderMouseDown}
-        onChange={handleSeekSliderChange}
-        onMouseUp={handleSeekSliderMouseUp}
-      />
-      <progress max={duration} value={playedSeconds} />
-      <WhiteDiv>[볼륨]</WhiteDiv>
-      <input
-        type="range"
-        min={0}
-        max={1}
-        step="any"
-        value={volume}
-        onChange={handleVolumeChange}
-      />
+      <ControllerWrapper>
+        <PlayerButton name="Back" onClick={handleHistoryBack}>
+          뒤로가기
+        </PlayerButton>
+        <BottomControllerWrapper>
+          <BottomProgress>
+            <WhiteDiv id="totalTime" className="total_time">
+              {Time.convertToTime(duration - playedSeconds)}
+            </WhiteDiv>
+            <input
+              type="range"
+              min={0}
+              max={duration}
+              step="any"
+              value={playedSeconds}
+              onMouseDown={handleSeekSliderMouseDown}
+              onChange={handleSeekSliderChange}
+              onMouseUp={handleSeekSliderMouseUp}
+            />
+            <progress max={duration} value={playedSeconds} />
+          </BottomProgress>
+          <BottomButtons>
+            <PlayerButton name="playerPlay" onClick={handlePlayAndPause}>
+              <polygon points="8 22 8 6 22.0043763 14" />
+            </PlayerButton>
+            <PlayerButton
+              name="playerBackward"
+              onClick={handleSeekButtonBackward}
+            >
+              <PlayerBackward />
+            </PlayerButton>
+            <PlayerButton
+              name="playerForward"
+              onClick={handleSeekButtonForward}
+            >
+              <PlayerForward />
+            </PlayerButton>
+            <PlayerButton name="playerVolume">
+              <PlayerVolume volume={volume} />
+            </PlayerButton>
+            <span>타이틀</span>
+            <PlayerButton
+              name="playerFullscreen"
+              onClick={handleClickFullscreen}
+            >
+              전체화면
+            </PlayerButton>
+          </BottomButtons>
+          <input
+            style={{ display: 'none' }}
+            type="range"
+            min={0}
+            max={1}
+            step="any"
+            value={volume}
+            onChange={handleVolumeChange}
+          />
+        </BottomControllerWrapper>
+      </ControllerWrapper>
     </WhiteDiv>
   );
+};
+
+Player.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.object,
+  }).isRequired,
 };
 
 export default Player;
