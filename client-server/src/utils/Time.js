@@ -17,4 +17,4 @@ const Time = {
   },
 };
 
-module.exports = Time;
+export default Time;
