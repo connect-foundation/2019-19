@@ -9,6 +9,7 @@ import PlayerButton from '../components/Player/PlayerButton';
 import PlayerForward from '../components/Player/PlayerForward';
 import PlayerBackward from '../components/Player/PlayerBackward';
 import PlayerVolume from '../components/Player/PlayerVolume';
+import PlayerFullscreen from '../components/Player/PlayerFullscreen';
 import Time from '../utils/Time';
 import KeyCode from '../utils/KeyCode';
 
@@ -67,6 +68,7 @@ const Player = ({ match }) => {
   const [loadedSeconds, setLoadedSeconds] = useState(0); // loadedSeconds는 0 ~ duration 사이의 값
   const [volume, setVolume] = useState(0.8);
   const [prevVolume, setPrevVolume] = useState(0);
+  const [hoverName, setHoverName] = useState('');
 
   /* Lifecycle method */
   // Hide, Show Navbar
@@ -204,7 +206,12 @@ const Player = ({ match }) => {
         onProgress={handleProgress}
       />
       <ControllerWrapper>
-        <PlayerButton name="Back" onClick={handleHistoryBack}>
+        <PlayerButton
+          name="Back"
+          onClick={handleHistoryBack}
+          hoverName={hoverName}
+          setHoverName={setHoverName}
+        >
           뒤로가기
         </PlayerButton>
         <BottomControllerWrapper>
@@ -225,30 +232,45 @@ const Player = ({ match }) => {
             <progress max={duration} value={playedSeconds} />
           </BottomProgress>
           <BottomButtons>
-            <PlayerButton name="playerPlay" onClick={handlePlayAndPause}>
+            <PlayerButton
+              name="play"
+              onClick={handlePlayAndPause}
+              hoverName={hoverName}
+              setHoverName={setHoverName}
+            >
               <polygon points="8 22 8 6 22.0043763 14" />
             </PlayerButton>
             <PlayerButton
-              name="playerBackward"
+              name="backward"
               onClick={handleSeekButtonBackward}
+              hoverName={hoverName}
+              setHoverName={setHoverName}
             >
               <PlayerBackward />
             </PlayerButton>
             <PlayerButton
-              name="playerForward"
+              name="forward"
               onClick={handleSeekButtonForward}
+              hoverName={hoverName}
+              setHoverName={setHoverName}
             >
               <PlayerForward />
             </PlayerButton>
-            <PlayerButton name="playerVolume">
+            <PlayerButton
+              name="volume"
+              hoverName={hoverName}
+              setHoverName={setHoverName}
+            >
               <PlayerVolume volume={volume} />
             </PlayerButton>
             <span>타이틀</span>
             <PlayerButton
-              name="playerFullscreen"
+              name="fullscreen"
               onClick={handleClickFullscreen}
+              hoverName={hoverName}
+              setHoverName={setHoverName}
             >
-              전체화면
+              <PlayerFullscreen />
             </PlayerButton>
           </BottomButtons>
           <input

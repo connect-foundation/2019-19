@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import '../../styles/css/playerButton.css';
 
 const ControlButton = styled.button`
   width: 4em;
@@ -16,14 +18,43 @@ const ControlButtonSVG = styled.svg`
   fill: white;
   stroke: white;
   stroke-width: 0;
+  transition: all ease 0.2s;
 `;
 
-const PlayerButton = ({ children, name, onClick }) => {
+const PlayerButton = ({ children, name, onClick, hoverName, setHoverName }) => {
+  const [isActive, setIsActive] = useState(true);
+
+  /* For Hover Effect */
+  const checkActive = () => {
+    if (hoverName === '' || hoverName === name) setIsActive(true);
+    else setIsActive(false);
+  };
+
+  useEffect(() => {
+    checkActive();
+  }, [hoverName]);
+
+  /* Handle Pointer Event */
+  const handlePointerEnter = () => {
+    setHoverName(name);
+  };
+
+  const handlePointerLeave = () => {
+    setHoverName('');
+  };
+
   return (
-    <ControlButton type="button" onClick={onClick}>
+    <ControlButton
+      className={`player-button player-button-${name}`}
+      type="button"
+      onClick={onClick}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+    >
       <ControlButtonSVG
-        className={`svg-icon svg-icon-${name}`}
-        focusable="false"
+        className={`svg-icon svg-icon-${name} ${
+          isActive ? '' : 'svg-icon-blurred'
+        }`}
       >
         <use filter="" xlinkHref={`#${name}`}>
           <symbol id={`${name}`} viewBox="0 0 28 28">
@@ -33,6 +64,14 @@ const PlayerButton = ({ children, name, onClick }) => {
       </ControlButtonSVG>
     </ControlButton>
   );
+};
+
+PlayerButton.propTypes = {
+  children: PropTypes.element.isRequired,
+  name: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  hoverName: PropTypes.string.isRequired,
+  setHoverName: PropTypes.func.isRequired,
 };
 
 export default PlayerButton;
