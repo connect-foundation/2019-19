@@ -7,6 +7,7 @@ import Slider from '../Carousels/NetflixSlider';
 function Hi1() {
   let currentScroll = 0;
   let presentView = 0;
+  const more = 3;
   const categoryList = [
     '스포츠',
     '음악',
@@ -49,12 +50,12 @@ function Hi1() {
       // });
 
       currentList = currentList.concat(
-        categoryList.slice(presentView, presentView + 3),
+        categoryList.slice(presentView, presentView + more),
       );
       setArr(currentList);
-      if (categoryList.slice(presentView, presentView + 3) === [])
+      if (categoryList.slice(presentView, presentView + more) === [])
         setIsEnd(true);
-      presentView += 3;
+      presentView += more;
       setFlag(true);
       document.documentElement.scrollTop = currentScroll;
     }
