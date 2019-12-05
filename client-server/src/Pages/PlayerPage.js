@@ -16,7 +16,7 @@ import VolumeModal from '../components/Player/VolumeModal';
 import PlayerFullscreen from '../components/Player/PlayerFullscreen';
 import BackButton from '../components/BackButton';
 import Time from '../utils/Time';
-import KeyCode from '../utils/KeyCode';
+import CharCode from '../utils/CharCode';
 
 /* Styled Component */
 const Wrapper = styled.div`
@@ -237,44 +237,50 @@ const Player = ({ match }) => {
   };
 
   /* Keyboard Event Handler */
-  const handleKeyDownEvent = e => {
+  const handleKeyUpEvent = e => {
+    e.preventDefault();
     switch (e.keyCode) {
-      case KeyCode.leftArrowCode:
-        handleSeekButtonBackward();
-        break;
-      case KeyCode.rightArrowCode:
-        handleSeekButtonForward();
-        break;
-      case KeyCode.upArrodCode:
-        handleVolumeUp();
-        break;
-      case KeyCode.downArrowCode:
-        handleVolumeDown();
-        break;
-      case KeyCode.spaceCode:
+      case CharCode.spaceCode:
         handlePlayAndPause();
         break;
-      case KeyCode.fCode:
+      case CharCode.leftArrowCode:
+        handleSeekButtonBackward();
+        break;
+      case CharCode.rightArrowCode:
+        handleSeekButtonForward();
+        break;
+      case CharCode.upArrodCode:
+        handleVolumeUp();
+        break;
+      case CharCode.downArrowCode:
+        handleVolumeDown();
+        break;
+      default:
+    }
+  };
+
+  const handleKeyPressEvent = e => {
+    e.preventDefault();
+    switch (e.charCode) {
+      case CharCode.enterCode:
+        handlePlayAndPause();
+        break;
+      case CharCode.FCode:
+      case CharCode.fCode:
         handleClickFullscreen();
         break;
-      case KeyCode.mCode:
+      case CharCode.MCode:
+      case CharCode.mCode:
         handleMute();
         break;
       default:
     }
   };
 
-  const handleKeyUpEvent = e => {
-    if (e.keyCode === KeyCode.enterCode) {
-      e.preventDefault();
-      handlePlayAndPause();
-    }
-  };
-
   /* Render */
   return (
     <Wrapper
-      onKeyDown={handleKeyDownEvent}
+      onKeyPress={handleKeyPressEvent}
       onKeyUp={handleKeyUpEvent}
       onMouseMove={handleMouseMove}
       isActive={isActive}
