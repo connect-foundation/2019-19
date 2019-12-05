@@ -158,6 +158,8 @@ const Player = ({ match }) => {
 
   const handleWrapperPlayAndPause = e => {
     const { tagName } = e.target;
+    console.log(e.currentTarget);
+    e.target.focus();
     if (
       tagName === 'BUTTON' ||
       tagName === 'svg' ||
@@ -252,23 +254,6 @@ const Player = ({ match }) => {
       case CharCode.downArrowCode:
         handleVolumeDown();
         break;
-      default:
-    }
-  };
-
-  const handleKeyUpEvent = e => {
-    e.preventDefault();
-    switch (e.keyCode) {
-      case CharCode.spaceCode:
-        handlePlayAndPause();
-        break;
-      default:
-    }
-  };
-
-  const handleKeyPressEvent = e => {
-    e.preventDefault();
-    switch (e.charCode) {
       case CharCode.enterCode:
         handlePlayAndPause();
         break;
@@ -284,11 +269,20 @@ const Player = ({ match }) => {
     }
   };
 
+  const handleKeyUpEvent = e => {
+    e.preventDefault();
+    switch (e.keyCode) {
+      case CharCode.spaceCode:
+        handlePlayAndPause();
+        break;
+      default:
+    }
+  };
+
   /* Render */
   return (
     <Wrapper
       onKeyDown={handleKeyDownEvent}
-      onKeyPress={handleKeyPressEvent}
       onKeyUp={handleKeyUpEvent}
       onMouseMove={handleMouseMove}
       isActive={isActive}
