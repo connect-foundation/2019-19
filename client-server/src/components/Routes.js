@@ -18,7 +18,8 @@ const Routes = () => {
       <Route path="/Popular" component={Popular} />
       <Route path="/Recent" component={Recent} />
       <Route path="/Login" component={Login} />
-      <Route exact path="/" component={Home} />
+      {/* <Route exact path="/" component={Home} /> */}
+      <Route exact path="/" component={Player} />
       <Route path="/Player/:videoId" component={Player} />
     </Router>
   );

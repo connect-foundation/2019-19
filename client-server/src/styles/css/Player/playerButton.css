@@ -1,0 +1,15 @@
+.svg-icon:hover {
+  transform: scale(1.2);
+}
+
+.svg-icon-blurred {
+  opacity: 0.5;
+}
+
+div .player-button-fullscreen {
+  margin-left: auto;
+}
+
+div .player-button-back {
+  margin: 3em;
+}

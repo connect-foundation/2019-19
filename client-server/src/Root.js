@@ -1,8 +1,9 @@
 import React from 'react';
 // import './index.css';
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { NavbarProvider } from './contexts/NavbarContext';
 import Routes from './components/Routes';
+import theme from './styles/css/theme';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -29,12 +30,12 @@ const GlobalStyles = createGlobalStyle`
 
 const Root = () => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <GlobalStyles />
       <NavbarProvider>
         <Routes />
       </NavbarProvider>
-    </>
+    </ThemeProvider>
   );
 };
 

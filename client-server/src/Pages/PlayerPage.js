@@ -5,25 +5,37 @@ import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
 import PropTypes from 'prop-types';
 import { NavbarContext } from '../contexts/NavbarContext';
+import PlayerSeekSlider from '../components/Player/PlayerSeekSlider';
 import PlayerButton from '../components/Player/PlayerButton';
 import PlayerPlay from '../components/Player/PlayerPlay';
 import PlayerPause from '../components/Player/PlayerPause';
 import PlayerForward from '../components/Player/PlayerForward';
 import PlayerBackward from '../components/Player/PlayerBackward';
 import PlayerVolume from '../components/Player/PlayerVolume';
+import VolumeModal from '../components/Player/VolumeModal';
 import PlayerFullscreen from '../components/Player/PlayerFullscreen';
 import BackButton from '../components/BackButton';
 import Time from '../utils/Time';
 import KeyCode from '../utils/KeyCode';
 
 /* Styled Component */
-const Title = styled.h2`
+const Wrapper = styled.div`
   color: white;
-  display: none;
 `;
 
-const WhiteDiv = styled.div`
-  color: white;
+const BottomProgressWrapper = styled.div`
+  // display:  ${props => (props.hoverName === 'volume' ? 'none' : 'flex')}
+  display: flex;
+  margin: 0 1em;
+  align-items: center;
+  visibilty:  ${props => (props.hoverName === 'volume' ? 'hidden' : 'block')}
+  opacity: ${props => (props.hoverName === 'volume' ? 0 : 1)}
+  transition: opacity ease 0.2s;
+`;
+
+const TimeSpan = styled.time`
+  margin-left: 1em;
+  font-size: 0.9em;
 `;
 
 const ControllerWrapper = styled.div`
@@ -36,11 +48,22 @@ const ControllerWrapper = styled.div`
 const BottomControllerWrapper = styled.div`
   position: absolute;
   bottom: 0;
+  width: 100%
+  padding-bottom: 0.5em;
 `;
 
-const BottomProgress = styled.div``;
+const VolumeWrapper = styled.div`
+  position: relative;
+`;
 
-const BottomButtons = styled.div``;
+const TitleSpan = styled.span`
+  margin: 0 1.2em;
+`;
+
+const BottomButtons = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 /* Seeking Variable */
 let seeking = false; // seeking slider를 움직이는 중인지?
@@ -196,10 +219,8 @@ const Player = ({ match }) => {
 
   /* Render */
   return (
-    <WhiteDiv onKeyUp={handleKeyEvent}>
-      <Title>비디오ID URL파라미터로 받기 - {match.params.videoId}</Title>
+    <Wrapper onKeyUp={handleKeyEvent}>
       <ReactPlayer
-        id="test"
         ref={player}
         width="100%"
         height="100vh"
@@ -212,7 +233,7 @@ const Player = ({ match }) => {
       />
       <ControllerWrapper>
         <PlayerButton
-          name="Back"
+          name="back"
           onClick={handleHistoryBack}
           hoverName={hoverName}
           setHoverName={setHoverName}
@@ -220,22 +241,18 @@ const Player = ({ match }) => {
           <BackButton />
         </PlayerButton>
         <BottomControllerWrapper>
-          <BottomProgress>
-            <WhiteDiv id="totalTime" className="total_time">
-              {Time.convertToTime(duration - playedSeconds)}
-            </WhiteDiv>
-            <input
-              type="range"
-              min={0}
-              max={duration}
-              step="any"
-              value={playedSeconds}
-              onMouseDown={handleSeekSliderMouseDown}
-              onChange={handleSeekSliderChange}
-              onMouseUp={handleSeekSliderMouseUp}
+          <BottomProgressWrapper hoverName={hoverName}>
+            <PlayerSeekSlider
+              duration={duration}
+              playedSeconds={playedSeconds}
+              handleSeekSliderMouseDown={handleSeekSliderMouseDown}
+              handleSeekSliderChange={handleSeekSliderChange}
+              handleSeekSliderMouseUp={handleSeekSliderMouseUp}
             />
-            <progress max={duration} value={playedSeconds} />
-          </BottomProgress>
+            <TimeSpan id="totalTime" className="total_time">
+              {Time.convertToTime(duration - playedSeconds)}
+            </TimeSpan>
+          </BottomProgressWrapper>
           <BottomButtons>
             <PlayerButton
               name={playing ? 'pause' : 'play'}
@@ -261,14 +278,23 @@ const Player = ({ match }) => {
             >
               <PlayerForward />
             </PlayerButton>
-            <PlayerButton
-              name="volume"
-              hoverName={hoverName}
-              setHoverName={setHoverName}
-            >
-              <PlayerVolume volume={volume} />
-            </PlayerButton>
-            <span>타이틀</span>
+            <VolumeWrapper>
+              <VolumeModal
+                volume={volume}
+                handleVolumeChange={handleVolumeChange}
+                hoverName={hoverName}
+                setHoverName={setHoverName}
+              />
+              <PlayerButton
+                name="volume"
+                onClick={handleMute}
+                hoverName={hoverName}
+                setHoverName={setHoverName}
+              >
+                <PlayerVolume volume={volume} />
+              </PlayerButton>
+            </VolumeWrapper>
+            <TitleSpan>타이틀</TitleSpan>
             <PlayerButton
               name="fullscreen"
               onClick={handleClickFullscreen}
@@ -278,18 +304,9 @@ const Player = ({ match }) => {
               <PlayerFullscreen />
             </PlayerButton>
           </BottomButtons>
-          <input
-            style={{ display: 'none' }}
-            type="range"
-            min={0}
-            max={1}
-            step="any"
-            value={volume}
-            onChange={handleVolumeChange}
-          />
         </BottomControllerWrapper>
       </ControllerWrapper>
-    </WhiteDiv>
+    </Wrapper>
   );
 };
 
