@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import '../../styles/css/playerButton.css';
+import '../../styles/css/Player/playerButton.css';
 
 const ControlButton = styled.button`
-  width: 3em;
-  height: 3em;
+  width: 2.5em;
+  height: 2.5em;
+  padding: 1em 1.2em;
   background-color: transparent;
   border: none;
-  padding: 0;
+  box-sizing: content-box;
 `;
 
 const ControlButtonSVG = styled.svg`
-  width: 3em;
-  height: 3em;
+  width: 2.5em;
+  height: 2.5em;
   cursor: pointer;
   fill: white;
   stroke: white;
@@ -39,7 +40,7 @@ const PlayerButton = ({ children, name, onClick, hoverName, setHoverName }) => {
     setHoverName(name);
   };
 
-  const handlePointerLeave = () => {
+  const handlePointerLeave = e => {
     setHoverName('');
   };
 
