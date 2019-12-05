@@ -23,13 +23,26 @@ const Wrapper = styled.div`
   color: white;
 `;
 
+const BackWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  ::after {
+    content: '뒤로 가기';
+    font-size: ${props => (props.hoverName === 'back' ? '1em' : '0.7em')};
+    margin-left: ${props => (props.hoverName === 'back' ? '0' : '-1em')};
+    visibility: ${props => (props.hoverName === 'back' ? 'visible' : 'hidden')};
+    opacity: ${props => (props.hoverName === 'back' ? 1 : 0)};
+    transition: opacity ease 0.2s, margin-left ease 0.2s, font-size ease 0.2s;
+  }
+`;
+
 const BottomProgressWrapper = styled.div`
-  // display:  ${props => (props.hoverName === 'volume' ? 'none' : 'flex')}
   display: flex;
   margin: 0 1em;
   align-items: center;
-  visibilty:  ${props => (props.hoverName === 'volume' ? 'hidden' : 'block')}
-  opacity: ${props => (props.hoverName === 'volume' ? 0 : 1)}
+  visibilty: ${props => (props.hoverName === 'volume' ? 'visible' : 'block')};
+  opacity: ${props => (props.hoverName === 'volume' ? 0 : 1)};
   transition: opacity ease 0.2s;
 `;
 
@@ -232,14 +245,17 @@ const Player = ({ match }) => {
         onProgress={handleProgress}
       />
       <ControllerWrapper>
-        <PlayerButton
-          name="back"
-          onClick={handleHistoryBack}
-          hoverName={hoverName}
-          setHoverName={setHoverName}
-        >
-          <BackButton />
-        </PlayerButton>
+        <BackWrapper hoverName={hoverName}>
+          <PlayerButton
+            name="back"
+            onClick={handleHistoryBack}
+            hoverName={hoverName}
+            setHoverName={setHoverName}
+          >
+            <BackButton />
+          </PlayerButton>
+          {/* <BackModal hoverName={hoverName} /> */}
+        </BackWrapper>
         <BottomControllerWrapper>
           <BottomProgressWrapper hoverName={hoverName}>
             <PlayerSeekSlider
