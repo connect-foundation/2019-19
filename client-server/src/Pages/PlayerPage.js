@@ -21,6 +21,18 @@ import KeyCode from '../utils/KeyCode';
 /* Styled Component */
 const Wrapper = styled.div`
   color: white;
+  cursor: ${props => (props.isActive ? '' : 'none')};
+`;
+
+const ControllerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  visibility: ${props => (props.isActive ? 'visible' : 'hidden')};
+  opacity: ${props => (props.isActive ? 1 : 0)};
+  transition: opacity ease 0.2s;
 `;
 
 const BackWrapper = styled.div`
@@ -51,13 +63,6 @@ const TimeSpan = styled.time`
   font-size: 0.9em;
 `;
 
-const ControllerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-`;
-
 const BottomControllerWrapper = styled.div`
   position: absolute;
   bottom: 0;
@@ -84,6 +89,20 @@ const toggleSeeking = () => {
   seeking = !seeking;
 };
 
+/* Hover Variable */
+let countdown;
+const changeCountdown = (callback, hoverName) => {
+  callback(true);
+  clearTimeout(countdown);
+  if (hoverName === '') {
+    countdown = setTimeout(() => {
+      if (hoverName === '') {
+        callback(false);
+      }
+    }, 4000);
+  }
+};
+
 /* Component */
 const Player = ({ match }) => {
   /* Context */
@@ -101,6 +120,7 @@ const Player = ({ match }) => {
   const player = createRef();
 
   /* State */
+  const [isActive, setIsActive] = useState(true);
   const [duration, setDuration] = useState(0); // 영상의 총 길이
   const [playing, setPlaying] = useState(false); // 재생중 여부
   const [playedSeconds, setPlayedSeconds] = useState(0); // playedSeconds는 0 ~ duration 사이의 값
@@ -115,6 +135,11 @@ const Player = ({ match }) => {
     setShowNav(false);
   }, []);
 
+  /* Mouse Hover Event */
+  const handleMouseMove = () => {
+    changeCountdown(setIsActive, hoverName);
+  };
+
   /* Click Event handler */
   // Initialize duration of video
   const handleDuration = dur => {
@@ -128,6 +153,19 @@ const Player = ({ match }) => {
 
   // Play(Pause) Button
   const handlePlayAndPause = () => {
+    setPlaying(!playing);
+  };
+
+  const handleWrapperPlayAndPause = e => {
+    const { tagName } = e.target;
+    if (
+      tagName === 'BUTTON' ||
+      tagName === 'svg' ||
+      tagName === 'use' ||
+      tagName === 'INPUT'
+    ) {
+      return;
+    }
     setPlaying(!playing);
   };
 
@@ -194,7 +232,7 @@ const Player = ({ match }) => {
   // Fullscreen Button
   const handleClickFullscreen = () => {
     if (screenfull.isEnabled) {
-      screenfull.request(player.current.getInternalPlayer());
+      screenfull.toggle();
     }
   };
 
@@ -232,7 +270,12 @@ const Player = ({ match }) => {
 
   /* Render */
   return (
-    <Wrapper onKeyUp={handleKeyEvent}>
+    <Wrapper
+      onKeyUp={handleKeyEvent}
+      onMouseMove={handleMouseMove}
+      isActive={isActive}
+      onClick={handleWrapperPlayAndPause}
+    >
       <ReactPlayer
         ref={player}
         width="100%"
@@ -244,7 +287,7 @@ const Player = ({ match }) => {
         onDuration={handleDuration}
         onProgress={handleProgress}
       />
-      <ControllerWrapper>
+      <ControllerWrapper isActive={isActive}>
         <BackWrapper hoverName={hoverName}>
           <PlayerButton
             name="back"
@@ -254,7 +297,6 @@ const Player = ({ match }) => {
           >
             <BackButton />
           </PlayerButton>
-          {/* <BackModal hoverName={hoverName} /> */}
         </BackWrapper>
         <BottomControllerWrapper>
           <BottomProgressWrapper hoverName={hoverName}>

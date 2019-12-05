@@ -12,7 +12,7 @@ const VolumeModalWrapper = styled.div`
   visibility: ${props => (props.isActive ? 'visible' : 'hidden')}
   opacity: ${props => (props.isActive ? 1 : 0)}
   transform: rotate(270deg) translateX(5em) translateY(-2em);
-  transition: opacity ease 0.1s;
+  transition: all ease 0.25s;
   will-change: transform, opacity;
   `;
 

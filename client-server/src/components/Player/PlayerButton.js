@@ -7,6 +7,8 @@ const ControlButton = styled.button`
   width: 2.5em;
   height: 2.5em;
   padding: 1em 1.2em;
+  cursor: pointer;
+  margin: 0;
   background-color: transparent;
   border: none;
   box-sizing: content-box;
@@ -20,10 +22,12 @@ const ControlButtonSVG = styled.svg`
   stroke: white;
   stroke-width: 0;
   transition: all ease 0.2s;
+  transform: ${props => (props.isHover ? 'scale(1.2)' : '')};
 `;
 
 const PlayerButton = ({ children, name, onClick, hoverName, setHoverName }) => {
   const [isActive, setIsActive] = useState(true);
+  const [isHover, setIsHover] = useState(false);
 
   /* For Hover Effect */
   const checkActive = () => {
@@ -38,10 +42,12 @@ const PlayerButton = ({ children, name, onClick, hoverName, setHoverName }) => {
   /* Handle Pointer Event */
   const handlePointerEnter = () => {
     setHoverName(name);
+    setIsHover(true);
   };
 
-  const handlePointerLeave = e => {
+  const handlePointerLeave = () => {
     setHoverName('');
+    setIsHover(false);
   };
 
   return (
@@ -53,6 +59,7 @@ const PlayerButton = ({ children, name, onClick, hoverName, setHoverName }) => {
       onPointerLeave={handlePointerLeave}
     >
       <ControlButtonSVG
+        isHover={isHover}
         className={`svg-icon svg-icon-${name} ${
           isActive ? '' : 'svg-icon-blurred'
         }`}

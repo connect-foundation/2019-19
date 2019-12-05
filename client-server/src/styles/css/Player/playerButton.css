@@ -1,7 +1,3 @@
-.svg-icon:hover {
-  transform: scale(1.2);
-}
-
 .svg-icon-blurred {
   opacity: 0.5;
 }
