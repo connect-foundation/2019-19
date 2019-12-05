@@ -237,8 +237,7 @@ const Player = ({ match }) => {
   };
 
   /* Keyboard Event Handler */
-  const handleKeyEvent = e => {
-    e.preventDefault();
+  const handleKeyDownEvent = e => {
     switch (e.keyCode) {
       case KeyCode.leftArrowCode:
         handleSeekButtonBackward();
@@ -251,9 +250,6 @@ const Player = ({ match }) => {
         break;
       case KeyCode.downArrowCode:
         handleVolumeDown();
-        break;
-      case KeyCode.enterCode:
-        handlePlayAndPause();
         break;
       case KeyCode.spaceCode:
         handlePlayAndPause();
@@ -268,10 +264,18 @@ const Player = ({ match }) => {
     }
   };
 
+  const handleKeyUpEvent = e => {
+    if (e.keyCode === KeyCode.enterCode) {
+      e.preventDefault();
+      handlePlayAndPause();
+    }
+  };
+
   /* Render */
   return (
     <Wrapper
-      onKeyUp={handleKeyEvent}
+      onKeyDown={handleKeyDownEvent}
+      onKeyUp={handleKeyUpEvent}
       onMouseMove={handleMouseMove}
       isActive={isActive}
       onClick={handleWrapperPlayAndPause}
