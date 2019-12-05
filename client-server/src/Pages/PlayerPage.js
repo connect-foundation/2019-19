@@ -237,12 +237,9 @@ const Player = ({ match }) => {
   };
 
   /* Keyboard Event Handler */
-  const handleKeyUpEvent = e => {
+  const handleKeyDownEvent = e => {
     e.preventDefault();
     switch (e.keyCode) {
-      case CharCode.spaceCode:
-        handlePlayAndPause();
-        break;
       case CharCode.leftArrowCode:
         handleSeekButtonBackward();
         break;
@@ -254,6 +251,16 @@ const Player = ({ match }) => {
         break;
       case CharCode.downArrowCode:
         handleVolumeDown();
+        break;
+      default:
+    }
+  };
+
+  const handleKeyUpEvent = e => {
+    e.preventDefault();
+    switch (e.keyCode) {
+      case CharCode.spaceCode:
+        handlePlayAndPause();
         break;
       default:
     }
@@ -280,6 +287,7 @@ const Player = ({ match }) => {
   /* Render */
   return (
     <Wrapper
+      onKeyDown={handleKeyDownEvent}
       onKeyPress={handleKeyPressEvent}
       onKeyUp={handleKeyUpEvent}
       onMouseMove={handleMouseMove}
