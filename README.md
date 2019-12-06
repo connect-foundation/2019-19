@@ -6,7 +6,7 @@
 > #### Netflix clone project
 > 컨텐츠 맞춤 추천을 기반으로 세상 모든 비디오를 스트리밍하는 서비스입니다.
 - [Documentations](https://github.com/connect-foundation/2019-19/wiki)
-
+- [Demo](http://www.abdvideo.ml/)
 ### 개발기간
 - 2019.11.4 ~ 진행중
 
