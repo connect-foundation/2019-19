@@ -27,6 +27,13 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
   }
+<<<<<<< HEAD
+
+  *:focus {
+    outline: none;
+  }
+=======
+>>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
 `;
 
 const Root = () => {
