@@ -17,7 +17,7 @@ router.get(
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    failureRedirect: 'http://localhost:8000/fail',
+    failureRedirect: process.env.CLIENT_SERVER_URL,
   }),
   function(req, res) {
     if (req.user) jwt.issueNewToken(req, res);

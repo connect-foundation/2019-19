@@ -54,18 +54,27 @@ const VolumeInput = styled.input`
   }
 
   ::-webkit-slider-thumb {
+<<<<<<< HEAD
     -webkit-appearance: none;
     width: 1.1em;
     height: 1.1em;
     margin-top: -4px;
     border: none;
     border-radius: 10px;
+=======
+    width: 1.1em;
+    height: 1.1em;
+    border: none;
+>>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
     background: ${props => props.theme.MainColor};
     transition: all ease 0.25s;
   }
 
   ::-webkit-slider-runnable-track {
+<<<<<<< HEAD
     -webkit-appearance: none;
+=======
+>>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
     height: 0.5em;
     transition: all ease 0.25s;
     background: ${props => props.theme.SliderColor2};

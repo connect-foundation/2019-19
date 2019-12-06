@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import IconCross from './iconSvg';
 import CheckBoxLabel from '../StyledComponents/CheckBoxLabel';
 import CheckBox from '../StyledComponents/CheckBox';
+import ENV from '../../../env';
 
 const axios = require('axios');
 
-const apiServer = 'http://localhost:8000';
+const apiServer = ENV.apiServer;
 
 const PostData = (userId, thumbNailId, URL) => {
   axios.post(`${apiServer}/like/${URL}`, {

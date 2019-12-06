@@ -7,10 +7,11 @@ import LikeBtn from '../../like/like';
 import MylistBtn from '../../like/mylist';
 import LoginContext from '../../../loginContextApi/context';
 import './Content.scss';
+import ENV from '../../../../env';
 
 const axios = require('axios');
 
-const apiServer = 'http://localhost:8000';
+const apiServer = ENV.apiServer;
 
 const Content = ({ movie, onClose }) => {
   const { userInfo } = useContext(LoginContext);
