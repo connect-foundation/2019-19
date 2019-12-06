@@ -67,47 +67,51 @@ const es_videoId = process.env.es_videoId;
 const es_likes = process.env.es_likes;
 const es_category = process.env.es_category;
 const es_name = process.env.es_name;
+
 const query = require('../utils/query.js');
 
-const filter_Size = 40;
-const Search_Size = 40;
+const FILTER_SIZE = 40;
+const SEARCH_SIZE = 40;
 
 const FilterController = {
 
-    filter_controller : async function(target,order,category_list) {
+    filter_controller : async function(column,order,category) {
 
         let resp = null;
+        if(column===es_videoId || column===es_likes){
 
-        if(target===es_videoId || target===es_likes){
-
-            resp = await query.filter_pipe(target,order,query.get_filtering, filter_Size);
+            resp = await query.get_filtering(column, order, FILTER_SIZE);
         }
-        else if(target==es_category){
+        else if(category==es_category){
 
-            resp = await query.filter_pipe(target,null,query.get_category, filter_Size, category_list);
+            
+            resp = await query.get_category(column, order, FILTER_SIZE);
         }
-        
         console.log(resp);
+        return resp;
 
     }
 };
 
-
 const SearchController = {
 
-    get_result: async function(column,order,target){
+    get_result: async function(column,target,order){
 
         let resp = "";
-        resp = await query.filter_pipe(column,order,query.get_search, filter_Size, null,target);
-        console.log(resp);
+        resp = await query.get_search(column,target,order,SEARCH_SIZE);
+        
+        //console.log(resp);
+        return resp;
     }
 
     
-}
+}   
+//console.log(query.get_filtering("name","asc"));
+//console.log(query.get_category(['게','코']),'asc');
+//console.log(query.get_search("category","게","asc",SEARCH_SIZE));
+//console.log(query.get_search("name","Au",FILTER_SIZE));
 
-//SearchController.get_result(es_name,"asc",'Aspernatur veritatis quia');
-
-//FilterController.filter_controller(es_category,"desc",['스포츠','게임']);
-//FilterController.filter_controller(es_videoId,"asc");   //비디오 번호순
-//FilterController.filter_controller(es_likes,"desc");    //좋아요 순
-//FilterController.filter_controller("reg_date","desc");  //최신 등록 컨텐츠 순
+//console.log(SearchController.get_result("name","Au","asc"));
+//console.log(SearchController.get_result('category','게','asc'));
+//console.log(FilterController.filter_controller(['게임','코미디'],'asc','category'));
+//console.log(FilterController.filter_controller('name','asc'));
