@@ -1,5 +1,9 @@
 import React from 'react';
 import MainThumbNail from '../components/MainThumbNail';
+<<<<<<< HEAD
+
+const Home = () => {
+=======
 import Slider from '../components/Carousels/NetflixSlider';
 import ENV from '../../env';
 
@@ -39,6 +43,7 @@ const Home = () => {
   }, []);
 
   if (contentsOnLoading) return <MainThumbNail />;
+>>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
   return (
     <>
       <MainThumbNail />

@@ -61,6 +61,20 @@ const Slider = styled.input`
   ::-webkit-slider-runnable-track {
     height: 0.25em;
     transition: all ease 0.25s;
+    border: none;
+    border-radius: 10px;
+    background: ${props => props.theme.MainColor};
+    transition: all ease 0.25s;
+  }
+
+  :hover::-webkit-slider-thumb {
+    width: 1.35em;
+    height: 1.35em;
+  }
+
+  ::-webkit-slider-runnable-track {
+    height: 0.25em;
+    transition: all ease 0.25s;
     background: ${props => props.theme.SliderColor2};
   }
 
