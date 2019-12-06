@@ -312,7 +312,7 @@ const Player = ({ match }) => {
           <BottomProgressWrapper hoverName={hoverName}>
             <SeekSlider
               duration={duration}
-              playedSeconds={playedSeconds}
+              playedSeconds={Number(playedSeconds)}
               handleSeekSliderMouseDown={handleSeekSliderMouseDown}
               handleSeekSliderChange={handleSeekSliderChange}
               handleSeekSliderMouseUp={handleSeekSliderMouseUp}

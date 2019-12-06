@@ -43,15 +43,24 @@ const Slider = styled.input`
   }
 
   ::-webkit-slider-thumb {
+    -webkit-appearance: none
+    width: 1.1em;
+    height: 1.1em;
+    margin-top: -5.25px;
     border: none;
+    border-radius: 10px;
     background: ${props => props.theme.MainColor};
+    transition: all ease 0.25s;
   }
 
   :hover::-webkit-slider-thumb {
-    transform: scale(1.1);
+    width: 1.35em;
+    height: 1.35em;
   }
 
   ::-webkit-slider-runnable-track {
+    height: 0.25em;
+    transition: all ease 0.25s;
     background: ${props => props.theme.SliderColor2};
   }
 
@@ -60,8 +69,11 @@ const Slider = styled.input`
   }
 
   ::-ms-thumb {
+    width: 1.1em;
+    height: 1.1em;
     border: none;
     background: ${props => props.theme.MainColor};
+    transition: all ease 0.25s;
   }
 
   :hover::-ms-thumb {
@@ -69,7 +81,9 @@ const Slider = styled.input`
   }
 
   ::-ms-track {
-    background: ${props => props.theme.SliderColor2};
+    height: 0.25em;
+    transition: all ease 0.25s;
+    background: ${props => props.theme.MainColor};
   }
 
   :hover::-ms-track {
@@ -77,7 +91,7 @@ const Slider = styled.input`
   }
 
   ::-ms-fill-lower {
-    background: ${props => props.theme.SliderColor2};
+    background: ${props => props.theme.MainColor};
   }
 
   ::-ms-fill-upper {

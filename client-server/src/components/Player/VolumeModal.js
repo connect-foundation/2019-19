@@ -54,14 +54,18 @@ const VolumeInput = styled.input`
   }
 
   ::-webkit-slider-thumb {
+    -webkit-appearance: none;
     width: 1.1em;
     height: 1.1em;
+    margin-top: -4px;
     border: none;
+    border-radius: 10px;
     background: ${props => props.theme.MainColor};
     transition: all ease 0.25s;
   }
 
   ::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
     height: 0.5em;
     transition: all ease 0.25s;
     background: ${props => props.theme.SliderColor2};

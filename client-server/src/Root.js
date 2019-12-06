@@ -27,6 +27,10 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
   }
+
+  *:focus {
+    outline: none;
+  }
 `;
 
 const Root = () => {
