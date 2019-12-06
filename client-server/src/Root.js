@@ -3,6 +3,7 @@ import React from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { NavbarProvider } from './contexts/NavbarContext';
 import Routes from './components/Routes';
+import Login from './loginContextApi/login';
 import theme from './styles/css/theme';
 
 const GlobalStyles = createGlobalStyle`
@@ -33,7 +34,9 @@ const Root = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <NavbarProvider>
-        <Routes />
+        <Login>
+          <Routes />
+        </Login>
       </NavbarProvider>
     </ThemeProvider>
   );

@@ -1,24 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-const StyledText = styled.p`
-  padding: 0.75em 2.3em;
+const StyledText = styled.div`
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 1rem;
   border-radius: 0.2vw;
   box-shadow: none;
-  font-size: 1.1vw;
+  font-size: 4rem
   margin-bottom: 0.75em;
   color: white;
-  top: 50px;
-  width: 30%;
+  width: 40%;
   margin-left: 5%;
 `;
 
-const MainText = ({ name, contents }) => {
-  return (
-    <StyledText>
-      <h2>{name}</h2>
-    </StyledText>
-  );
+const MainText = ({ name }) => {
+  return <StyledText>{name}</StyledText>;
+};
+
+MainText.propTypes = {
+  name: PropTypes.string.isRequired,
 };
 
 export default MainText;

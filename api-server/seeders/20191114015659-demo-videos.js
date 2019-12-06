@@ -17,24 +17,26 @@ const videoCategoryDomain = [
 ];
 
 const demoData = [];
-for (let i = 0; i < 200; i++) {
+for (let i = 0; i < 200; i += 1) {
   const videoObj = {
     video_id: null,
-    name: `영상 ${i}`,
+    name: casual.title,
     category: casual.random_element(videoCategoryDomain),
     likes: casual.integer(1, 500),
     reg_date: new Date(Date.now()),
-    url: 'https:www.naver.com',
+    thumbnail_img_url: `https://picsum.photos/id/${i}/1600/640`,
+    thumbnai_video_url: null,
+    streaming_url: null,
   };
   demoData.push(videoObj);
 }
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: queryInterface => {
     return queryInterface.bulkInsert('videos', demoData, {});
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.bulkDelete('videos', null, {});
   },
 };

@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'User',
     {
       user_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         primaryKey: true,
       },
       name: DataTypes.STRING,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
   User.associate = models => {
-    User.hasMany(models.MyVideo, {
+    User.hasMany(models.Myvideos, {
       foreignKey: 'fk_user_id',
       sourceKey: 'user_id',
     });

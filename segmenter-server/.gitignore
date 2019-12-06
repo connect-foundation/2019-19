@@ -1,0 +1,7 @@
+node_modules
+videos
+.env
+/*.mp4
+*.ts
+*.m3u8
+docs/*.md

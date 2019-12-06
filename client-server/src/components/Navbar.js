@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logo from '../../dist/play.png';
 import PageBtn from './PageBtn';
+import LoginContext from '../loginContextApi/context';
 
 const StyledNavbarContainer = styled.div`
   display: flex;
@@ -12,7 +14,7 @@ const StyledNavbarContainer = styled.div`
   position: sticky;
   font-family: 'Nanum Gothic', sans-serif;
   background-color: rgb(20, 20, 20);
-  z-index: 1;
+  z-index: 10;
 `;
 const StyledLogo = styled.img`
   float: left;
@@ -36,6 +38,14 @@ const StyledLink = {
 };
 
 const Navbar = () => {
+  const { username, setUsername } = useContext(LoginContext);
+
+  const Logout = () => {
+    Cookies.remove('user_info');
+    setUsername(null);
+    window.location.reload();
+  };
+
   return (
     <StyledNavbarContainer>
       <Link to="/" style={StyledLink}>
@@ -56,9 +66,13 @@ const Navbar = () => {
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
-        <Link to="/Login" style={StyledLink}>
-          <PageBtn name="로그인" />
-        </Link>
+        {username ? (
+          <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
+        ) : (
+          <a href="http://localhost:8000/oauth/google" style={StyledLink}>
+            <PageBtn name="로그인" />
+          </a>
+        )}
       </StyledNavRight>
     </StyledNavbarContainer>
   );
