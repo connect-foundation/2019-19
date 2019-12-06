@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CheckBoxLabel from '../StyledComponents/CheckBoxLabel';
 import CheckBox from '../StyledComponents/CheckBox';
+import ENV from '../../../env';
 
 const axios = require('axios');
 
-const apiServer = 'http://localhost:8000';
+const apiServer = ENV.apiServer;
 
 const PostData = (userId, videoId, URL) => {
   axios.post(`${apiServer}/mylist/${URL}`, {

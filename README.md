@@ -57,6 +57,19 @@ API_KEY=
 PRESET360ID=
 PRESET480ID=
 PRESET720ID=
+
+#elastic-server
+access_key=
+secret_key=
+search_dir=
+bucket_name=
+movie_table=
+public_ip=
+index=
+es_videoId=
+es_likes=
+es_category=
+es_name=
 ```
 
 ### 기능
