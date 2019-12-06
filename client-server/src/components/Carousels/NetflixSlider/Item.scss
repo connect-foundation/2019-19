@@ -1,0 +1,33 @@
+.item {
+  flex: 0 0 19.7%;
+  transition: transform 400ms ease 100ms;
+  margin: 0 0.1rem;
+  position: relative;
+  min-height: 12rem;
+  img {
+    height: 100%;
+    width: 100%;
+    vertical-align: top;
+  }
+  .content-info {
+    position: absolute;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+    left: 10%;
+    top: 10%;
+    font-size: 150%;
+    padding: 5%;
+  }
+  video {
+    height: 100%;
+    width: 100%;
+    vertical-align: top;
+    transition: opacity 2s;
+    opacity: 0.1;
+    z-index: 3;
+    object-fit: fill;
+  }
+  video:hover {
+    opacity: 1;
+  }
+}

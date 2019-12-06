@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logo from '../../dist/play.png';
 import PageBtn from './PageBtn';
-
-const serverURL = 'http://localhost:8000';
+import LoginContext from '../loginContextApi/context';
 
 const StyledNavbarContainer = styled.div`
   display: flex;
@@ -16,7 +14,7 @@ const StyledNavbarContainer = styled.div`
   position: sticky;
   font-family: 'Nanum Gothic', sans-serif;
   background-color: rgb(20, 20, 20);
-  z-index: 1;
+  z-index: 10;
 `;
 const StyledLogo = styled.img`
   float: left;
@@ -40,22 +38,11 @@ const StyledLink = {
 };
 
 const Navbar = () => {
-  const [userInfo, setUserInfo] = useState();
-
-  useEffect(() => {
-    axios
-      .post(`${serverURL}/oauth/google/verify`, {
-        userToken: Cookies.get('user_info'),
-      })
-      .then(response => {
-        setUserInfo(response.data.userName);
-      })
-      .catch(err => console.log(err));
-  }, []);
+  const { username, setUsername } = useContext(LoginContext);
 
   const Logout = () => {
     Cookies.remove('user_info');
-    setUserInfo(null);
+    setUsername(null);
     window.location.reload();
   };
 
@@ -67,17 +54,23 @@ const Navbar = () => {
       <Link to="/" style={StyledLink}>
         <PageBtn name="홈" />
       </Link>
-      <Link to="/Recent" style={StyledLink}>
+      <Link to="/recent" style={StyledLink}>
         <PageBtn name="최신 컨텐츠" />
       </Link>
-      <Link to="/Popular" style={StyledLink}>
+      <Link to="/popular" style={StyledLink}>
         <PageBtn name="인기 컨텐츠" />
       </Link>
+      {username ? (
+        <Link to="/my-videos" style={StyledLink}>
+          <PageBtn name="내가 찜한 컨텐츠" />
+        </Link>
+      ) : null}
+
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
-        {userInfo ? (
-          <PageBtn name={`${userInfo} 로그아웃`} onClick={Logout} />
+        {username ? (
+          <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (
           <a href="http://localhost:8000/oauth/google" style={StyledLink}>
             <PageBtn name="로그인" />
