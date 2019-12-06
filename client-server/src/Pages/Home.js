@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import MainThumbNail from '../components/MainThumbNail';
+<<<<<<< HEAD
+
+const Home = () => {
+=======
 import Slider from '../components/Carousels/NetflixSlider';
 import ENV from '../../env';
 
@@ -40,24 +43,10 @@ const Home = () => {
   }, []);
 
   if (contentsOnLoading) return <MainThumbNail />;
+>>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
   return (
     <>
       <MainThumbNail />
-      <Slider categoryName="스포츠">
-        {sportsContents.map(content => (
-          <Slider.Item movie={content._source} key={content._source.video_id} />
-        ))}
-      </Slider>
-      <Slider categoryName="교육">
-        {eduContents.map(content => (
-          <Slider.Item movie={content._source} key={content._source.video_id} />
-        ))}
-      </Slider>
-      <Slider categoryName="음악">
-        {musicContents.map(content => (
-          <Slider.Item movie={content._source} key={content._source.video_id} />
-        ))}
-      </Slider>
     </>
   );
 };
