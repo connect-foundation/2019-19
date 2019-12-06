@@ -43,7 +43,6 @@ const Slider = styled.input`
   }
 
   ::-webkit-slider-thumb {
-<<<<<<< HEAD
     -webkit-appearance: none
     width: 1.1em;
     height: 1.1em;
@@ -62,17 +61,6 @@ const Slider = styled.input`
   ::-webkit-slider-runnable-track {
     height: 0.25em;
     transition: all ease 0.25s;
-=======
-    border: none;
-    background: ${props => props.theme.MainColor};
-  }
-
-  :hover::-webkit-slider-thumb {
-    transform: scale(1.1);
-  }
-
-  ::-webkit-slider-runnable-track {
->>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
     background: ${props => props.theme.SliderColor2};
   }
 
@@ -81,16 +69,11 @@ const Slider = styled.input`
   }
 
   ::-ms-thumb {
-<<<<<<< HEAD
     width: 1.1em;
     height: 1.1em;
     border: none;
     background: ${props => props.theme.MainColor};
     transition: all ease 0.25s;
-=======
-    border: none;
-    background: ${props => props.theme.MainColor};
->>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
   }
 
   :hover::-ms-thumb {
@@ -98,13 +81,9 @@ const Slider = styled.input`
   }
 
   ::-ms-track {
-<<<<<<< HEAD
     height: 0.25em;
     transition: all ease 0.25s;
     background: ${props => props.theme.MainColor};
-=======
-    background: ${props => props.theme.SliderColor2};
->>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
   }
 
   :hover::-ms-track {
@@ -112,11 +91,7 @@ const Slider = styled.input`
   }
 
   ::-ms-fill-lower {
-<<<<<<< HEAD
     background: ${props => props.theme.MainColor};
-=======
-    background: ${props => props.theme.SliderColor2};
->>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
   }
 
   ::-ms-fill-upper {
