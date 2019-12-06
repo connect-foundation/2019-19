@@ -12,12 +12,12 @@
   }
   &__background {
     left: 0;
-    xwright: 0;
+    right: 0;
     &__shadow {
       left: 0;
       right: 0;
       background: #000;
-      width: 30%;
+      width: 40%;
       z-index: 2;
       &:before {
         content: '';
@@ -33,11 +33,11 @@
     &__image {
       height: 100%;
       width: 70vw;
-      object-fit: fill;
       background-position: center 10%;
       background-size: cover;
       z-index: 1;
       right: 0;
+      object-fit: fill;
     }
   }
   &__area {
@@ -77,7 +77,7 @@
     color: #fff;
     width: 40px;
     height: 40px;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.1);
     outline: none;
     border: none;
     position: absolute;
