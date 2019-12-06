@@ -1,0 +1,11 @@
+.svg-icon-blurred {
+  opacity: 0.5;
+}
+
+div .player-button-fullscreen {
+  margin-left: auto;
+}
+
+div .player-button-back {
+  margin: 2em 0 2em 2em;
+}
