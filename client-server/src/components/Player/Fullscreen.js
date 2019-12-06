@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayerFullscreen = () => {
+const Fullscreen = () => {
   return (
     <g transform="translate(2, 6)">
       <polygon points="8 0 6 0 5.04614258 0 0 0 0 5 2 5 2 2 8 2" />
@@ -20,4 +20,4 @@ const PlayerFullscreen = () => {
   );
 };
 
-export default PlayerFullscreen;
+export default Fullscreen;

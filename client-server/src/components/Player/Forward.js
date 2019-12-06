@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayerForward = () => {
+const Forward = () => {
   return (
     <g stroke="none" strokeWidth="1" fill="none">
       <g transform="translate(14.000000, 13.000000) scale(-1, 1) translate(-14.000000, -13.000000) translate(4.000000, 1.000000)">
@@ -26,4 +26,4 @@ const PlayerForward = () => {
   );
 };
 
-export default PlayerForward;
+export default Forward;

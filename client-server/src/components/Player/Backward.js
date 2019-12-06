@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayerBackward = () => {
+const Backward = () => {
   return (
     <g stroke="none" strokeWidth="1" fill="none">
       <path
@@ -24,4 +24,4 @@ const PlayerBackward = () => {
   );
 };
 
-export default PlayerBackward;
+export default Backward;

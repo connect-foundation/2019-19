@@ -5,15 +5,15 @@ import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
 import PropTypes from 'prop-types';
 import { NavbarContext } from '../contexts/NavbarContext';
-import PlayerSeekSlider from '../components/Player/PlayerSeekSlider';
-import PlayerButton from '../components/Player/PlayerButton';
-import PlayerPlay from '../components/Player/PlayerPlay';
-import PlayerPause from '../components/Player/PlayerPause';
-import PlayerForward from '../components/Player/PlayerForward';
-import PlayerBackward from '../components/Player/PlayerBackward';
-import PlayerVolume from '../components/Player/PlayerVolume';
+import SeekSlider from '../components/Player/SeekSlider';
+import Button from '../components/Player/Button';
+import Play from '../components/Player/Play';
+import Pause from '../components/Player/Pause';
+import Forward from '../components/Player/Forward';
+import Backward from '../components/Player/Backward';
+import Volume from '../components/Player/VolumeButton';
 import VolumeModal from '../components/Player/VolumeModal';
-import PlayerFullscreen from '../components/Player/PlayerFullscreen';
+import Fullscreen from '../components/Player/Fullscreen';
 import BackButton from '../components/BackButton';
 import Time from '../utils/Time';
 import CharCode from '../utils/CharCode';
@@ -158,8 +158,6 @@ const Player = ({ match }) => {
 
   const handleWrapperPlayAndPause = e => {
     const { tagName } = e.target;
-    console.log(e.currentTarget);
-    e.target.focus();
     if (
       tagName === 'BUTTON' ||
       tagName === 'svg' ||
@@ -301,18 +299,18 @@ const Player = ({ match }) => {
       />
       <ControllerWrapper isActive={isActive}>
         <BackWrapper hoverName={hoverName}>
-          <PlayerButton
+          <Button
             name="back"
             onClick={handleHistoryBack}
             hoverName={hoverName}
             setHoverName={setHoverName}
           >
             <BackButton />
-          </PlayerButton>
+          </Button>
         </BackWrapper>
         <BottomControllerWrapper>
           <BottomProgressWrapper hoverName={hoverName}>
-            <PlayerSeekSlider
+            <SeekSlider
               duration={duration}
               playedSeconds={playedSeconds}
               handleSeekSliderMouseDown={handleSeekSliderMouseDown}
@@ -324,30 +322,30 @@ const Player = ({ match }) => {
             </TimeSpan>
           </BottomProgressWrapper>
           <BottomButtons>
-            <PlayerButton
+            <Button
               name={playing ? 'pause' : 'play'}
               onClick={handlePlayAndPause}
               hoverName={hoverName}
               setHoverName={setHoverName}
             >
-              {playing ? <PlayerPause /> : <PlayerPlay />}
-            </PlayerButton>
-            <PlayerButton
+              {playing ? <Pause /> : <Play />}
+            </Button>
+            <Button
               name="backward"
               onClick={handleSeekButtonBackward}
               hoverName={hoverName}
               setHoverName={setHoverName}
             >
-              <PlayerBackward />
-            </PlayerButton>
-            <PlayerButton
+              <Backward />
+            </Button>
+            <Button
               name="forward"
               onClick={handleSeekButtonForward}
               hoverName={hoverName}
               setHoverName={setHoverName}
             >
-              <PlayerForward />
-            </PlayerButton>
+              <Forward />
+            </Button>
             <VolumeWrapper>
               <VolumeModal
                 volume={volume}
@@ -355,24 +353,24 @@ const Player = ({ match }) => {
                 hoverName={hoverName}
                 setHoverName={setHoverName}
               />
-              <PlayerButton
+              <Button
                 name="volume"
                 onClick={handleMute}
                 hoverName={hoverName}
                 setHoverName={setHoverName}
               >
-                <PlayerVolume volume={volume} />
-              </PlayerButton>
+                <Volume volume={volume} />
+              </Button>
             </VolumeWrapper>
             <TitleSpan>타이틀</TitleSpan>
-            <PlayerButton
+            <Button
               name="fullscreen"
               onClick={handleClickFullscreen}
               hoverName={hoverName}
               setHoverName={setHoverName}
             >
-              <PlayerFullscreen />
-            </PlayerButton>
+              <Fullscreen />
+            </Button>
           </BottomButtons>
         </BottomControllerWrapper>
       </ControllerWrapper>

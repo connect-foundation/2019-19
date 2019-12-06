@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
-import Recent from '../Pages/RecentPage';
-import Login from '../Pages/LoginPage';
-import Home from '../Pages/HomePage';
-import Popular from '../Pages/PopularPage';
+import Recent from '../Pages/Recent';
+import Login from '../Pages/Login';
+import Home from '../Pages/Home';
+import Popular from '../Pages/Popular';
 // eslint-disable-next-line import/no-cycle
 import Navbar from './Navbar';
-import Player from '../Pages/PlayerPage';
+import Player from '../Pages/Player';
 import { NavbarContext } from '../contexts/NavbarContext';
 
 const Routes = () => {
@@ -18,8 +18,7 @@ const Routes = () => {
       <Route path="/Popular" component={Popular} />
       <Route path="/Recent" component={Recent} />
       <Route path="/Login" component={Login} />
-      {/* <Route exact path="/" component={Home} /> */}
-      <Route exact path="/" component={Player} />
+      <Route exact path="/" component={Home} />
       <Route path="/Player/:videoId" component={Player} />
     </Router>
   );

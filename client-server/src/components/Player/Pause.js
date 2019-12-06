@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayerPause = () => {
+const Pause = () => {
   return (
     <>
       <rect x="9" y="6" width="4" height="16" />
@@ -9,4 +9,4 @@ const PlayerPause = () => {
   );
 };
 
-export default PlayerPause;
+export default Pause;

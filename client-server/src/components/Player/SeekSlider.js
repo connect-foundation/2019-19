@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const SeekSlider = styled.input`
+const Slider = styled.input`
   width: 100%;
   cursor: pointer;
   margin: 0;
@@ -85,7 +85,7 @@ const SeekSlider = styled.input`
   }
 `;
 
-const PlayerSeekSlider = ({
+const SeekSlider = ({
   duration,
   playedSeconds,
   handleSeekSliderMouseDown,
@@ -94,7 +94,7 @@ const PlayerSeekSlider = ({
 }) => {
   return (
     <>
-      <SeekSlider
+      <Slider
         type="range"
         min={0}
         max={duration}
@@ -108,7 +108,7 @@ const PlayerSeekSlider = ({
   );
 };
 
-PlayerSeekSlider.propTypes = {
+SeekSlider.propTypes = {
   duration: PropTypes.number.isRequired,
   playedSeconds: PropTypes.number.isRequired,
   handleSeekSliderMouseDown: PropTypes.func.isRequired,
@@ -116,4 +116,4 @@ PlayerSeekSlider.propTypes = {
   handleSeekSliderMouseUp: PropTypes.func.isRequired,
 };
 
-export default PlayerSeekSlider;
+export default SeekSlider;

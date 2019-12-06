@@ -4,7 +4,7 @@ import VolumeMedium from './VolumeMedium';
 import VolumeLow from './VolumeLow';
 import VolumeMuted from './VolumeMuted';
 
-const PlayerVolume = ({ volume }) => {
+const VolumeButton = ({ volume }) => {
   const changeButtonByVolume = () => {
     if (volume >= 0.66) {
       return <VolumeHigh />;
@@ -21,4 +21,4 @@ const PlayerVolume = ({ volume }) => {
   return changeButtonByVolume(volume);
 };
 
-export default PlayerVolume;
+export default VolumeButton;

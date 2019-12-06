@@ -25,7 +25,7 @@ const ControlButtonSVG = styled.svg`
   transform: ${props => (props.isHover ? 'scale(1.2)' : '')};
 `;
 
-const PlayerButton = ({ children, name, onClick, hoverName, setHoverName }) => {
+const Button = ({ children, name, onClick, hoverName, setHoverName }) => {
   const [isActive, setIsActive] = useState(true);
   const [isHover, setIsHover] = useState(false);
 
@@ -74,7 +74,7 @@ const PlayerButton = ({ children, name, onClick, hoverName, setHoverName }) => {
   );
 };
 
-PlayerButton.propTypes = {
+Button.propTypes = {
   children: PropTypes.element.isRequired,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
@@ -82,4 +82,4 @@ PlayerButton.propTypes = {
   setHoverName: PropTypes.func.isRequired,
 };
 
-export default PlayerButton;
+export default Button;
