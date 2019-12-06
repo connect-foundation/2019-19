@@ -41,8 +41,8 @@ const useSliding = (elementWidth, countElements) => {
     }
   };
 
-  const hasNext = countElements === 25 ? 1 : 0; // 버튼 표시 유무
-  const hasPrev = countElements === 25 ? 1 : 0;
+  const hasNext = countElements === 25 ? true : false; // 버튼 표시 유무
+  const hasPrev = countElements === 25 ? true : false;
 
   return {
     handlePrev,
