@@ -1,17 +1,17 @@
-const fs = require("fs");
-const path = require("path");
-const moment = require("moment");
-require("dotenv").config();
+const fs = require('fs');
+const path = require('path');
+const moment = require('moment');
+require('dotenv').config();
 
-const Storage = require("../modules/Storage");
-const Transcoder = require("../modules/Transcoder");
-const Parser = require("../modules/Parser");
-const Segmenter = require("../modules/Segmenter");
-const Video = require("../models/Video");
+const Storage = require('../modules/Storage');
+const Transcoder = require('../modules/Transcoder');
+const Parser = require('../modules/Parser');
+const Segmenter = require('../modules/Segmenter');
+const Video = require('../models/Video');
 
 const VideoModel = new Video();
 
-const RESOLUTIONS = ["360p.mp4", "480p.mp4", "720p.mp4"];
+const RESOLUTIONS = ['360p.mp4', '480p.mp4', '720p.mp4'];
 
 const StreamController = {
   // Object storage에 영상들 업로드하는 함수
@@ -19,7 +19,7 @@ const StreamController = {
     // Upload 작업의 Promise 배열 만들기
     const uploads = files.reduce((acc, fileName) => {
       if (Parser.isVideo(fileName) === false) {
-        console.log("There is non-video file!");
+        console.log('There is non-video file!');
         return acc;
       }
 
@@ -92,8 +92,8 @@ const StreamController = {
         const localFilePath = path.resolve(productsDir, productName);
         uploads.push(
           Storage.uploadVideo(localFilePath, productName, productsDir, {
-            ACL: "public-read"
-          })
+            ACL: 'public-read',
+          }),
         );
         return false;
       });
@@ -111,17 +111,17 @@ const StreamController = {
         const nameWithoutExt = Parser.removeExtension(fileName);
         const streamingURL = `${process.env.CDN_URL}/videos/${nameWithoutExt}/360p.stream.m3u8`; // FIXME: abs를 위해 수정할 것!
         const thumbnailImgURL = `${process.env.CDN_URL}/thumbnails/${nameWithoutExt}/${nameWithoutExt}_000005.png`;
-        const datetime = moment().format("YYYY-MM-DD HH:mm:ss");
+        const datetime = moment().format('YYYY-MM-DD HH:mm:ss');
         inserts.push(
           VideoModel.create({
             name: nameWithoutExt,
-            category: "테스트", // TODO: 카테고리 변경
+            category: '테스트', // TODO: 카테고리 변경
             likes: 0,
             reg_date: datetime,
             thumbnail_img_url: thumbnailImgURL,
-            thumbnai_video_url: null,
-            streaming_url: streamingURL
-          })
+            thumbnail_video_url: null,
+            streaming_url: streamingURL,
+          }),
         );
       });
       await Promise.all(inserts);
@@ -137,8 +137,8 @@ const StreamController = {
         Bucket: process.env.BUCKET_NAME,
         Delete: {
           Objects: [],
-          Quiet: false
-        }
+          Quiet: false,
+        },
       };
       const originalKey = `videos/${fileName}`;
       originalParams.Delete.Objects.push({ Key: originalKey });
@@ -150,8 +150,8 @@ const StreamController = {
         Bucket: process.env.BUCKET_NAME,
         Delete: {
           Objects: [],
-          Quiet: false
-        }
+          Quiet: false,
+        },
       };
       RESOLUTIONS.forEach(RESOLUTION => {
         const transcodedKey = `transcoded/${fileNameWithoutExt}/${RESOLUTION}`;
@@ -164,14 +164,14 @@ const StreamController = {
         Bucket: process.env.BUCKET_NAME,
         Delete: {
           Objects: [],
-          Quiet: false
-        }
+          Quiet: false,
+        },
       };
       const transcodedDirKey = `transcoded/${fileNameWithoutExt}/`;
       transcodedDirParams.Delete.Objects.push({ Key: transcodedDirKey });
       Storage.deleteObjects(transcodedDirParams);
     });
-  }
+  },
 };
 
 module.exports = StreamController;

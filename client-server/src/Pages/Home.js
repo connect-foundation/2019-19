@@ -40,7 +40,6 @@ const Home = () => {
   }, []);
 
   if (contentsOnLoading) return <MainThumbNail />;
-
   return (
     <>
       <MainThumbNail />
