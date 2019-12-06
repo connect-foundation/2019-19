@@ -10,7 +10,7 @@ async function getFiltering(column, order, size) {
   const data = await client
     .search({
       index: process.env.index,
-      type: 'data',
+      type: '_doc',
       sort: [`${column}:${order}`],
       body: {
         size,
@@ -34,7 +34,7 @@ async function getCategory(column, order, size, categoryList) {
   const data = await client
     .search({
       index: process.env.index,
-      type: 'data',
+      type: '_doc',
       sort: [`${column}:${order}`],
       body: {
         size,
@@ -64,7 +64,7 @@ async function getSearch(column, order, size, categoryList, target) {
   const data = await client
     .search({
       index: process.env.index,
-      type: 'data',
+      type: '_doc',
       sort: [`${column}:${order}`],
       body: {
         size,

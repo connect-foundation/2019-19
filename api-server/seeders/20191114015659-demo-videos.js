@@ -25,7 +25,7 @@ for (let i = 0; i < 200; i += 1) {
     likes: casual.integer(1, 500),
     reg_date: new Date(Date.now()),
     thumbnail_img_url: `https://picsum.photos/id/${i}/1600/640`,
-    thumbnai_video_url: null,
+    thumbnail_video_url: null,
     streaming_url: null,
   };
   demoData.push(videoObj);
