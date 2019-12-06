@@ -12,7 +12,7 @@ export default () => (
   <Router>
     <Navbar />
     <Route path="/popular" component={Popular} />
-    <Route path="/recent" component={Recent} />
+    <Route path="/recent" component={Home} />
     <Route path="/privacy-policy" component={Policy} />
     <Route path="/my-videos" component={MyVideos} />
     <Route exact path="/" component={MyVideos} />

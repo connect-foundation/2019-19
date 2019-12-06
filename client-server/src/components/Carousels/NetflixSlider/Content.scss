@@ -12,12 +12,12 @@
   }
   &__background {
     left: 0;
-    right: 0;
+    xwright: 0;
     &__shadow {
       left: 0;
       right: 0;
       background: #000;
-      width: 40%;
+      width: 30%;
       z-index: 2;
       &:before {
         content: '';
@@ -32,6 +32,8 @@
     }
     &__image {
       height: 100%;
+      width: 70vw;
+      object-fit: fill;
       background-position: center 10%;
       background-size: cover;
       z-index: 1;

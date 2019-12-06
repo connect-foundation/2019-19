@@ -6,21 +6,15 @@ import MainButton from '../../MainButton';
 import LikeBtn from '../../like/like';
 import MylistBtn from '../../like/mylist';
 import LoginContext from '../../../loginContextApi/context';
+import ENV from '../../../../env';
 import './Content.scss';
 
 const axios = require('axios');
 
-const apiServer = 'http://localhost:8000';
+const apiServer = ENV.apiServer;
 
 const Content = ({ movie, onClose }) => {
   const { userInfo } = useContext(LoginContext);
-  const [thumbNailId, setThumbNailId] = useState(null);
-  console.log(movie);
-  useEffect(() => {
-    axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
-      setThumbNailId(thumbNailData.data.video_id);
-    });
-  }, []);
 
   return (
     <div className="content">
@@ -38,7 +32,7 @@ const Content = ({ movie, onClose }) => {
         <div className="content__area__container">
           <div className="content__title">{movie.name}</div>
           <div className="content__description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            xLorem ipsum dolor sit amet, consectetur adipiscing elit.
             Pellentesque et euismod ligula. Morbi mattis pretium eros, ut mollis
             leo tempus eget. Sed in dui ac ipsum feugiat ultricies. Phasellus
             vestibulum enim quis quam congue, non fringilla orci placerat.
@@ -47,8 +41,8 @@ const Content = ({ movie, onClose }) => {
           <div className="content__btns__container">
             <MainButton name="▶  재생" />
             {userInfo && [
-              <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
-              <MylistBtn userId={userInfo} thumbNaild={thumbNailId} />,
+              <LikeBtn userId={userInfo} thumbNailId={movie.video_id} />,
+              <MylistBtn userId={userInfo} thumbNailId={movie.video_id} />,
             ]}
           </div>
         </div>

@@ -38,7 +38,11 @@ const Slider = ({ categoryName, children, activeSlide }) => {
   };
 
   return (
-    <div style={{ marginTop: '2rem' }}>
+    <div
+      style={{
+        marginTop: '0rem',
+      }}
+    >
       <SliderContext.Provider value={contextValue}>
         <h2 className="slider__title">{categoryName}</h2>
         <SliderWrapper>
@@ -65,7 +69,7 @@ const Slider = ({ categoryName, children, activeSlide }) => {
 Slider.propTypes = {
   children: PropTypes.any.isRequired,
   activeSlide: PropTypes.any,
-  categoryName: PropTypes.string.isRequired,
+  categoryName: PropTypes.string,
 };
 
 export default Slider;

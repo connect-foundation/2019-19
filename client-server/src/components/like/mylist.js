@@ -16,6 +16,7 @@ const PostData = (userId, videoId, URL) => {
   });
 };
 const MylistBtn = ({ userId, thumbNailId }) => {
+  console.log(userId, thumbNailId);
   const [Clicked, setClicked] = useState(false);
   const [mylist, setMylist] = useState(false);
   const contentText = mylist ? '✔ 찜한 컨텐츠 취소' : '✚ 내가 찜한 컨텐츠';
@@ -46,7 +47,7 @@ const MylistBtn = ({ userId, thumbNailId }) => {
 
 MylistBtn.propTypes = {
   userId: PropTypes.string.isRequired,
-  thumbNailId: PropTypes.string.isRequired,
+  thumbNailId: PropTypes.number.isRequired,
 };
 
 export default MylistBtn;
