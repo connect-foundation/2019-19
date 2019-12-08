@@ -20,7 +20,8 @@
     "passport-google-oauth": "^2.0.0",
     "sequelize": "^5.21.2",
     "sequelize-cli": "^5.5.1",
-    "urldecode": "^1.0.1"
+    "urldecode": "^1.0.1",
+    "youtube-dl": "^2.1.0"
   },
   "devDependencies": {
     "casual": "^1.6.2"
