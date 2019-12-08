@@ -44,6 +44,7 @@ const MainThumbNail = () => {
 
   useEffect(() => {
     axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
+      console.log(thumbNailData);
       setThumbNailId(thumbNailData.data.video_id);
       setThumbNailTitle(thumbNailData.data.name);
       axios
