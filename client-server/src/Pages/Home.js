@@ -1,26 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MainThumbNail from '../components/MainThumbNail';
 import Scroll from '../components/infinite_scroll/Scroll';
+import Slider from '../components/Carousels/NetflixSlider';
+import axios from 'axios';
+import ENV from '../../env';
 
 const Home = () => {
+  const [sportsData, setSportsData] = useState(null);
+  const [onLoading, setOnLoading] = useState(true);
+  useEffect(() => {
+    axios.get(`${ENV.apiServer}/video/스포츠`).then(res => {
+      setSportsData(res.data);
+      setOnLoading(false);
+    });
+  }, []);
+
   const requestCategories = [
-    '스포츠',
     '교육',
     '음악',
     '과학기술',
     '엔터테인먼트',
     '코미디',
     '여행',
-    // '뷰티/패션',
-    // '영화/애니메이션',
-    // '노하우/스타일',
-    // '뉴스/정치',
-    // '애완동물/동물',
+    '뷰티패션',
+    '영화애니메이션',
+    '노하우스타일',
+    '뉴스정치',
+    '애완동물동물',
   ];
-
+  if (onLoading) return null;
   return (
     <>
       <MainThumbNail />
+      <Slider categoryName={'스포츠'}>
+        {sportsData.map(content => (
+          <Slider.Item movie={content._source} key={content._source.video_id} />
+        ))}
+      </Slider>
       <Scroll categoryList={requestCategories} />
     </>
   );

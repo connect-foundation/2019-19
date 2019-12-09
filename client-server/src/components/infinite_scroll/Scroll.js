@@ -1,11 +1,11 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
 import Slider from '../Carousels/NetflixSlider';
 
-const apiServer = 'http://localhost:8000';
+import ENV from '../../../env';
 
 const InfinityScroll = ({ categoryList }) => {
   let currentScroll = 0; // 현재 스크롤 위치
@@ -17,11 +17,13 @@ const InfinityScroll = ({ categoryList }) => {
   const [isEnd, setIsEnd] = useState(false);
   const [arr2, setArr2] = useState({});
 
+  useEffect(() => {}, document.documentElement.scrollTop);
+
   const handleInfinity = debounce(() => {
     if (isEnd) return;
     if (
       window.innerHeight + document.documentElement.scrollTop >
-      document.documentElement.offsetHeight - 100 // 스크롤 여유
+      document.documentElement.offsetHeight - 500 // 스크롤 여유
     ) {
       currentScroll = document.documentElement.scrollTop; // 데이터 요청후 스크롤바 위치 조정
       const sliceCategory = categoryList.slice(
@@ -30,13 +32,15 @@ const InfinityScroll = ({ categoryList }) => {
       );
 
       sliceCategory.forEach((e, i) => {
-        axios.get(`${apiServer}/video/${sliceCategory[i]}`).then(response => {
-          setArr2(prevState => {
-            return { ...prevState, [e]: response.data };
+        axios
+          .get(`${ENV.apiServer}/video/${sliceCategory[i]}`)
+          .then(response => {
+            setArr2(prevState => {
+              return { ...prevState, [e]: response.data };
+            });
+            if (i === sliceCategory.length - 1) setLoading(true);
+            setCurList(preState => [...preState, e]);
           });
-          if (i === sliceCategory.length - 1) setLoading(true);
-          setCurList(preState => [...preState, e]);
-        });
       });
 
       if (categoryList.slice(presentView, presentView + sliceamount) === [])

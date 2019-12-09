@@ -68,7 +68,8 @@
   }
   &__btns__container {
     height: 5rem;
-    width: 100%;
+    min-width: 30rem;
+    max-width: 35rem;
     display: flex;
     align-items: center;
     justify-content: space-between;

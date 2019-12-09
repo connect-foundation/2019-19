@@ -47,20 +47,9 @@ const MainThumbNail = () => {
       console.log(thumbNailData);
       setThumbNailId(thumbNailData.data.video_id);
       setThumbNailTitle(thumbNailData.data.name);
-      axios
-        .get(thumbNailData.data.thumbnail_img_url, {
-          responseType: 'arraybuffer',
-        })
-        .then(img => {
-          const blob = new Blob([img.data], {
-            type: img.headers['content-type'],
-          });
-          const thumbNailImage = URL.createObjectURL(blob);
-          setOnLoading(false);
-          setThumbNailImg(thumbNailImage);
-          setHide(1);
-        })
-        .catch(err => console.log(err));
+      setThumbNailImg(thumbNailData.data.thumbnail_img_url);
+      setHide(1);
+      setOnLoading(false);
     });
   }, []);
 

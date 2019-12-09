@@ -27,11 +27,12 @@
     transform: scale(1.5) !important;
   }
 
-  &:not(&--open):hover .item {
+  &:not(&--open) .item:hover .slider__container ~ .item {
     transform: translateX(-25%);
   }
 
-  &:not(&--open) .item:hover ~ .item {
+  // Hover한 Item의 오른쪽 Item들을 우로 25% 이동
+  .item:hover ~ .item {
     transform: translateX(25%);
   }
 }

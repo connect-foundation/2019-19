@@ -12,11 +12,6 @@ const Item = ({ movie }) => {
   const [imageUrl, setImageUrl] = useState(
     'https://mir-s3-cdn-cf.behance.net/project_modules/disp/b6e0b072897469.5bf6e79950d23.gif',
   );
-  useEffect(() => {
-    Axios.get(movie.thumbnail_img_url).then(() => {
-      setImageUrl(movie.thumbnail_img_url);
-    });
-  }, []);
   return (
     <SliderContext.Consumer>
       {({ onSelectSlide, currentSlide, elementRef }) => {
@@ -46,7 +41,7 @@ const Item = ({ movie }) => {
             ) : (
               <>
                 <div className="content-info">{movie.name}</div>
-                <img src={imageUrl} alt="" />
+                <img src={movie.thumbnail_img_url} alt="" />
               </>
             )}
             <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
