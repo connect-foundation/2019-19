@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import logo from '../../dist/play.png';
 import PageBtn from './PageBtn';
 import LoginContext from '../loginContextApi/context';
+<<<<<<< HEAD
+=======
+import ENV from '../../env';
+>>>>>>> 7d103901d5f63078c32a9c5e700affd191b780b9
 
 const StyledNavbarContainer = styled.div`
   display: flex;
@@ -60,19 +64,25 @@ const Navbar = () => {
       <Link to="/popular" style={StyledLink}>
         <PageBtn name="인기 컨텐츠" />
       </Link>
+<<<<<<< HEAD
       {username ? (
         <Link to="/my-videos" style={StyledLink}>
           <PageBtn name="내가 찜한 컨텐츠" />
         </Link>
       ) : null}
 
+=======
+      <Link to="/Player/1" style={StyledLink}>
+        <PageBtn name="플레이어" />
+      </Link>
+>>>>>>> 7d103901d5f63078c32a9c5e700affd191b780b9
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
         {username ? (
           <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (
-          <a href="http://localhost:8000/oauth/google" style={StyledLink}>
+          <a href={`${ENV.apiServer}/oauth/google`} style={StyledLink}>
             <PageBtn name="로그인" />
           </a>
         )}

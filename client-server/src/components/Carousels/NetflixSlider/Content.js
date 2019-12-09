@@ -32,7 +32,7 @@ const Content = ({ movie, onClose }) => {
         <div className="content__area__container">
           <div className="content__title">{movie.name}</div>
           <div className="content__description">
-            xLorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Pellentesque et euismod ligula. Morbi mattis pretium eros, ut mollis
             leo tempus eget. Sed in dui ac ipsum feugiat ultricies. Phasellus
             vestibulum enim quis quam congue, non fringilla orci placerat.

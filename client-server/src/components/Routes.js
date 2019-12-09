@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Recent from '../Pages/Recent';
 import Home from '../Pages/Home';
@@ -7,14 +7,22 @@ import Policy from '../Pages/Policy';
 import MyVideos from '../Pages/MyVideos';
 // eslint-disable-next-line import/no-cycle
 import Navbar from './Navbar';
+import Player from '../Pages/Player';
+import { NavbarContext } from '../contexts/NavbarContext';
 
-export default () => (
-  <Router>
-    <Navbar />
-    <Route path="/popular" component={Popular} />
-    <Route path="/recent" component={Recent} />
-    <Route path="/privacy-policy" component={Policy} />
-    <Route path="/my-videos" component={MyVideos} />
-    <Route exact path="/" component={Home} />
-  </Router>
-);
+const Routes = () => {
+  const { showNav } = useContext(NavbarContext);
+
+  return (
+    <Router>
+      {showNav && <Navbar />}
+      <Route path="/Popular" component={Popular} />
+      <Route path="/Recent" component={Recent} />
+      <Route exact path="/" component={Home} />
+      <Route path="/privacy-policy" component={Policy} />
+      <Route path="/Player/:videoId" component={Player} />
+    </Router>
+  );
+};
+
+export default Routes;

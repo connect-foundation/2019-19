@@ -69,7 +69,11 @@ const Slider = ({ categoryName, children, activeSlide }) => {
 Slider.propTypes = {
   children: PropTypes.any.isRequired,
   activeSlide: PropTypes.any,
+<<<<<<< HEAD
   categoryName: PropTypes.string,
+=======
+  categoryName: PropTypes.string.isRequired,
+>>>>>>> 7d103901d5f63078c32a9c5e700affd191b780b9
 };
 
 export default Slider;
