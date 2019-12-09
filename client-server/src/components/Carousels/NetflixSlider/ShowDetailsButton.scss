@@ -5,7 +5,7 @@
   right: 0;
   opacity: 0;
   transition: opacity 300ms ease 100ms;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.05);
   border: 0;
   outline: none;
   width: 100%;
@@ -15,8 +15,5 @@
     width: 14px;
     margin: 0 auto;
     color: white;
-  }
-  &:hover {
-    cursor: pointer;
   }
 }

@@ -12,6 +12,14 @@ const Item = ({ movie }) => {
   const [imageUrl, setImageUrl] = useState(
     'https://mir-s3-cdn-cf.behance.net/project_modules/disp/b6e0b072897469.5bf6e79950d23.gif',
   );
+
+  const playVideo = () => {
+    document.getElementById(movie.video_id).play();
+  };
+
+  const pauseVideo = () => {
+    document.getElementById(movie.video_id).pause();
+  };
   return (
     <SliderContext.Consumer>
       {({ onSelectSlide, currentSlide, elementRef }) => {
@@ -27,24 +35,28 @@ const Item = ({ movie }) => {
             onMouseLeave={() => setHover(false)}
             onBlur={() => setHover(false)}
           >
-            {hover ? (
-              <>
+            <>
+              <div
+                className="video-area"
+                onMouseOver={playVideo}
+                onFocus={playVideo}
+                onMouseLeave={pauseVideo}
+                onBlur={pauseVideo}
+              >
                 <video
+                  id={movie.video_id}
                   src={movie.thumbnail_video_url} // thumbnail_video_url
                   alt="thumbnail-video"
                   poster={movie.thumbnail_img_url}
-                  autoPlay
                 >
                   <track kind="captions" />
                 </video>
-              </>
-            ) : (
-              <>
-                <div className="content-info">{movie.name}</div>
-                <img src={movie.thumbnail_img_url} alt="" />
-              </>
-            )}
-            <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
+                <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
+              </div>
+              <div className="content-info">{movie.name}</div>
+              <img src={movie.thumbnail_img_url} alt="" />
+            </>
+
             {isActive && <Mark />}
           </div>
         );
