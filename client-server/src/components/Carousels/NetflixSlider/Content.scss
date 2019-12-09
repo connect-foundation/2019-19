@@ -1,7 +1,7 @@
 .content {
   position: relative;
   height: 35rem;
-  margin-top: -40px;
+  margin-top: 0;
   &__background,
   &__background__shadow,
   &__background__image,
@@ -32,10 +32,12 @@
     }
     &__image {
       height: 100%;
+      width: 70vw;
       background-position: center 10%;
       background-size: cover;
       z-index: 1;
       right: 0;
+      object-fit: fill;
     }
   }
   &__area {
@@ -66,16 +68,17 @@
   }
   &__btns__container {
     height: 5rem;
-    width: 100%;
+    min-width: 30rem;
+    max-width: 35rem;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
   &__close {
     color: #fff;
     width: 40px;
     height: 40px;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.1);
     outline: none;
     border: none;
     position: absolute;

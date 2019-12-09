@@ -1,52 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MainThumbNail from '../components/MainThumbNail';
-<<<<<<< HEAD
-
-const Home = () => {
-=======
+import Scroll from '../components/infinite_scroll/Scroll';
 import Slider from '../components/Carousels/NetflixSlider';
+import axios from 'axios';
 import ENV from '../../env';
 
-const apiServer = ENV.apiServer;
-
 const Home = () => {
-  const requestCategories = [
-    '스포츠',
-    '음악',
-    '교육',
-    // '영화/애니메이션',
-    '과학기술',
-    '엔터테인먼트',
-    '코미디',
-    // '뷰티/패션',
-    '여행',
-    // '노하우/스타일',
-    // '뉴스/정치',
-    // '애완동물/동물',
-  ];
-  const [sportsContents, setSportsContents] = useState([]);
-  const [eduContents, setEduContents] = useState([]);
-  const [musicContents, setMusicContents] = useState([]);
-  const [contentsOnLoading, setContentsOnLoading] = useState(true);
-
+  const [sportsData, setSportsData] = useState(null);
+  const [onLoading, setOnLoading] = useState(true);
   useEffect(() => {
-    axios.get(`${apiServer}/video/스포츠`).then(sportsResponse => {
-      setSportsContents(sportsResponse.data);
-      axios.get(`${apiServer}/video/교육`).then(eduResponse => {
-        setEduContents(eduResponse.data);
-        axios.get(`${apiServer}/video/음악`).then(musicResponse => {
-          setMusicContents(musicResponse.data);
-          setContentsOnLoading(false);
-        });
-      });
+    axios.get(`${ENV.apiServer}/video/스포츠`).then(res => {
+      setSportsData(res.data);
+      setOnLoading(false);
     });
   }, []);
 
-  if (contentsOnLoading) return <MainThumbNail />;
->>>>>>> dfb3e2d75c7fa8e0b363b4c13244b9563f7ba08b
+  const requestCategories = [
+    '교육',
+    '음악',
+    '과학기술',
+    '엔터테인먼트',
+    '코미디',
+    '여행',
+    '뷰티패션',
+    '영화애니메이션',
+    '노하우스타일',
+    '뉴스정치',
+    '애완동물동물',
+  ];
+  if (onLoading) return null;
   return (
     <>
       <MainThumbNail />
+      <Slider categoryName={'스포츠'}>
+        {sportsData.map(content => (
+          <Slider.Item movie={content._source} key={content._source.video_id} />
+        ))}
+      </Slider>
+      <Scroll categoryList={requestCategories} />
     </>
   );
 };
