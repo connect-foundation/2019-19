@@ -30,4 +30,13 @@ router.post('/my-videos', async (req, res) => {
   });
 });
 
+router.post('/is-zzimed', async (req, res) => {
+  const reqData = req.body.params;
+  const { userId } = reqData;
+  const { videoId } = reqData;
+  const data = await Myvideos.didUserZzim(userId, videoId);
+  if (!data) return res.json({});
+  return res.json(data);
+});
+
 module.exports = router;

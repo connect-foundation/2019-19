@@ -40,5 +40,15 @@ module.exports = (sequelize, DataTypes) => {
     });
     return data;
   };
+  Myvideos.didUserZzim = async (userId, videoId) => {
+    const data = await Myvideos.findOne({
+      where: {
+        fk_user_id: userId,
+        fk_video_id: videoId,
+      },
+    });
+    if (data) return data.dataValues;
+    return null;
+  };
   return Myvideos;
 };
