@@ -2,8 +2,8 @@ const youtubedl = require('youtube-dl');
 const fs = require('fs');
 const data = require('./data.js');
 
-Object.values(data).map((e, i) => {
-  e.map((ee, ii) => {
+Object.values(data).forEach((e, i) => {
+  e.forEach((ee, ii) => {
     const output = `videos/${Object.keys(data)[i]}${ii}.mp4`;
 
     let downloaded = 0;
