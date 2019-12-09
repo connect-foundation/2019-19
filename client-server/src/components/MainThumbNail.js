@@ -7,18 +7,11 @@ import MainText from './MainText';
 import LikeBtn from './like/like';
 import MylistBtn from './like/mylist';
 import LoginContext from '../loginContextApi/context';
-<<<<<<< HEAD
-
-const axios = require('axios');
-
-const apiServer = 'http://localhost:8000';
-=======
 import ENV from '../../env';
 
 const axios = require('axios');
 
 const apiServer = ENV.apiServer;
->>>>>>> 7d103901d5f63078c32a9c5e700affd191b780b9
 
 const StyledThumbNail = styled.div`
   height: 40rem;
@@ -52,31 +45,11 @@ const MainThumbNail = () => {
 
   useEffect(() => {
     axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
-<<<<<<< HEAD
-      console.log(thumbNailData);
       setThumbNailId(thumbNailData.data.video_id);
       setThumbNailTitle(thumbNailData.data.name);
       setThumbNailImg(thumbNailData.data.thumbnail_img_url);
       setHide(1);
       setOnLoading(false);
-=======
-      setThumbNailId(thumbNailData.data.video_id);
-      setThumbNailTitle(thumbNailData.data.name);
-      axios
-        .get(thumbNailData.data.thumbnail_img_url, {
-          responseType: 'arraybuffer',
-        })
-        .then(img => {
-          const blob = new Blob([img.data], {
-            type: img.headers['content-type'],
-          });
-          const thumbNailImage = URL.createObjectURL(blob);
-          setOnLoading(false);
-          setThumbNailImg(thumbNailImage);
-          setHide(1);
-        })
-        .catch(err => console.log(err));
->>>>>>> 7d103901d5f63078c32a9c5e700affd191b780b9
     });
   }, []);
 
