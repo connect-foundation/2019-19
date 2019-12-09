@@ -2,7 +2,7 @@ const youtubedl = require("youtube-dl");
 const fs = require("fs");
 const data = require("./data.js");
 
-const output = `videos/hi.mp4`;
+const output = `../../videos/hi.mp4`;
 
 let downloaded = 0;
 
