@@ -20,6 +20,7 @@ const Routes = () => {
       <Route path="/Recent" component={Recent} />
       <Route exact path="/" component={Home} />
       <Route path="/privacy-policy" component={Policy} />
+      <Route path="/my-videos" component={MyVideos} />
       <Route path="/Player/:videoId" component={Player} />
     </Router>
   );
