@@ -1,3 +1,4 @@
+
 const data = require('../../crawler/infoJson/file0.json');
 
 module.exports = {

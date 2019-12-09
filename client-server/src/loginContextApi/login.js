@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import LoginContext from './context';
+import ENV from '../../env';
 
-const apiServer = 'http://localhost:8000';
 const axios = require('axios');
 
 const Login = props => {
@@ -17,7 +17,7 @@ const Login = props => {
   const { children } = props;
   useEffect(() => {
     axios
-      .post(`${apiServer}/oauth/google/verify`, {
+      .post(`${ENV.apiServer}/oauth/google/verify`, {
         userToken: Cookies.get('user_info'),
       })
       .then(response => {
