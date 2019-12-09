@@ -10,18 +10,20 @@ import Axios from 'axios';
 const Item = ({ movie }) => {
   const [hover, setHover] = useState(false);
   const [imageUrl, setImageUrl] = useState(
-    'https://picsum.photos/id/0/1600/640',
+    'https://mir-s3-cdn-cf.behance.net/project_modules/disp/b6e0b072897469.5bf6e79950d23.gif',
   );
 
-  useEffect(() => {
-    Axios.get(movie.thumbnail_img_url).then(() => {
-      setImageUrl(movie.thumbnail_img_url);
-    });
-  }, []);
+  const playVideo = () => {
+    document.getElementById(movie.video_id).play();
+  };
+
+  const pauseVideo = () => {
+    document.getElementById(movie.video_id).pause();
+  };
   return (
     <SliderContext.Consumer>
       {({ onSelectSlide, currentSlide, elementRef }) => {
-        const isActive = currentSlide && currentSlide.id === movie.id;
+        const isActive = currentSlide && currentSlide.id === movie.video_id;
         return (
           <div
             ref={elementRef}
@@ -33,24 +35,28 @@ const Item = ({ movie }) => {
             onMouseLeave={() => setHover(false)}
             onBlur={() => setHover(false)}
           >
-            {hover ? (
-              <>
+            <>
+              <div
+                className="video-area"
+                onMouseOver={playVideo}
+                onFocus={playVideo}
+                onMouseLeave={pauseVideo}
+                onBlur={pauseVideo}
+              >
                 <video
-                  src="https://connect.or.kr/connectfoundation_/video/home_bg.mp4" // thumbnail_video_url
+                  id={movie.video_id}
+                  src={movie.thumbnail_video_url} // thumbnail_video_url
                   alt="thumbnail-video"
                   poster={movie.thumbnail_img_url}
-                  autoPlay
                 >
                   <track kind="captions" />
                 </video>
-              </>
-            ) : (
-              <>
-                <div className="content-info">{movie.name}</div>
-                <img src={imageUrl} alt="" />
-              </>
-            )}
-            <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
+                <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
+              </div>
+              <div className="content-info">{movie.name}</div>
+              <img src={movie.thumbnail_img_url} alt="" />
+            </>
+
             {isActive && <Mark />}
           </div>
         );

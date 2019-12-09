@@ -10,6 +10,7 @@
     width: 100%;
   }
   &__title {
+    margin: 20px 0 0 55px;
     margin: 0 0 0 2%;
     color: white;
   }
@@ -24,14 +25,16 @@
   }
 
   &:not(&--open) .item:hover {
-    transform: scale(1.5) !important;
+    transform: scale(1.4) !important;
+    z-index: 4;
   }
 
-  &:not(&--open):hover .item {
+  &:not(&--open) .item:hover .slider__container ~ .item {
     transform: translateX(-25%);
   }
 
-  &:not(&--open) .item:hover ~ .item {
-    transform: translateX(25%);
-  }
+  // Hover한 Item의 오른쪽 Item들을 우로 25% 이동
+  //   .item:hover ~ .item {
+  //     transform: translateX(25%);
+  //   }
 }

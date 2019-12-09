@@ -22,6 +22,24 @@ const MylistBtn = ({ userId, thumbNailId }) => {
   const contentText = mylist ? '✔ 찜한 컨텐츠 취소' : '✚ 내가 찜한 컨텐츠';
 
   useEffect(() => {
+    if (thumbNailId && userId) {
+      axios
+        .post(`${apiServer}/mylist/is-zzimed`, {
+          params: {
+            userId,
+            videoId: thumbNailId,
+          },
+        })
+        .then(res => {
+          if (res.data.my_video_id) {
+            setMylist(true);
+            document.getElementById(`${thumbNailId}jjim`).checked = true;
+          }
+        });
+    }
+  }, [userId, thumbNailId]);
+
+  useEffect(() => {
     if (mylist && Clicked) PostData(userId, thumbNailId, 'mylist-video');
     if (!mylist && Clicked) PostData(userId, thumbNailId, 'unMylist-video');
   }, [mylist]);
@@ -47,7 +65,7 @@ const MylistBtn = ({ userId, thumbNailId }) => {
 
 MylistBtn.propTypes = {
   userId: PropTypes.string.isRequired,
-  thumbNailId: PropTypes.string.isRequired,
+  thumbNailId: PropTypes.number.isRequired,
 };
 
 export default MylistBtn;
