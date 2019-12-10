@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../dist/play.png';
 import PageBtn from './PageBtn';
 import LoginContext from '../loginContextApi/context';
-<<<<<<< HEAD
-=======
 import ENV from '../../env';
->>>>>>> 7d103901d5f63078c32a9c5e700affd191b780b9
 
 const StyledNavbarContainer = styled.div`
   display: flex;
@@ -17,7 +14,7 @@ const StyledNavbarContainer = styled.div`
   top: 0;
   position: sticky;
   font-family: 'Nanum Gothic', sans-serif;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(20, 20, 20, 0.5);
   z-index: 10;
 `;
 const StyledLogo = styled.img`
@@ -64,18 +61,15 @@ const Navbar = () => {
       <Link to="/popular" style={StyledLink}>
         <PageBtn name="인기 컨텐츠" />
       </Link>
-<<<<<<< HEAD
       {username ? (
         <Link to="/my-videos" style={StyledLink}>
           <PageBtn name="내가 찜한 컨텐츠" />
         </Link>
       ) : null}
 
-=======
       <Link to="/Player/1" style={StyledLink}>
         <PageBtn name="플레이어" />
       </Link>
->>>>>>> 7d103901d5f63078c32a9c5e700affd191b780b9
       <StyledNavRight>
         <PageBtn name="🔍" />
         <PageBtn name="추천" />
