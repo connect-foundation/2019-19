@@ -18,6 +18,7 @@ const Routes = () => {
       {showNav && <Navbar />}
       <Route path="/Popular" component={Popular} />
       <Route path="/Recent" component={Recent} />
+      <Route path="/my-videos" component={MyVideos} />
       <Route exact path="/" component={Home} />
       <Route path="/privacy-policy" component={Policy} />
       <Route path="/Player/:videoId" component={Player} />
