@@ -50,7 +50,7 @@ const SearchResults = props => {
 
   return (
     <>
-      {noContents ? (
+      {noContents || !myVideoList.length ? (
         <MessageOnCenter>검색 결과가 없습니다.</MessageOnCenter>
       ) : (
         sliceIndexArray.map(e => {
