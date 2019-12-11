@@ -47,7 +47,6 @@ const LikeBtn = ({ userId, thumbNailId }) => {
   }, [Like]);
 
   const handleLikeClicked = () => {
-    alert('clicked');
     if (!Clicked) setClicked(true);
     setLike(!Like);
   };

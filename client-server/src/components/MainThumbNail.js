@@ -24,7 +24,7 @@ const StyledThumbNail = styled.div`
   opacity: ${props => props.hide};
   flex-direction: column;
   justify-content: center;
-  animation: fade-in-thumbnail 800ms ease;
+  animation: fade-in-thumbnail 1000ms ease;
 
   @keyframes fade-in-thumbnail {
     0% {
