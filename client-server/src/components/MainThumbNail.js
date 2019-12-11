@@ -24,14 +24,20 @@ const StyledThumbNail = styled.div`
   opacity: ${props => props.hide};
   flex-direction: column;
   justify-content: center;
-  animation fade-in 1500ms; ease;
+  animation fade-in 800ms; ease;
 
   @keyframes fade-in {
       0% {
-        filter: blur(1.17rem) 
+        //  -webkit-filter: blur(1.17rem);
+        //  -o-filter: blur(1.17rem);
+        //  -ms-filter: blur(1.17rem);
+         filter: blur(1.17rem);
       }
       100% {
-        filter: blur(0) 
+        // -webkit-filter: blur(0);
+        // -o-filter: blur(0);
+        // -ms-filter: blur(0);
+        filter: blur(0);
       }
   }
 `;

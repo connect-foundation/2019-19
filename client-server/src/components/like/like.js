@@ -47,6 +47,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
   }, [Like]);
 
   const handleLikeClicked = () => {
+    alert('clicked');
     if (!Clicked) setClicked(true);
     setLike(!Like);
   };
@@ -54,11 +55,11 @@ const LikeBtn = ({ userId, thumbNailId }) => {
   return (
     <div>
       <CheckBox
-        id={`${thumbNailId}`}
+        id={`like-${thumbNailId}`}
         type="checkbox"
         onClick={handleLikeClicked}
       />
-      <CheckBoxLabel htmlFor={`${thumbNailId}`}>
+      <CheckBoxLabel htmlFor={`like-${thumbNailId}`}>
         <IconCross />
         &nbsp; 좋아요 {contentText}
       </CheckBoxLabel>
@@ -68,7 +69,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
 
 LikeBtn.propTypes = {
   userId: PropTypes.string,
-  thumbNailId: PropTypes.number,
+  thumbNailId: PropTypes.string,
 };
 
 export default LikeBtn;

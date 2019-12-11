@@ -12,7 +12,7 @@ const StyledText = styled.div`
   color: white;
   width: 40%;
   margin-left: 5%;
-  animation: title-blur 3000ms ease;
+  animation: title-blur 2000ms ease;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.6);
