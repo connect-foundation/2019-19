@@ -35,7 +35,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
         .then(res => {
           if (res.data.like_id) {
             setLike(true);
-            document.getElementById(`${thumbNailId}`).checked = true;
+            document.getElementById(`like-${thumbNailId}`).checked = true;
           }
         });
     }
