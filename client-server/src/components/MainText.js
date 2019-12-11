@@ -12,6 +12,20 @@ const StyledText = styled.div`
   color: white;
   width: 40%;
   margin-left: 5%;
+  animation: title-blur 3000ms ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  @keyframes title-blur {
+    0% {
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
 `;
 
 const MainText = ({ name }) => {

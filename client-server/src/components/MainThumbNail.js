@@ -24,6 +24,16 @@ const StyledThumbNail = styled.div`
   opacity: ${props => props.hide};
   flex-direction: column;
   justify-content: center;
+  animation fade-in 1500ms; ease;
+
+  @keyframes fade-in {
+      0% {
+        filter: blur(1.17rem) 
+      }
+      100% {
+        filter: blur(0) 
+      }
+  }
 `;
 
 const StyledButtonsContainer = styled.div`
