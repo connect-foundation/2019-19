@@ -1,5 +1,4 @@
-
-const data = require('../../crawler/infoJson/file0.json');
+const data = require('../../crawler/infoJson/file8.json');
 
 module.exports = {
   up: queryInterface => {
