@@ -3,11 +3,13 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledInputBox = styled.div`
-  width: 16rem;
-  height: 100%;
-  // border: solid red 0.1rem;
+  width: 15rem;
+  height: 95%;
+  border: solid lightgray 0.1rem;
+  border-radius: 0.2rem;
   margin: auto;
   margin-left: 0;
+  padding: 0.1rem
   animation: slide-down 0.4s ease;
 
   @keyframes slide-down {
@@ -26,10 +28,10 @@ const inputStyle = {
   backgroundColor: 'rgba(20,20,20,1)',
   color: 'white',
   height: '3rem',
-  width: '100%',
+  width: '90%',
   paddingLeft: '1rem',
-  //   border: 'purple solid 0.1rem',
   fontSize: 'medium',
+  border: 'none',
 };
 
 const SearchInput = () => {
