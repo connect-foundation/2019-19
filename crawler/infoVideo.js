@@ -27,7 +27,7 @@ Object.values(data).forEach((e, i) => {
       if (err) throw err;
       const tempVideo = casual.random_element(videoStreamingUrlDomain);
       const videoObj = {
-        video_id: +info.id,
+        video_id: info.id,
         name: info.fulltitle,
         category: Object.keys(data)[i],
         likes: info.like_count,
@@ -39,7 +39,7 @@ Object.values(data).forEach((e, i) => {
       demoData.push(videoObj);
 
       const json = JSON.stringify(demoData);
-      fs.writeFileSync(`infoJson/file${i}.json`, json, 'utf8');
+      fs.writeFileSync(`infoJson/file8.json`, json, 'utf8');
     });
   });
 });
