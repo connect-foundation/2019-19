@@ -56,7 +56,6 @@ async function get_category(category_list, order, size, sort) {
         return err;
       },
     );
-  return data;
 }
 
 async function get_search(column, target, order, size) {
@@ -84,6 +83,28 @@ async function get_search(column, target, order, size) {
     );
 }
 
+async function get_recent_videos(size) {
+  return await client
+    .search({
+      index: process.env.index,
+      type: '_doc',
+      body: {
+        sort: [{ reg_date: { order: 'desc' } }],
+        size: size,
+        query: { match_all: {} },
+      },
+    })
+    .then(
+      function(resp) {
+        return resp.hits.hits;
+      },
+      function(err) {
+        return err;
+      },
+    );
+}
+
 module.exports.get_filtering = get_filtering;
 module.exports.get_category = get_category;
 module.exports.get_search = get_search;
+module.exports.get_recent_videos = get_recent_videos;

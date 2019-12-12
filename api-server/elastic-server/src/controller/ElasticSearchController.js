@@ -17,14 +17,19 @@ const ElasticSearch = {
    */
   filterController: async function(column, order, category_list, sort) {
     const SEARCH_SIZE = 40;
-    let resp = null;
+    let result = null;
 
     if (column === es_videoId || column === es_likes) {
-      resp = await query.get_filtering(column, order, SEARCH_SIZE);
+      result = await query.get_filtering(column, order, SEARCH_SIZE);
     } else if (column == es_category) {
-      resp = await query.get_category(category_list, order, SEARCH_SIZE, sort);
+      result = await query.get_category(
+        category_list,
+        order,
+        SEARCH_SIZE,
+        sort,
+      );
     }
-    return resp;
+    return result;
   },
 
   // 무조건 video 테이블만 뒤짐 | 초성만 넣어도 검색 됨
@@ -36,18 +41,23 @@ const ElasticSearch = {
    */
   getResult: async function(column, target, order) {
     const SEARCH_SIZE = 40;
-    let resp = '';
-    resp = await query.get_search(column, target, order, SEARCH_SIZE);
-
-    return resp;
+    let result = '';
+    result = await query.get_search(column, target, order, SEARCH_SIZE);
+    return result;
+  },
+  getFiveRecentVideos: async () => {
+    let result = '';
+    result = await query.get_recent_videos(5);
+    return result;
   },
 };
 
 const temp = async () => {
-  const data = await ElasticSearch.filterController('category', 'desc', [
-    '음악',
-  ]);
-  console.log(data);
+  //   const data = await ElasticSearch.filterController('category', 'desc', [
+  //     '음악',
+  //   ]);
+  const data = await ElasticSearch.getFiveRecentVideos();
+  //   console.log(data);
 };
 
 temp();

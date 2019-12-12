@@ -15,6 +15,13 @@ router.get('/main-thumbnail-video', async (req, res) => {
   return res.json(data);
 });
 
+router.get('/recent-thumbnail-video', async (req, res) => {
+  const topFiveRecentVideos = await ElasticSearch.getFiveRecentVideos();
+  const result =
+    topFiveRecentVideos[Math.floor(Math.random() * topFiveRecentVideos.length)];
+  return res.json(result);
+});
+
 // 요청받은 카테고리의 컨텐츠들을 좋아요 높은 순으로 json 데이터 제공 (Home 페이지 캐러셀에 쓰임)
 router.get('/:category', async (req, res) => {
   const decodedCategory = decodeUrl(req.params.category);
