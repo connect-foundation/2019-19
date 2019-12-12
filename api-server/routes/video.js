@@ -10,7 +10,7 @@ router.get('/five-random-popular-videos', async (req, res) => {
   return res.json(data);
 });
 
-router.get('/main-thumbnail-video', async (req, res) => {
+router.get('/popular-thumbnail-video', async (req, res) => {
   const data = await Video.getRandomPopularVideo();
   return res.json(data);
 });

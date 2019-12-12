@@ -56,7 +56,7 @@ const temp = async () => {
   //   const data = await ElasticSearch.filterController('category', 'desc', [
   //     '음악',
   //   ]);
-  const data = await ElasticSearch.getFiveRecentVideos();
+  //   const data = await ElasticSearch.getFiveRecentVideos();
   //   console.log(data);
 };
 

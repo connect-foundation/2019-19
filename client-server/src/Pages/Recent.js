@@ -4,7 +4,7 @@ import MainThumbNail from '../components/MainThumbNail';
 const Recent = () => {
   return (
     <>
-      <MainThumbNail />
+      <MainThumbNail requestUrl={'recent-thumbnail-video'} />
     </>
   );
 };
