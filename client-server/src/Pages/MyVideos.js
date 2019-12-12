@@ -9,7 +9,6 @@ const { apiServer } = ENV;
 const MyVideos = () => {
   const { userInfo } = useContext(LoginContext);
   const [myVideoList, setMyVideoList] = useState([]);
-  const [toBeRendered, setToBeRendered] = useState([]);
   const [onLoading, setOnLoading] = useState(true);
   const [numOfContentsInEachRaw, setNumOfContentsInEachRaw] = useState(5);
   const [sliceIndexArray, setSliceIndexArray] = useState([]);

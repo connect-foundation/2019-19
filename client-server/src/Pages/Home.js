@@ -31,7 +31,7 @@ const Home = () => {
   if (onLoading) return null;
   return (
     <>
-      <MainThumbNail />
+      <MainThumbNail requestUrl={'popular-thumbnail-video'} />
       {sportsData.length && (
         <Slider categoryName={'스포츠'}>
           {sportsData.map(content => (
