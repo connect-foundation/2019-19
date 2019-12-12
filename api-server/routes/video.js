@@ -15,11 +15,15 @@ router.get('/main-thumbnail-video', async (req, res) => {
   return res.json(data);
 });
 
+// 요청받은 카테고리의 컨텐츠들을 좋아요 높은 순으로 json 데이터 제공 (Home 페이지 캐러셀에 쓰임)
 router.get('/:category', async (req, res) => {
   const decodedCategory = decodeUrl(req.params.category);
-  const data = await ElasticSearch.filterController('category', 'desc', [
-    decodedCategory,
-  ]);
+  const data = await ElasticSearch.filterController(
+    'category',
+    'desc',
+    [decodedCategory],
+    [{ likes: { order: 'desc' } }],
+  );
   //   console.log(data);
   return res.json(data);
 });

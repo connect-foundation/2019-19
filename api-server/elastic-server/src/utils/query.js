@@ -23,13 +23,20 @@ async function get_filtering(column, order, size) {
     );
 }
 
-async function get_category(category_list, order, size) {
+/**
+ *
+ * @param {*} category_list
+ * @param {*} order
+ * @param {*} size
+ * @param {*} option ex)  [{ reg_date: { order: 'desc' } }]
+ */
+async function get_category(category_list, order, size, sort) {
   return await client
     .search({
       index: process.env.index,
       type: '_doc',
-      sort: [`category : ${order}`],
       body: {
+        sort: sort,
         size: size,
         query: {
           match: {
