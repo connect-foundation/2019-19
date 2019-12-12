@@ -31,7 +31,18 @@ router.get('/:category', async (req, res) => {
     [decodedCategory],
     [{ likes: { order: 'desc' } }],
   );
-  //   console.log(data);
+  return res.json(data);
+});
+
+// 요청받은 카테고리의 컨텐츠들을 최근 날짜 순으로 json 데이터 제공 (Recent 페이지 캐러셀에 쓰임)
+router.get('/:category/recent', async (req, res) => {
+  const decodedCategory = decodeUrl(req.params.category);
+  const data = await ElasticSearch.filterController(
+    'category',
+    'desc',
+    [decodedCategory],
+    [{ reg_date: { order: 'desc' } }],
+  );
   return res.json(data);
 });
 
