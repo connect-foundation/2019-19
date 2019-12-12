@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import IconCross from '../Icons/IconCross';
-import MainButton from '../../MainButton';
+import PlayButton from '../../PlayButton';
 import LikeBtn from '../../like/like';
 import MylistBtn from '../../like/mylist';
 import LoginContext from '../../../loginContextApi/context';
@@ -39,7 +39,7 @@ const Content = ({ movie, onClose }) => {
             Praesent sollicitudin
           </div>
           <div className="content__btns__container">
-            <MainButton name="▶  재생" />
+            <PlayButton name="▶  재생" />
             {userInfo && [
               <LikeBtn userId={userInfo} thumbNailId={movie.video_id} />,
               <MylistBtn userId={userInfo} thumbNailId={movie.video_id} />,

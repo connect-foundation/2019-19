@@ -3,8 +3,13 @@ module.exports = (sequelize, DataTypes) => {
     'Video',
     {
       video_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         primaryKey: true,
+      },
+      index: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
       },
       name: DataTypes.STRING,
       category: DataTypes.STRING,

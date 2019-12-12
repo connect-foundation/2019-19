@@ -35,7 +35,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
         .then(res => {
           if (res.data.like_id) {
             setLike(true);
-            document.getElementById(`${thumbNailId}`).checked = true;
+            document.getElementById(`like-${thumbNailId}`).checked = true;
           }
         });
     }
@@ -54,11 +54,11 @@ const LikeBtn = ({ userId, thumbNailId }) => {
   return (
     <div>
       <CheckBox
-        id={`${thumbNailId}`}
+        id={`like-${thumbNailId}`}
         type="checkbox"
         onClick={handleLikeClicked}
       />
-      <CheckBoxLabel htmlFor={`${thumbNailId}`}>
+      <CheckBoxLabel htmlFor={`like-${thumbNailId}`}>
         <IconCross />
         &nbsp; 좋아요 {contentText}
       </CheckBoxLabel>
@@ -68,7 +68,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
 
 LikeBtn.propTypes = {
   userId: PropTypes.string,
-  thumbNailId: PropTypes.number,
+  thumbNailId: PropTypes.string,
 };
 
 export default LikeBtn;

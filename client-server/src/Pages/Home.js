@@ -32,11 +32,16 @@ const Home = () => {
   return (
     <>
       <MainThumbNail />
-      <Slider categoryName={'스포츠'}>
-        {sportsData.map(content => (
-          <Slider.Item movie={content._source} key={content._source.video_id} />
-        ))}
-      </Slider>
+      {sportsData.length && (
+        <Slider categoryName={'스포츠'}>
+          {sportsData.map(content => (
+            <Slider.Item
+              movie={content._source}
+              key={content._source.video_id}
+            />
+          ))}
+        </Slider>
+      )}
       <Scroll categoryList={requestCategories} />
     </>
   );

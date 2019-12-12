@@ -2,10 +2,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('videos', {
       video_id: {
-        allowNull: true,
-        autoIncrement: true,
+        allowNull: false,
         primaryKey: true,
+        type: Sequelize.STRING,
+      },
+      index: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
       },
       name: {
         type: Sequelize.STRING,
