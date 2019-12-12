@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { css } from '@emotion/core';
 import styled from 'styled-components';
 import { ClipLoader } from 'react-spinners';
-import MainButton from './MainButton';
+import PlayButton from './PlayButton';
 import MainText from './MainText';
 import LikeBtn from './like/like';
 import MylistBtn from './like/mylist';
@@ -84,7 +84,7 @@ const MainThumbNail = () => {
       <StyledThumbNail bg={thumbNailImg} hide={hide}>
         <MainText name={thumbNailTitle} />
         <StyledButtonsContainer>
-          <MainButton name="▶  재생" />
+          <PlayButton name="▶  재생" />
           {userInfo && [
             <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
             <MylistBtn userId={userInfo} thumbNailId={thumbNailId} />,
