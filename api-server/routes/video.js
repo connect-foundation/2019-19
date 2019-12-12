@@ -20,7 +20,14 @@ router.get('/:category', async (req, res) => {
   const data = await ElasticSearch.filterController('category', 'desc', [
     decodedCategory,
   ]);
-  console.log(data);
+  //   console.log(data);
+  return res.json(data);
+});
+
+router.get('/search/:keyword', async (req, res) => {
+  const decodedKeyword = decodeUrl(req.params.keyword);
+  console.log(`decodedKeyword is ${decodedKeyword}`);
+  const data = await ElasticSearch.getResult('name', decodedKeyword, 'asc');
   return res.json(data);
 });
 

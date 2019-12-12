@@ -1,60 +1,53 @@
 require('dotenv').config();
-
-const tableName = { movie: process.env.movie_table };
-const esVideoId = process.env.es_videoId;
-const esLikes = process.env.es_likes;
-const esCategory = process.env.es_category;
-const esName = process.env.es_name;
+const table_name = { movie: process.env.movie_table };
+const es_videoId = process.env.es_videoId;
+const es_likes = process.env.es_likes;
+const es_category = process.env.es_category;
+const es_name = process.env.es_name;
 const query = require('../utils/query.js');
 
-const filterSize = 40;
-const searchSize = 40;
-
 const ElasticSearch = {
-  async filterController(target, order, categoryList) {
+  /**
+   * 
+   * @param {string} column     video 테이블 안에 있는 column 이름
+   * @param {string} order      "asc", "desc" 둘 중 하나만
+   * @param {Array} category_list 카테고리 조회할 때만 쓰는거라 배열형태 (column 인자에 category 안쓰면 없어도 되는 인자?)
+                       ['게임','스포츠'] or ['게임'] 단어 개수 딱 맞아야됨 ex) '음'으로 검색하면 '음악' 검색 안되고 '음악'으로 검색해야됨
+   */
+  filterController: async function(column, order, category_list) {
+    const SEARCH_SIZE = 40;
     let resp = null;
 
-    if (target === esVideoId || target === esLikes) {
-      resp = await query.filterPipe(
-        target,
-        order,
-        query.getFiltering,
-        filterSize,
-      );
-    } else if (target === esCategory) {
-      resp = await query.filterPipe(
-        target,
-        null,
-        query.getCategory,
-        filterSize,
-        categoryList,
-      );
+    if (column === es_videoId || column === es_likes) {
+      resp = await query.get_filtering(column, order, SEARCH_SIZE);
+    } else if (column == es_category) {
+      resp = await query.get_category(category_list, order, SEARCH_SIZE);
     }
+    return resp;
+  },
+
+  // 무조건 video 테이블만 뒤짐 | 초성만 넣어도 검색 됨
+  /**
+   *
+   * @param {string} column ex) "name"
+   * @param {string} target ex) "동영상제목?"
+   * @param {string} order  ex) "asc", "desc"
+   */
+  getResult: async function(column, target, order) {
+    const SEARCH_SIZE = 40;
+    let resp = '';
+    resp = await query.get_search(column, target, order, SEARCH_SIZE);
+
     return resp;
   },
 };
 
-// const SearchController = {
-//   async getResult(column, order, target) {
-//     let resp = '';
-//     resp = await query.filterPipe(
-//       column,
-//       order,
-//       query.getSearch,
-//       filterSize,
-//       null,
-//       target,
-//     );
-//     console.log(resp);
-//   },
-// };
+const temp = async () => {
+  const data = await ElasticSearch.filterController('category', 'desc', [
+    '음악',
+  ]);
+  console.log(data);
+};
 
-// SearchController.getResult(esName, 'asc', 'Aspernatur veritatis quia');
-
-// FilterController.filterController(esCategory, 'desc', ['스포츠', '게임']);
-// ElasticSearch.filterController(esCategory, 'desc', ['스포츠']);
-// FilterController.filterController(esVideoId, 'asc'); //비디오 번호순
-// FilterController.filterController(esLikes, 'desc'); // 좋아요 순
-// FilterController.filterController("reg_date","desc");  //최신 등록 컨텐츠 순
-
+temp();
 module.exports = ElasticSearch;

@@ -2,6 +2,25 @@
   display: flex;
   position: relative;
 
+  animation: fade-in 1000ms ease;
+
+  @keyframes fade-in {
+    0% {
+      //  -webkit-filter: blur(1.17rem);
+      //  -o-filter: blur(1.17rem);
+      //  -ms-filter: blur(1.17rem);
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      // -webkit-filter: blur(0);
+      // -o-filter: blur(0);
+      // -ms-filter: blur(0);
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
   &__container {
     display: flex;
     padding: 0 55px;
@@ -11,7 +30,6 @@
   }
   &__title {
     margin: 20px 0 0 55px;
-    margin: 0 0 0 2%;
     color: white;
   }
 

@@ -4,6 +4,7 @@
   margin: 0 0.1rem;
   position: relative;
   min-height: 12rem;
+
   img {
     height: 100%;
     width: 100%;
@@ -16,10 +17,10 @@
   .content-info {
     position: absolute;
     color: white;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.4);
     left: 10%;
     top: 10%;
-    font-size: 150%;
+    font-size: 110%;
     padding: 5%;
   }
   video {
