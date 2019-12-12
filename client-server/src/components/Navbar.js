@@ -7,6 +7,8 @@ import PageBtn from './PageBtn';
 import SearchInput from './Search/SearchInput';
 import SearchBox from './StyledComponents/SearchBox';
 import SearchIcon from './Search/SearchIcon';
+import Dropdown from './Recommender/Dropdown';
+import RecommendContainer from './Recommender/RecommendContainer';
 import LoginContext from '../loginContextApi/context';
 import ENV from '../../env';
 
@@ -45,11 +47,12 @@ const StyledLink = {
 const Navbar = () => {
   const { username, setUsername } = useContext(LoginContext);
   const [searchBoxVisible, setSearchBoxVisible] = useState(false);
+  const [recommenderVisible, setRecommenderVisible] = useState(false);
 
-  const searchBoxOutClickHandler = ref => {
+  const outClickHandler = (ref, stateSetter) => {
     const handleClickOutside = event => {
       if (ref.current && !ref.current.contains(event.target)) {
-        setSearchBoxVisible(false);
+        stateSetter(false);
       }
     };
     useEffect(() => {
@@ -62,7 +65,9 @@ const Navbar = () => {
     });
   };
   const searchBoxRef = useRef(null);
-  searchBoxOutClickHandler(searchBoxRef);
+  const recommenderRef = useRef(null);
+  outClickHandler(searchBoxRef, setSearchBoxVisible);
+  outClickHandler(recommenderRef, setRecommenderVisible);
 
   const Logout = () => {
     Cookies.remove('user_info');
@@ -72,6 +77,10 @@ const Navbar = () => {
 
   const showSearchBox = () => {
     setSearchBoxVisible(true);
+  };
+
+  const showRecommender = () => {
+    setRecommenderVisible(true);
   };
 
   return (
@@ -101,7 +110,10 @@ const Navbar = () => {
           <SearchIcon />
           {searchBoxVisible && <SearchInput />}
         </SearchBox>
-        <PageBtn name="추천" />
+        <RecommendContainer onClick={showRecommender} ref={recommenderRef}>
+          <PageBtn name="추천" />
+          {recommenderVisible && <Dropdown />}
+        </RecommendContainer>
         {username ? (
           <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (
