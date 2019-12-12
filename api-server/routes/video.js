@@ -15,6 +15,11 @@ router.get('/popular-thumbnail-video', async (req, res) => {
   return res.json(data);
 });
 
+router.get('/popular-videos', async (req, res) => {
+  const result = await ElasticSearch.getPopularVideos();
+  return res.json(result);
+});
+
 router.get('/recent-thumbnail-video', async (req, res) => {
   const topFiveRecentVideos = await ElasticSearch.getFiveRecentVideos();
   const result =

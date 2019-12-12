@@ -46,19 +46,13 @@ const ElasticSearch = {
     return result;
   },
   getFiveRecentVideos: async () => {
-    let result = '';
-    result = await query.get_recent_videos(5);
+    const result = await query.get_recent_videos(5);
+    return result;
+  },
+  getPopularVideos: async () => {
+    const result = await query.get_popular_videos(25);
     return result;
   },
 };
 
-const temp = async () => {
-  //   const data = await ElasticSearch.filterController('category', 'desc', [
-  //     '음악',
-  //   ]);
-  //   const data = await ElasticSearch.getFiveRecentVideos();
-  //   console.log(data);
-};
-
-temp();
 module.exports = ElasticSearch;
