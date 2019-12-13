@@ -69,6 +69,7 @@ const Navbar = () => {
   outClickHandler(searchBoxRef, setSearchBoxVisible);
   outClickHandler(recommenderRef, setRecommenderVisible);
 
+
   const Logout = () => {
     Cookies.remove('user_info');
     setUsername(null);
@@ -82,7 +83,7 @@ const Navbar = () => {
   const showRecommender = () => {
     setRecommenderVisible(true);
   };
-
+  
   return (
     <StyledNavbarContainer>
       <Link to="/" style={StyledLink}>
