@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const ContentContainer = styled.div`
+  min-height: 4rem;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -38,19 +39,24 @@ const TextArea = styled.div`
     font-size: x-small;
   }
 `;
-const RecommendedContent = () => {
+const RecommendedContent = ({ category, title, date, thumbnailImg }) => {
   return (
     <ContentContainer>
-      <ContentImage src="https://occ-0-988-993.1.nflxso.net/art/3a065/cbec3e76347fd7ff3b03de1ad78f78e255a3a065.jpg" />
+      <ContentImage src={thumbnailImg} />
       <TextArea>
-        <div className="commentary">취향저격 스포츠 컨텐츠</div>
-        <div className="title">{`디파티드`}</div>
-        <div className="date">2019.08.22</div>
+        <div className="commentary">{`취향저격 ${category} 컨텐츠`}</div>
+        <div className="title">{title}</div>
+        <div className="date">{date}</div>
       </TextArea>
     </ContentContainer>
   );
 };
 
-RecommendedContent.propTypes = {};
+RecommendedContent.propTypes = {
+  category: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  thumbnailImg: PropTypes.string.isRequired,
+};
 
 export default RecommendedContent;

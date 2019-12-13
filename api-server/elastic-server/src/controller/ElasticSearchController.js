@@ -52,6 +52,10 @@ const ElasticSearch = {
     const result = await query.get_popular_videos(25);
     return result;
   },
+  recommendContents: async size => {
+    const result = await query.recommend_contents(size);
+    return result;
+  },
 };
 
 module.exports = ElasticSearch;

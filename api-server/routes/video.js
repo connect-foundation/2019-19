@@ -58,4 +58,13 @@ router.get('/search/:keyword', async (req, res) => {
   return res.json(data);
 });
 
+router.post('/recommend', async (req, res) => {
+  // const decodedKeyword = decodeUrl(req.params.keyword);
+  // console.log(`decodedKeyword is ${decodedKeyword}`);
+  // const data = await ElasticSearch.getResult('name', decodedKeyword, 'asc');
+  // return res.json(data);
+  const result = await ElasticSearch.recommendContents(5);
+  return res.json(result);
+});
+
 module.exports = router;

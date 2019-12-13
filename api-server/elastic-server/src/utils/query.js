@@ -125,8 +125,30 @@ async function get_popular_videos(size) {
     );
 }
 
+async function recommend_contents(size) {
+  return await client
+    .search({
+      index: process.env.index,
+      type: '_doc',
+      body: {
+        sort: [{ likes: { order: 'desc' } }],
+        size: size,
+        query: { match_all: {} },
+      },
+    })
+    .then(
+      function(resp) {
+        return resp.hits.hits;
+      },
+      function(err) {
+        return err;
+      },
+    );
+}
+
 module.exports.get_filtering = get_filtering;
 module.exports.get_category = get_category;
 module.exports.get_search = get_search;
 module.exports.get_recent_videos = get_recent_videos;
 module.exports.get_popular_videos = get_popular_videos;
+module.exports.recommend_contents = recommend_contents;

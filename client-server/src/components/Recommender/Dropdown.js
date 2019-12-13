@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import RecommendedContent from './RecommendedContent';
+import LoginContext from '../../loginContextApi/context';
+import axios from 'axios';
+import ENV from '../../../env';
+
+const apiServer = ENV.apiServer;
 
 const DropdownContainer = styled.div`
   padding: 0;
@@ -9,7 +13,7 @@ const DropdownContainer = styled.div`
   right: 6rem;
   width: 24rem;
   height: 30rem;
-  border: solid lightgray 0.1rem;
+  border: solid lightgray 0.06rem;
   background-color: rgba(20, 20, 20, 0.9);
   overflow: scroll;
   animation: srr 800ms ease;
@@ -26,17 +30,36 @@ const DropdownContainer = styled.div`
 `;
 
 const Dropdown = () => {
+  const { userId } = useContext(LoginContext);
+  const [recommededContents, setRecommededContents] = useState(null);
+  const [onLoading, setOnLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .post(`${apiServer}/video/recommend`, {
+        params: {
+          userId,
+        },
+      })
+      .then(res => {
+        setRecommededContents(res.data);
+        setOnLoading(false);
+      });
+  }, []);
+
+  if (onLoading) return null;
+
   return (
     <DropdownContainer>
-      <RecommendedContent />
-      <RecommendedContent />
-      <RecommendedContent />
-      <RecommendedContent />
-      <RecommendedContent />
+      {recommededContents.map(content => (
+        <RecommendedContent
+          category={content._source.category}
+          title={content._source.name}
+          date={content._source.reg_date.slice(0, 10)}
+          thumbnailImg={content._source.thumbnail_img_url}
+        />
+      ))}
     </DropdownContainer>
   );
 };
-
-Dropdown.propTypes = {};
 
 export default Dropdown;
