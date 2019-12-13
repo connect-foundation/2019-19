@@ -58,5 +58,4 @@ const ElasticSearch = {
   },
 };
 
-temp();
 module.exports = ElasticSearch;
