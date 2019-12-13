@@ -5,16 +5,7 @@ import { Redirect } from 'react-router-dom';
 import PlayBtn from './StyledComponents/CheckBoxLabel';
 import CheckBox from './StyledComponents/CheckBox';
 import LoginContext from '../loginContextApi/context';
-
-const Toast = styled.div`
-  position: absolute;
-  background-color: rgba(125, 243, 209, 0.7);
-  color: lightgray;
-  border-radius: 0.5rem;
-  padding: 1.2rem;
-  margin-top: 4.5rem;
-  animation: fade-in 500ms ease;
-`;
+import Toast from './StyledComponents/Toast';
 
 const PlayButton = ({ name }) => {
   const { userInfo } = useContext(LoginContext);
