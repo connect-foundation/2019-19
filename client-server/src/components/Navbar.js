@@ -1,10 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import logo from '../../dist/play.png';
+import logo from '../../dist/white.png';
 import PageBtn from './PageBtn';
+import SearchInput from './Search/SearchInput';
+import SearchBox from './StyledComponents/SearchBox';
+import Toast from './StyledComponents/Toast';
+import SearchIcon from './Search/SearchIcon';
+import Dropdown from './Recommender/Dropdown';
+import RecommendContainer from './Recommender/RecommendContainer';
 import LoginContext from '../loginContextApi/context';
+import ENV from '../../env';
 
 const StyledNavbarContainer = styled.div`
   display: flex;
@@ -18,10 +25,10 @@ const StyledNavbarContainer = styled.div`
 `;
 const StyledLogo = styled.img`
   float: left;
-  margin: auto 2rem auto 2rem;
-  padding: 0.5rem;
-  width: 3%;
-  height: 3%;
+  margin: 0.5rem 1rem 0.5rem 3rem;
+  width: 4.8rem;
+  height: 3rem;
+  padding: 0rem;
 
   &:hover {
     cursor: pointer;
@@ -35,15 +42,53 @@ const StyledNavRight = styled.div`
 const StyledLink = {
   display: 'contents',
   textDecoration: 'none',
+  padding: '0',
 };
 
 const Navbar = () => {
   const { username, setUsername } = useContext(LoginContext);
+  const [searchBoxVisible, setSearchBoxVisible] = useState(false);
+  const [recommenderVisible, setRecommenderVisible] = useState(false);
+  const [alertToLogin, setAlertToLogin] = useState(false);
+
+  const outClickHandler = (ref, stateSetter) => {
+    const handleClickOutside = event => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        stateSetter(false);
+      }
+    };
+    useEffect(() => {
+      // Bind the event listener
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    });
+  };
+  const searchBoxRef = useRef(null);
+  const recommenderRef = useRef(null);
+  outClickHandler(searchBoxRef, setSearchBoxVisible);
+  outClickHandler(recommenderRef, setRecommenderVisible);
 
   const Logout = () => {
     Cookies.remove('user_info');
     setUsername(null);
     window.location.reload();
+  };
+
+  const showSearchBox = () => {
+    setSearchBoxVisible(true);
+  };
+
+  const showRecommender = () => {
+    if (!username) {
+      setAlertToLogin(true);
+      setTimeout(() => {
+        setAlertToLogin(false);
+      }, 2500);
+    }
+    setRecommenderVisible(true);
   };
 
   return (
@@ -65,14 +110,27 @@ const Navbar = () => {
           <PageBtn name="내가 찜한 컨텐츠" />
         </Link>
       ) : null}
-
+      <Link to="/Player/1" style={StyledLink}>
+        <PageBtn name="플레이어" />
+      </Link>
       <StyledNavRight>
-        <PageBtn name="🔍" />
-        <PageBtn name="추천" />
+        <SearchBox onClick={showSearchBox} ref={searchBoxRef}>
+          <SearchIcon />
+          {searchBoxVisible && <SearchInput />}
+        </SearchBox>
+        <RecommendContainer onClick={showRecommender} ref={recommenderRef}>
+          <PageBtn name="추천" />
+          {username && recommenderVisible && <Dropdown />}
+          {alertToLogin && (
+            <Toast marginTop="1.5rem" marginRight="1rem">
+              로그인이 필요합니다.
+            </Toast>
+          )}
+        </RecommendContainer>
         {username ? (
           <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (
-          <a href="http://localhost:8000/oauth/google" style={StyledLink}>
+          <a href={`${ENV.apiServer}/oauth/google`} style={StyledLink}>
             <PageBtn name="로그인" />
           </a>
         )}
