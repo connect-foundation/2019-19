@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import PlayBtn from './StyledComponents/CheckBoxLabel';
 import CheckBox from './StyledComponents/CheckBox';
 import LoginContext from '../loginContextApi/context';
+import Toast from './StyledComponents/Toast';
 
 const Toast = styled.div`
   position: absolute;
