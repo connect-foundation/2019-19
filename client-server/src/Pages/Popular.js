@@ -13,7 +13,6 @@ const Popular = () => {
 
   useEffect(() => {
     axios.get(`${apiServer}/video/popular-videos`).then(res => {
-      console.log(res.data);
       setPopularVideoList(res.data);
       const numOfMyVideos = res.data.length;
       if (res.data.length === 0) return; // 유저가 찜한 컨텐츠가 없다는 view 표시해야

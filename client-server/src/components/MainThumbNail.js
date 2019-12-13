@@ -61,7 +61,6 @@ const MainThumbNail = ({ requestUrl }) => {
 
   useEffect(() => {
     axios.get(`${apiServer}/video/${requestUrl}`).then(thumbNailData => {
-      console.log(thumbNailData);
       if (thumbNailData.data._source) {
         thumbNailData.data = thumbNailData.data._source;
       }

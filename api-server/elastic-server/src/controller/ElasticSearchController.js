@@ -13,7 +13,8 @@ const ElasticSearch = {
    * @param {string} order      "asc", "desc" 둘 중 하나만
    * @param {Array} category_list 카테고리 조회할 때만 쓰는거라 배열형태 (column 인자에 category 안쓰면 없어도 되는 인자?)
                        ['게임','스포츠'] or ['게임'] 단어 개수 딱 맞아야됨 ex) '음'으로 검색하면 '음악' 검색 안되고 '음악'으로 검색해야됨
-   */
+**/
+
   filterController: async function(column, order, category_list, sort) {
     const SEARCH_SIZE = 40;
     let result = null;
