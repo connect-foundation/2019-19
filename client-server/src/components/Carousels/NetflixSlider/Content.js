@@ -22,6 +22,7 @@ const Content = ({ movie, onClose }) => {
         <div className="content__background__shadow" />
         <video
           src={movie.thumbnail_video_url}
+          //   src="https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vcl4-StMGYAw.mp4"
           className="content__background__image"
           autoPlay
         >
