@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Container = styled.h3`
-  display: inline-table;
+  display: inline-block;
   border: solid 0.1rem white;
   border-radius: 0.2rem;
   background-color: rgba(20, 20, 20, 0.5);

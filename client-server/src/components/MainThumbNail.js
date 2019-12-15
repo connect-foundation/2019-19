@@ -56,7 +56,7 @@ const TagsContainer = styled.div`
   padding: 0.5rem;
   //   background-color: rgba(0, 0, 0, 0.3);
   //   border: solid white 0.1rem;
-  display: inline-flex;
+  display: inline-block;
   justify-content: flex-start;
   margin-left: 5%;
   flex-wrap: wrap;
