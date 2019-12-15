@@ -1,10 +1,10 @@
-const data = require('../../crawler/infoJson/file8.json');
+const data = require('../../crawler/tagJson/file11.json');
 
 module.exports = {
   up: queryInterface => {
-    return queryInterface.bulkInsert('videos', data, {});
+    return queryInterface.bulkInsert('tags', data, {});
   },
   down: queryInterface => {
-    return queryInterface.bulkDelete('videos', null, {});
+    return queryInterface.bulkDelete('tags', null, {});
   },
 };
