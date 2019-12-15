@@ -291,7 +291,7 @@ const Player = ({ match }) => {
         width="100%"
         height="100vh"
         style={{ display: 'flex', position: 'relative' }}
-        url="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+        url="https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vk5WQZzDRVtw/720p.stream.m3u8"
         playing={playing}
         volume={volume}
         onDuration={handleDuration}

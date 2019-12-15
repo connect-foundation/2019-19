@@ -9,7 +9,7 @@ const Home = () => {
   const [sportsData, setSportsData] = useState(null);
   const [onLoading, setOnLoading] = useState(true);
   useEffect(() => {
-    axios.get(`${ENV.apiServer}/video/스포츠`).then(res => {
+    axios.get(`${ENV.apiServer}/video/영화애니메이션`).then(res => {
       setSportsData(res.data);
       setOnLoading(false);
     });
@@ -23,7 +23,7 @@ const Home = () => {
     '코미디',
     '여행',
     '뷰티패션',
-    '영화애니메이션',
+    '스포츠',
     '노하우스타일',
     '뉴스정치',
     '애완동물동물',
@@ -33,7 +33,7 @@ const Home = () => {
     <>
       <MainThumbNail requestUrl={'popular-thumbnail-video'} />
       {sportsData.length && (
-        <Slider categoryName={'스포츠'}>
+        <Slider categoryName={'영화애니메이션'}>
           {sportsData.map(content => (
             <Slider.Item
               movie={content._source}
