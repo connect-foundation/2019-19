@@ -16,8 +16,11 @@ const DropdownContainer = styled.div`
   border: solid lightgray 0.06rem;
   background-color: rgba(20, 20, 20, 0.9);
   overflow: scroll;
-  animation: srr 800ms ease;
-  @keyframes srr {
+  scrollbar-width: none;
+  scrollbar-color: dark;
+
+  animation: srr-recommender 800ms ease;
+  @keyframes srr-recommender {
     0% {
       height: 0%;
       opacity: 0;

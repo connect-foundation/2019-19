@@ -15,16 +15,34 @@ const apiServer = ENV.apiServer;
 
 const Content = ({ movie, onClose }) => {
   const { userInfo } = useContext(LoginContext);
+  useEffect(() => {
+    // Bind the event listener
+    document.getElementById(`content-${movie.video_id}`).addEventListener(
+      'loadedmetadata',
+      function() {
+        console.log(this.currentTime);
+
+        console.log(this.currentTime);
+        console.log(this.readyState);
+        this.play();
+        // setTimeout(() => {
+        //   //   this.currentTime = this.duration / 2;
+        //   this.play();
+        // }, 2000);
+      },
+      false,
+    );
+  }, []);
 
   return (
     <div className="content">
       <div className="content__background">
         <div className="content__background__shadow" />
         <video
-          src={movie.thumbnail_video_url}
-          //   src="https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vcl4-StMGYAw.mp4"
+          id={`content-${movie.video_id}`}
+          src={`https://${movie.thumbnail_video_url}`}
           className="content__background__image"
-          autoPlay
+          poster={movie.thumbnail_img_url}
         >
           <track kind="captions" />
         </video>

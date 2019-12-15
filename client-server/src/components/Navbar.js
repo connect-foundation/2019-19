@@ -26,8 +26,7 @@ const StyledNavbarContainer = styled.div`
 const StyledLogo = styled.img`
   float: left;
   margin: 0.5rem 1rem 0.5rem 3rem;
-  width: 4.8rem;
-  height: 3rem;
+  width: 6%;
   padding: 0rem;
 
   &:hover {
