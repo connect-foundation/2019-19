@@ -1,6 +1,7 @@
 const express = require('express');
 const decodeUrl = require('urldecode');
 const { Video } = require('../models');
+const { Tag } = require('../models');
 const ElasticSearch = require('../elastic-server/src/controller/ElasticSearchController');
 
 const router = express.Router();
@@ -65,6 +66,12 @@ router.post('/recommend', async (req, res) => {
   // return res.json(data);
   const result = await ElasticSearch.recommendContents(5);
   return res.json(result);
+});
+
+router.get('/tags/:video_id', async (req, res) => {
+  const videoId = decodeUrl(req.params.video_id);
+  const data = await Tag.getAllTagsAboutVideo(videoId);
+  return res.json(data);
 });
 
 module.exports = router;
