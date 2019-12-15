@@ -6,6 +6,7 @@ import PlayButton from './PlayButton';
 import MainText from './MainText';
 import LikeBtn from './like/like';
 import MylistBtn from './like/mylist';
+import Tag from '../components/Tag/Tag';
 import LoginContext from '../loginContextApi/context';
 import ENV from '../../env';
 
@@ -23,7 +24,7 @@ const StyledThumbNail = styled.div`
   display: flex;
   opacity: ${props => props.hide};
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   animation: fade-in-thumbnail 1000ms ease;
 
   @keyframes fade-in-thumbnail {
@@ -51,12 +52,25 @@ const StyledButtonsContainer = styled.div`
   margin-left: 5%;
 `;
 
+const TagsContainer = styled.div`
+  padding: 0.5rem;
+  //   background-color: rgba(0, 0, 0, 0.3);
+  //   border: solid white 0.1rem;
+  display: inline-flex;
+  justify-content: flex-start;
+  margin-left: 5%;
+  flex-wrap: wrap;
+  width: 40%;
+  //   overflow: scroll;
+`;
+
 const MainThumbNail = ({ requestUrl }) => {
   const [onLoading, setOnLoading] = useState(true);
-  const [thumbNailImg, setThumbNailImg] = useState(null);
+  const [thumbNailImg, setThumbNailImg] = useState();
   const [hide, setHide] = useState(0);
   const [thumbNailTitle, setThumbNailTitle] = useState('로딩중');
-  const [thumbNailId, setThumbNailId] = useState(null);
+  const [thumbNailTags, setThumbNailTags] = useState(null);
+  const [thumbNailId, setThumbNailId] = useState();
   const { userInfo } = useContext(LoginContext);
 
   useEffect(() => {
@@ -67,8 +81,13 @@ const MainThumbNail = ({ requestUrl }) => {
       setThumbNailId(thumbNailData.data.video_id);
       setThumbNailTitle(thumbNailData.data.name);
       setThumbNailImg(thumbNailData.data.thumbnail_img_url);
-      setHide(1);
-      setOnLoading(false);
+      axios
+        .get(`${apiServer}/video/tags/${thumbNailData.data.video_id}`)
+        .then(tagResponse => {
+          setThumbNailTags(tagResponse.data);
+          setHide(1);
+          setOnLoading(false);
+        });
     });
   }, []);
 
@@ -85,6 +104,7 @@ const MainThumbNail = ({ requestUrl }) => {
       />
       <StyledThumbNail bg={thumbNailImg} hide={hide}>
         <MainText name={thumbNailTitle} />
+
         <StyledButtonsContainer>
           <PlayButton name="▶  재생" />
           {userInfo && [
@@ -92,6 +112,13 @@ const MainThumbNail = ({ requestUrl }) => {
             <MylistBtn userId={userInfo} thumbNailId={thumbNailId} />,
           ]}
         </StyledButtonsContainer>
+        {thumbNailTags && (
+          <TagsContainer>
+            {thumbNailTags.map(tagObject => (
+              <Tag name={tagObject.name} />
+            ))}
+          </TagsContainer>
+        )}
       </StyledThumbNail>
     </>
   );
