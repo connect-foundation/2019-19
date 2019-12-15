@@ -2,18 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const Container = styled.h3`
+const Container = styled.h4`
   display: inline-block;
-  border: solid 0.1rem white;
+  border: solid 0.05rem lightgray;
   border-radius: 0.2rem;
-  background-color: rgba(20, 20, 20, 0.5);
-  color: white;
-  padding: 0.5rem;
-  margin: auto;
+  background-color: rgba(20, 20, 20, 0.7);
+  color: lightgray;
+  padding: 0.3rem;
+  margin: 0.2rem;
+  margin-left: 0;
 
   &:hover {
     cursor: pointer;
-    color: lightgray;
+    color: white;
   }
 `;
 

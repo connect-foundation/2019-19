@@ -7,6 +7,7 @@ import MainText from './MainText';
 import LikeBtn from './like/like';
 import MylistBtn from './like/mylist';
 import Tag from '../components/Tag/Tag';
+import TagsContainer from './StyledComponents/TagsContainer';
 import LoginContext from '../loginContextApi/context';
 import ENV from '../../env';
 
@@ -50,18 +51,6 @@ const StyledButtonsContainer = styled.div`
   width: 35%;
   height: 8%;
   margin-left: 5%;
-`;
-
-const TagsContainer = styled.div`
-  padding: 0.5rem;
-  //   background-color: rgba(0, 0, 0, 0.3);
-  //   border: solid white 0.1rem;
-  display: inline-block;
-  justify-content: flex-start;
-  margin-left: 5%;
-  flex-wrap: wrap;
-  width: 40%;
-  //   overflow: scroll;
 `;
 
 const MainThumbNail = ({ requestUrl }) => {
@@ -113,7 +102,7 @@ const MainThumbNail = ({ requestUrl }) => {
           ]}
         </StyledButtonsContainer>
         {thumbNailTags && (
-          <TagsContainer>
+          <TagsContainer marginLeft={5}>
             {thumbNailTags.map(tagObject => (
               <Tag name={tagObject.name} />
             ))}
