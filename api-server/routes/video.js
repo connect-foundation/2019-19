@@ -3,6 +3,7 @@ const decodeUrl = require('urldecode');
 const { Video } = require('../models');
 const { Tag } = require('../models');
 const ElasticSearch = require('../elastic-server/src/controller/ElasticSearchController');
+const db = require('../models');
 
 const router = express.Router();
 
@@ -60,12 +61,13 @@ router.get('/search/:keyword', async (req, res) => {
 });
 
 router.post('/recommend', async (req, res) => {
-  // const decodedKeyword = decodeUrl(req.params.keyword);
-  // console.log(`decodedKeyword is ${decodedKeyword}`);
-  // const data = await ElasticSearch.getResult('name', decodedKeyword, 'asc');
-  // return res.json(data);
-  const result = await ElasticSearch.recommendContents(5);
-  return res.json(result);
+  console.log(req.body);
+  const userId = req.body.params.userId;
+  const videoId = req.body.params.videoId;
+  const queryStatement = Video.recommendationQuery(userId, videoId);
+  console.log(queryStatement);
+  const result = await db.sequelize.query(queryStatement);
+  return res.json(result[0]);
 });
 
 router.get('/tags/:video_id', async (req, res) => {

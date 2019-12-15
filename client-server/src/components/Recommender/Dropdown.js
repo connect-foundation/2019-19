@@ -41,9 +41,11 @@ const Dropdown = () => {
       .post(`${apiServer}/video/recommend`, {
         params: {
           userId,
+          videoId: 'vJxE5MaKuCEc',
         },
       })
       .then(res => {
+        console.log(res.data);
         setRecommededContents(res.data);
         setOnLoading(false);
       });
@@ -52,16 +54,20 @@ const Dropdown = () => {
   if (onLoading) return null;
 
   return (
-    <DropdownContainer>
-      {recommededContents.map(content => (
-        <RecommendedContent
-          category={content._source.category}
-          title={content._source.name}
-          date={content._source.reg_date.slice(0, 10)}
-          thumbnailImg={content._source.thumbnail_img_url}
-        />
-      ))}
-    </DropdownContainer>
+    <>
+      {RecommendedContent.length && (
+        <DropdownContainer>
+          {recommededContents.map(content => (
+            <RecommendedContent
+              category={content.category}
+              title={content.name}
+              date={content.reg_date.slice(0, 10)}
+              thumbnailImg={content.thumbnail_img_url}
+            />
+          ))}
+        </DropdownContainer>
+      )}
+    </>
   );
 };
 
