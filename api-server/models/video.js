@@ -55,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
     const data = await Video.findAll();
     return data;
   };
+  Video.getVideoNameById = async videoId => {
+    const data = await Video.findAll({ where: { video_id: videoId } });
+    return data;
+  };
   Video.postVideo = async (name, category, url) => {
     Video.create({
       name,

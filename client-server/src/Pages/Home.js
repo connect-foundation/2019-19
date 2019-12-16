@@ -4,6 +4,7 @@ import Scroll from '../components/infinite_scroll/Scroll';
 import Slider from '../components/Carousels/NetflixSlider';
 import axios from 'axios';
 import ENV from '../../env';
+import ScrollFakeUI from '../components/infinite_scroll/ScrollFakeUI';
 
 const Home = () => {
   const [sportsData, setSportsData] = useState(null);
@@ -28,11 +29,12 @@ const Home = () => {
     '뉴스정치',
     '애완동물동물',
   ];
-  if (onLoading) return null;
+  if (onLoading)
+    return <MainThumbNail requestUrl={'popular-thumbnail-video'} />;
   return (
     <>
       <MainThumbNail requestUrl={'popular-thumbnail-video'} />
-      {sportsData.length && (
+      {sportsData.length ? (
         <Slider categoryName={'영화애니메이션'}>
           {sportsData.map(content => (
             <Slider.Item
@@ -41,6 +43,8 @@ const Home = () => {
             />
           ))}
         </Slider>
+      ) : (
+        <ScrollFakeUI numOfContents={6} />
       )}
       <Scroll categoryList={requestCategories} />
     </>

@@ -25,14 +25,12 @@ const Content = ({ movie, onClose }) => {
     document.getElementById(`content-${movie.video_id}`).addEventListener(
       'loadedmetadata',
       function() {
-        console.log(this.currentTime);
-
-        console.log(this.currentTime);
-        console.log(this.readyState);
         this.play();
+        // console.log(this.currentTime);
+        // console.log(this.currentTime);
+        // console.log(this.readyState);
         // setTimeout(() => {
-        //   //   this.currentTime = this.duration / 2;
-        //   this.play();
+        //   this.currentTime = this.duration / 2;
         // }, 2000);
       },
       false,

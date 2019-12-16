@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Slider from '../components/Carousels/NetflixSlider';
+import FakeUI from '../components/infinite_scroll/ScrollFakeUI';
 import ENV from '../../env';
 
 const { apiServer } = ENV;
@@ -26,7 +27,7 @@ const Popular = () => {
     });
   }, []);
 
-  if (onLoading) return null;
+  if (onLoading) return <FakeUI numOfContents={5} />;
 
   return (
     <>

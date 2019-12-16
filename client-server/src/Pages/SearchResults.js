@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Slider from '../components/Carousels/NetflixSlider';
-import styled from 'styled-components';
+import MessageOnCenter from '../components/StyledComponents/MessageOnCenter';
 
 import ENV from '../../env';
 
 const { apiServer } = ENV;
-
-const MessageOnCenter = styled.h1`
-  position: absolute;
-  color: white;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-`;
 
 const SearchResults = props => {
   const [myVideoList, setMyVideoList] = useState([]);

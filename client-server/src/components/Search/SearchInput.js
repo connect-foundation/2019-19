@@ -49,6 +49,7 @@ const SearchInput = () => {
         placeholder="제목, 이름, 태그"
         type="text"
         onKeyUp={changeURL}
+        id="search-contents-input"
       ></input>
       {userInput && <Redirect to={`/search/${userInput}`} />}
     </StyledInputBox>

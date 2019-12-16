@@ -27,7 +27,7 @@ const Recent = () => {
     '뉴스정치',
     '애완동물동물',
   ];
-  if (onLoading) return null;
+  if (onLoading) return <MainThumbNail requestUrl={'recent-thumbnail-video'} />;
   return (
     <>
       <MainThumbNail requestUrl={'recent-thumbnail-video'} />
