@@ -7,26 +7,6 @@ import CheckBox from './StyledComponents/CheckBox';
 import LoginContext from '../loginContextApi/context';
 import Toast from './StyledComponents/Toast';
 
-const Toast = styled.div`
-  position: absolute;
-  background-color: rgba(125, 243, 209, 0.7);
-  color: lightgray;
-  border-radius: 0.5rem;
-  padding: 1.2rem;
-  margin-top: 4.5rem;
-  animation: fade-in 500ms ease;
-`;
-
-const Toast = styled.div`
-  position: absolute;
-  background-color: rgba(125, 243, 209, 0.7);
-  color: lightgray;
-  border-radius: 0.5rem;
-  padding: 1.2rem;
-  margin-top: 4.5rem;
-  animation: fade-in 500ms ease;
-`;
-
 const PlayButton = ({ name, videoId }) => {
   const { userInfo } = useContext(LoginContext);
   const [userTryPlay, setUserTryPlay] = useState(false);
