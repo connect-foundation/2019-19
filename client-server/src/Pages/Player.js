@@ -142,15 +142,21 @@ const Player = ({ match }) => {
   const [videoUrl, setVideoUrl] = useState(
     `https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/${videoId}/${pigsel}.stream.m3u8`,
   );
-  const [thumbNailTitle, setThumbNailTitle] = useState(null);
+  const [videoTitle, setVideoTitle] = useState(null);
 
   /* Lifecycle method */
-  // Hide, Show Navbar
+  // Hide, Show Navbar & 비디오 타이틀 불러오기
   useEffect(() => {
     setShowNav(false);
-    axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
-      setThumbNailTitle(thumbNailData.data.name);
-    });
+    axios
+      .post(`${apiServer}/video/get-name-by-vid`, {
+        params: {
+          videoId,
+        },
+      })
+      .then(res => {
+        setVideoTitle(res.data[0].name);
+      });
   }, []);
 
   useEffect(() => {
@@ -386,7 +392,7 @@ const Player = ({ match }) => {
                 <Volume volume={volume} />
               </Button>
             </VolumeWrapper>
-            <TitleSpan>{thumbNailTitle}</TitleSpan>
+            <TitleSpan>{videoTitle}</TitleSpan>
             <PigselWrapper>
               <PigselModal
                 setPigsels={setPigsel}

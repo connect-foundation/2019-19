@@ -93,9 +93,6 @@ const Navbar = () => {
           <PageBtn name="내가 찜한 컨텐츠" />
         </Link>
       ) : null}
-      <Link to="/Player/1" style={StyledLink}>
-        <PageBtn name="플레이어" />
-      </Link>
       <StyledNavRight>
         <SearchBox onClick={showSearchBox} ref={searchBoxRef}>
           <SearchIcon />

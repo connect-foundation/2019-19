@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const ControlPigsel = styled.ul`
@@ -33,7 +33,7 @@ const PigselModal = ({
   setPlayedSeconds,
   videoId,
 }) => {
-  const [pigsel, setPigsel] = useState('720p');
+  const [pigsel, setPigsel] = useState('720p'); // 초기 값 720p
 
   const handleClick = (e, prop) => {
     e.preventDefault();
@@ -45,13 +45,9 @@ const PigselModal = ({
     );
   };
 
-  const handleOver = e => {
-    e.preventDefault();
-  };
-
   return (
     <>
-      <ControlPigselWrapper onMouseOver={e => handleOver(e)}>
+      <ControlPigselWrapper>
         <ControlPigsel>
           <ControlPigselList onClick={e => handleClick(e, '360p')}>
             360p &ensp;
@@ -60,7 +56,7 @@ const PigselModal = ({
             480p &ensp;
           </ControlPigselList>
           <ControlPigselList onClick={e => handleClick(e, '720p')}>
-            720p &ensp;
+            720p &nbsp;
           </ControlPigselList>
         </ControlPigsel>
         {pigsel}
