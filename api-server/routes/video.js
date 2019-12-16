@@ -61,11 +61,9 @@ router.get('/search/:keyword', async (req, res) => {
 });
 
 router.post('/recommend', async (req, res) => {
-  console.log(req.body);
   const userId = req.body.params.userId;
   const videoId = req.body.params.videoId;
   const queryStatement = Video.recommendationQuery(userId, videoId);
-  console.log(queryStatement);
   const result = await db.sequelize.query(queryStatement);
   return res.json(result[0]);
 });
