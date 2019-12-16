@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -39,20 +40,28 @@ const TextArea = styled.div`
     font-size: x-small;
   }
 `;
-const RecommendedContent = ({ category, title, date, thumbnailImg }) => {
+
+const RecommendedContent = ({ id, category, title, date, thumbnailImg }) => {
+  const [userClicked, setUserClicked] = useState(false);
+  const foo = () => {
+    setUserClicked(true);
+  };
+
   return (
-    <ContentContainer>
+    <ContentContainer onClick={foo}>
       <ContentImage src={thumbnailImg} />
       <TextArea>
         <div className="commentary">{`취향저격 ${category} 컨텐츠`}</div>
         <div className="title">{title}</div>
         <div className="date">{date}</div>
       </TextArea>
+      {userClicked && <Redirect to={`/Player/${id}}`} />}
     </ContentContainer>
   );
 };
 
 RecommendedContent.propTypes = {
+  id: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,

@@ -14,7 +14,7 @@ const DropdownContainer = styled.div`
   width: 24rem;
   height: 30rem;
   border: solid lightgray 0.06rem;
-  background-color: rgba(20, 20, 20, 0.9);
+  background-color: rgba(20, 20, 20, 0.7);
   overflow: scroll;
   scrollbar-width: none;
   scrollbar-color: dark;
@@ -59,6 +59,7 @@ const Dropdown = () => {
         <DropdownContainer>
           {recommededContents.map(content => (
             <RecommendedContent
+              id={content.video_id}
               category={content.category}
               title={content.name}
               date={content.reg_date.slice(0, 10)}
