@@ -36,7 +36,6 @@ const Content = ({ movie, onClose }) => {
       false,
     );
   }, []);
-
   return (
     <div className="content">
       <div className="content__background">
@@ -57,7 +56,7 @@ const Content = ({ movie, onClose }) => {
             {tags && tags.map(tag => <Tag name={tag.name} />)}
           </TagsContainer>
           <div className="content__btns__container">
-            <PlayButton name="▶  재생" />
+            <PlayButton name="▶  재생" videoId={movie.video_id} />
             {userInfo && [
               <LikeBtn userId={userInfo} thumbNailId={movie.video_id} />,
               <MylistBtn userId={userInfo} thumbNailId={movie.video_id} />,

@@ -95,7 +95,7 @@ const MainThumbNail = ({ requestUrl }) => {
         <MainText name={thumbNailTitle} />
 
         <StyledButtonsContainer>
-          <PlayButton name="▶  재생" />
+          <PlayButton name="▶  재생" videoId={thumbNailId} />
           {userInfo && [
             <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
             <MylistBtn userId={userInfo} thumbNailId={thumbNailId} />,

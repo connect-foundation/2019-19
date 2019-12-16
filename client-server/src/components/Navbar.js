@@ -89,7 +89,6 @@ const Navbar = () => {
     }
     setRecommenderVisible(true);
   };
-
   return (
     <StyledNavbarContainer>
       <Link to="/" style={StyledLink}>

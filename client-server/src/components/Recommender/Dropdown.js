@@ -45,7 +45,6 @@ const Dropdown = () => {
         },
       })
       .then(res => {
-        console.log(res.data);
         setRecommededContents(res.data);
         setOnLoading(false);
       });

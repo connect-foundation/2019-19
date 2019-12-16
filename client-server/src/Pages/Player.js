@@ -11,12 +11,18 @@ import Play from '../components/Player/Play';
 import Pause from '../components/Player/Pause';
 import Forward from '../components/Player/Forward';
 import Backward from '../components/Player/Backward';
+import PigselModal from '../components/Player/PigselModal';
 import Volume from '../components/Player/VolumeButton';
 import VolumeModal from '../components/Player/VolumeModal';
 import Fullscreen from '../components/Player/Fullscreen';
 import BackButton from '../components/BackButton';
 import Time from '../utils/Time';
 import CharCode from '../utils/CharCode';
+import ENV from '../../env';
+
+const axios = require('axios');
+
+const apiServer = ENV.apiServer;
 
 /* Styled Component */
 const Wrapper = styled.div`
@@ -74,6 +80,10 @@ const VolumeWrapper = styled.div`
   position: relative;
 `;
 
+const PigselWrapper = styled.div`
+  position: relative;
+`;
+
 const TitleSpan = styled.span`
   margin: 0 1.2em;
 `;
@@ -107,7 +117,6 @@ const changeCountdown = (callback, hoverName) => {
 const Player = ({ match }) => {
   /* Context */
   const { showNav, setShowNav } = useContext(NavbarContext);
-
   /* History */
   const history = useHistory();
   history.listen(() => {
@@ -128,12 +137,33 @@ const Player = ({ match }) => {
   const [volume, setVolume] = useState(0.8);
   const [prevVolume, setPrevVolume] = useState(0);
   const [hoverName, setHoverName] = useState('');
+  const videoId = window.location.href.split('Player/')[1];
+  const [pigsel, setPigsel] = useState('720p');
+  const [videoUrl, setVideoUrl] = useState(
+    `https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/${videoId}/${pigsel}.stream.m3u8`,
+  );
+  const [videoTitle, setVideoTitle] = useState(null);
 
   /* Lifecycle method */
-  // Hide, Show Navbar
+  // Hide, Show Navbar & 비디오 타이틀 불러오기
   useEffect(() => {
     setShowNav(false);
+    axios
+      .post(`${apiServer}/video/get-name-by-vid`, {
+        params: {
+          videoId,
+        },
+      })
+      .then(res => {
+        setVideoTitle(res.data[0].name);
+      });
   }, []);
+
+  useEffect(() => {
+    console.log(playedSeconds, videoUrl);
+    player.current.seekTo(playedSeconds);
+    setPlaying(!playing);
+  }, [pigsel]);
 
   /* Mouse Hover Event */
   const handleMouseMove = () => {
@@ -291,7 +321,7 @@ const Player = ({ match }) => {
         width="100%"
         height="100vh"
         style={{ display: 'flex', position: 'relative' }}
-        url="https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vk5WQZzDRVtw/720p.stream.m3u8"
+        url={videoUrl}
         playing={playing}
         volume={volume}
         onDuration={handleDuration}
@@ -362,7 +392,16 @@ const Player = ({ match }) => {
                 <Volume volume={volume} />
               </Button>
             </VolumeWrapper>
-            <TitleSpan>타이틀</TitleSpan>
+            <TitleSpan>{videoTitle}</TitleSpan>
+            <PigselWrapper>
+              <PigselModal
+                setPigsels={setPigsel}
+                setVideoUrls={setVideoUrl}
+                playedSeconds={Number(playedSeconds)}
+                setPlayedSeconds={setPlayedSeconds}
+                videoId={videoId}
+              />
+            </PigselWrapper>
             <Button
               name="fullscreen"
               onClick={handleClickFullscreen}

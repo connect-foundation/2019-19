@@ -44,12 +44,12 @@ const TextArea = styled.div`
 
 const RecommendedContent = ({ id, category, title, date, thumbnailImg }) => {
   const [userClicked, setUserClicked] = useState(false);
-  const foo = () => {
+  const handleTagClick = () => {
     setUserClicked(true);
   };
 
   return (
-    <ContentContainer onClick={foo}>
+    <ContentContainer onClick={handleTagClick}>
       <ContentImage src={thumbnailImg} />
       <TextArea>
         <div className="commentary">{`취향저격 ${category} 컨텐츠`}</div>
