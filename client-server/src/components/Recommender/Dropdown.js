@@ -11,13 +11,16 @@ const DropdownContainer = styled.div`
   padding: 0;
   position: absolute;
   right: 6rem;
-  width: 24rem;
+  width: 36rem;
   height: 30rem;
-  border: solid lightgray 0.06rem;
-  background-color: rgba(20, 20, 20, 0.9);
+  border: solid lightgray 0.1rem;
+  background-color: rgba(20, 20, 20, 0.7);
   overflow: scroll;
-  animation: srr 800ms ease;
-  @keyframes srr {
+  scrollbar-width: none;
+  scrollbar-color: dark;
+
+  animation: srr-recommender 800ms ease;
+  @keyframes srr-recommender {
     0% {
       height: 0%;
       opacity: 0;
@@ -38,6 +41,7 @@ const Dropdown = () => {
       .post(`${apiServer}/video/recommend`, {
         params: {
           userId,
+          videoId: 'vJxE5MaKuCEc',
         },
       })
       .then(res => {
@@ -49,16 +53,21 @@ const Dropdown = () => {
   if (onLoading) return null;
 
   return (
-    <DropdownContainer>
-      {recommededContents.map(content => (
-        <RecommendedContent
-          category={content._source.category}
-          title={content._source.name}
-          date={content._source.reg_date.slice(0, 10)}
-          thumbnailImg={content._source.thumbnail_img_url}
-        />
-      ))}
-    </DropdownContainer>
+    <>
+      {RecommendedContent.length && (
+        <DropdownContainer>
+          {recommededContents.map(content => (
+            <RecommendedContent
+              id={content.video_id}
+              category={content.category}
+              title={content.name}
+              date={content.reg_date.slice(0, 10)}
+              thumbnailImg={content.thumbnail_img_url}
+            />
+          ))}
+        </DropdownContainer>
+      )}
+    </>
   );
 };
 

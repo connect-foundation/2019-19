@@ -9,7 +9,7 @@ const GridContentBox = styled.div`
   transition: 500ms;
   object-fit: fill;
   padding: 0;
-  border: solid rgb(20, 20, 20, 1) 0.01rem;
+  border: solid rgb(20, 20, 20, 0) 0.01rem;
 
   .content-title {
     position: relative;

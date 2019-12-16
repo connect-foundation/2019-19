@@ -55,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
     const data = await Video.findAll();
     return data;
   };
+  Video.getVideoNameById = async videoId => {
+    const data = await Video.findAll({ where: { video_id: videoId } });
+    return data;
+  };
   Video.postVideo = async (name, category, url) => {
     Video.create({
       name,
@@ -86,6 +90,27 @@ module.exports = (sequelize, DataTypes) => {
       where: { video_id: videoId },
     });
     return data;
+  };
+  Video.recommendationQuery = (userId, videoId) => {
+    const queryStatement = `
+      SELECT video_id, name, category, likes, reg_date,
+      thumbnail_img_url, thumbnail_video_url, like_cnt
+      FROM videos a,
+      (
+      SELECT fk_video_id, count(fk_video_id) AS "like_cnt"
+      FROM likes
+      WHERE fk_user_id IN(
+          SELECT fk_user_id
+          FROM likes
+          WHERE fk_video_id='${videoId}'
+          AND fk_user_id NOT IN ('${userId}')
+      )
+      GROUP BY fk_video_id
+      ORDER BY like_cnt DESC
+      ) b
+      WHERE a.video_id = b.fk_video_id
+      ORDER BY like_cnt DESC;`;
+    return queryStatement;
   };
   return Video;
 };
