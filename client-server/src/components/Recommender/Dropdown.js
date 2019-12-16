@@ -11,9 +11,9 @@ const DropdownContainer = styled.div`
   padding: 0;
   position: absolute;
   right: 6rem;
-  width: 24rem;
+  width: 36rem;
   height: 30rem;
-  border: solid lightgray 0.06rem;
+  border: solid lightgray 0.1rem;
   background-color: rgba(20, 20, 20, 0.7);
   overflow: scroll;
   scrollbar-width: none;

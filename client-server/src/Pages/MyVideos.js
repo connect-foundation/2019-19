@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
 import LoginContext from '../loginContextApi/context';
 import Slider from '../components/Carousels/NetflixSlider';
 import MessageOnCenter from '../components/StyledComponents/MessageOnCenter';
@@ -38,7 +40,18 @@ const MyVideos = () => {
     }
   }, userInfo);
 
-  if (onLoading) return null;
+  if (onLoading)
+    return (
+      <ClipLoader
+        css={css`
+          margin: 4% 48%;
+        `}
+        sizeUnit="rem"
+        size={5}
+        color="lightgray"
+        loading={onLoading}
+      />
+    );
 
   return (
     <>

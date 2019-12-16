@@ -3,8 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
 import Slider from '../Carousels/NetflixSlider';
-import ScrollFakeUI from './ScrollFakeUI';
 
 import ENV from '../../../env';
 
@@ -66,6 +67,15 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
 
   return (
     <>
+      <ClipLoader
+        css={css`
+          margin: 2% 48%;
+        `}
+        sizeUnit="rem"
+        size={5}
+        color="lightgray"
+        loading={!loading}
+      />
       {loading ? (
         <>
           {curList.map((e, i) => {
@@ -80,11 +90,28 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
               </Slider>
             );
           })}
-          {/* <ScrollFakeUI /> */}
-          {!isEnd && <ScrollFakeUI numOfContents={6} />}
+          {!isEnd && (
+            <ClipLoader
+              css={css`
+                margin: 2% 48%;
+              `}
+              sizeUnit="rem"
+              size={5}
+              color="lightgray"
+              loading={loading}
+            />
+          )}
         </>
       ) : (
-        <ScrollFakeUI numOfContents={6} />
+        <ClipLoader
+          css={css`
+            // margin: 2% 48%;
+          `}
+          sizeUnit="rem"
+          size={5}
+          color="lightgray"
+          loading={loading}
+        />
       )}
     </>
   );

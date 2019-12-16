@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import MainThumbNail from '../components/MainThumbNail';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
 import Scroll from '../components/infinite_scroll/Scroll';
 import Slider from '../components/Carousels/NetflixSlider';
 import axios from 'axios';
 import ENV from '../../env';
-import ScrollFakeUI from '../components/infinite_scroll/ScrollFakeUI';
 
 const Home = () => {
   const [sportsData, setSportsData] = useState(null);
@@ -34,17 +35,17 @@ const Home = () => {
   return (
     <>
       <MainThumbNail requestUrl={'popular-thumbnail-video'} />
-      {sportsData.length ? (
-        <Slider categoryName={'영화애니메이션'}>
-          {sportsData.map(content => (
-            <Slider.Item
-              movie={content._source}
-              key={content._source.video_id}
-            />
-          ))}
-        </Slider>
-      ) : (
-        <ScrollFakeUI numOfContents={6} />
+      {sportsData.length && (
+        <>
+          <Slider categoryName={'영화애니메이션'}>
+            {sportsData.map(content => (
+              <Slider.Item
+                movie={content._source}
+                key={content._source.video_id}
+              />
+            ))}
+          </Slider>
+        </>
       )}
       <Scroll categoryList={requestCategories} />
     </>

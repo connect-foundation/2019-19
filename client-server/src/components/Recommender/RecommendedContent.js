@@ -37,7 +37,8 @@ const TextArea = styled.div`
   }
 
   .date {
-    font-size: x-small;
+    font-size: small;
+    font-weight: bold;
   }
 `;
 

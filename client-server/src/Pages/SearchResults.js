@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import FakeUI from '../components/infinite_scroll/ScrollFakeUI';
 import Slider from '../components/Carousels/NetflixSlider';
 import MessageOnCenter from '../components/StyledComponents/MessageOnCenter';
 
@@ -38,7 +39,7 @@ const SearchResults = props => {
     });
   }, [keyword]);
 
-  if (onLoading) return null;
+  if (onLoading) return <FakeUI numOfContents={5} />;
 
   return (
     <>
