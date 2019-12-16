@@ -63,6 +63,7 @@ router.post('/get-name-by-vid', async (req, res) => {
   const videoId = req.body.params.videoId;
   const videoName = await Video.getVideoNameById(videoId);
   return res.json(videoName);
+});
 
 router.post('/recommend', async (req, res) => {
   // const decodedKeyword = decodeUrl(req.params.keyword);
@@ -72,5 +73,4 @@ router.post('/recommend', async (req, res) => {
   const result = await ElasticSearch.recommendContents(5);
   return res.json(result);
 });
-
 module.exports = router;
