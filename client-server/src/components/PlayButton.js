@@ -27,11 +27,10 @@ const Toast = styled.div`
   animation: fade-in 500ms ease;
 `;
 
-const PlayButton = ({ name }) => {
+const PlayButton = ({ name, videoId }) => {
   const { userInfo } = useContext(LoginContext);
   const [userTryPlay, setUserTryPlay] = useState(false);
   const [alertUserToLogin, setAlertUserToLogin] = useState(false);
-
   const handlePlayClicked = () => {
     userInfo ? setUserTryPlay(true) : showMsgToLogin();
   };
@@ -44,15 +43,17 @@ const PlayButton = ({ name }) => {
   return (
     <>
       <CheckBox />
+
       <PlayBtn onClick={handlePlayClicked}>{name}</PlayBtn>
       {alertUserToLogin && <Toast>로그인이 필요합니다.</Toast>}
-      {userTryPlay && <Redirect to={`/Player/${1}`} />}
+      {userTryPlay && <Redirect to={`/Player/${videoId}`} />}
     </>
   );
 };
 
 PlayButton.propTypes = {
   name: PropTypes.string.isRequired,
+  videoId: PropTypes.string.isRequired,
 };
 
 export default PlayButton;

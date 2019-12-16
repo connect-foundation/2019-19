@@ -58,6 +58,12 @@ router.get('/search/:keyword', async (req, res) => {
   return res.json(data);
 });
 
+router.post('/get-name-by-vid', async (req, res) => {
+  console.log(req.body);
+  const videoId = req.body.params.videoId;
+  const videoName = await Video.getVideoNameById(videoId);
+  return res.json(videoName);
+
 router.post('/recommend', async (req, res) => {
   // const decodedKeyword = decodeUrl(req.params.keyword);
   // console.log(`decodedKeyword is ${decodedKeyword}`);
