@@ -27,7 +27,7 @@ const Tag = ({ name }) => {
   };
   return (
     <>
-      <Container onClick={searchByTagName}>{`#${name}`}</Container>)
+      <Container onClick={searchByTagName}>{`#${name}`}</Container>
       {tagClicked && <Redirect to={`/search/${name}`} />}
     </>
   );
