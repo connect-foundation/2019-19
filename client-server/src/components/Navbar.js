@@ -26,8 +26,7 @@ const StyledNavbarContainer = styled.div`
 const StyledLogo = styled.img`
   float: left;
   margin: 0.5rem 1rem 0.5rem 3rem;
-  width: 4.8rem;
-  height: 3rem;
+  width: 6%;
   padding: 0rem;
 
   &:hover {
@@ -109,9 +108,6 @@ const Navbar = () => {
           <PageBtn name="내가 찜한 컨텐츠" />
         </Link>
       ) : null}
-      <Link to="/Player/1" style={StyledLink}>
-        <PageBtn name="플레이어" />
-      </Link>
       <StyledNavRight>
         <SearchBox onClick={showSearchBox} ref={searchBoxRef}>
           <SearchIcon />

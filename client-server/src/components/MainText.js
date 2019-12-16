@@ -8,7 +8,7 @@ const StyledText = styled.div`
   border-radius: 0.2vw;
   box-shadow: none;
   font-size: 4rem
-  margin-bottom: 0.75em;
+  margin-bottom: 0.2rem;
   color: white;
   width: 40%;
   margin-left: 5%;

@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
 import Slider from '../Carousels/NetflixSlider';
 
 import ENV from '../../../env';
@@ -20,7 +22,10 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
   useEffect(() => {}, document.documentElement.scrollTop);
 
   const handleInfinity = debounce(() => {
-    if (isEnd) return;
+    if (isEnd) {
+      alert('end');
+      return;
+    }
     if (
       window.innerHeight + document.documentElement.scrollTop >
       document.documentElement.offsetHeight - 500 // 스크롤 여유
@@ -43,7 +48,10 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
           });
       });
 
-      if (categoryList.slice(presentView, presentView + sliceamount) === [])
+      if (
+        categoryList.slice(presentView, presentView + sliceamount).length <
+        sliceamount
+      )
         setIsEnd(true);
       presentView += sliceamount;
       document.documentElement.scrollTop = currentScroll;
@@ -59,8 +67,17 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
 
   return (
     <>
+      <ClipLoader
+        css={css`
+          margin: 2% 48%;
+        `}
+        sizeUnit="rem"
+        size={5}
+        color="lightgray"
+        loading={!loading}
+      />
       {loading ? (
-        <div>
+        <>
           {curList.map((e, i) => {
             return (
               <Slider categoryName={e}>
@@ -73,9 +90,28 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
               </Slider>
             );
           })}
-        </div>
+          {!isEnd && (
+            <ClipLoader
+              css={css`
+                margin: 2% 48%;
+              `}
+              sizeUnit="rem"
+              size={5}
+              color="lightgray"
+              loading={loading}
+            />
+          )}
+        </>
       ) : (
-        <div />
+        <ClipLoader
+          css={css`
+            // margin: 2% 48%;
+          `}
+          sizeUnit="rem"
+          size={5}
+          color="lightgray"
+          loading={loading}
+        />
       )}
     </>
   );

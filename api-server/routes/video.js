@@ -1,7 +1,9 @@
 const express = require('express');
 const decodeUrl = require('urldecode');
 const { Video } = require('../models');
+const { Tag } = require('../models');
 const ElasticSearch = require('../elastic-server/src/controller/ElasticSearchController');
+const db = require('../models');
 
 const router = express.Router();
 
@@ -64,12 +66,23 @@ router.get('/search/:keyword', async (req, res) => {
 });
 
 router.post('/recommend', async (req, res) => {
-  // const decodedKeyword = decodeUrl(req.params.keyword);
-  // console.log(`decodedKeyword is ${decodedKeyword}`);
-  // const data = await ElasticSearch.getResult('name', decodedKeyword, 'asc');
-  // return res.json(data);
-  const result = await ElasticSearch.recommendContents(5);
-  return res.json(result);
+  const userId = req.body.params.userId;
+  const videoId = req.body.params.videoId;
+  const queryStatement = Video.recommendationQuery(userId, videoId);
+  const result = await db.sequelize.query(queryStatement);
+  return res.json(result[0]);
+});
+
+router.post('/get-name-by-vid', async (req, res) => {
+  const videoId = req.body.params.videoId;
+  const videoName = await Video.getVideoNameById(videoId);
+  return res.json(videoName);
+});
+
+router.get('/tags/:video_id', async (req, res) => {
+  const videoId = decodeUrl(req.params.video_id);
+  const data = await Tag.getAllTagsAboutVideo(videoId);
+  return res.json(data);
 });
 
 module.exports = router;
