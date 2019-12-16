@@ -35,5 +35,9 @@ module.exports = (sequelize, DataTypes) => {
       name,
     });
   };
+  Tag.getAllTagsAboutVideo = async videoId => {
+    const data = await Tag.findAll({ where: { fk_video_id: videoId } });
+    return data;
+  };
   return Tag;
 };

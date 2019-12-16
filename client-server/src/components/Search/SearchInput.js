@@ -41,16 +41,25 @@ const SearchInput = () => {
     //   document.getElementById('realbody').innerHTML = e.target.value;
     //   location.pathname = e.target.value;
     setUserInput(e.target.value);
+
+    // 유저가 검색창에 단어를 모두 지우면 홈으로 리다이렉트하기 위함
+    if (e.target.value === '') {
+      setUserInput(false);
+    }
+    console.log(e.target.value);
   };
   return (
     <StyledInputBox>
       <input
         style={inputStyle}
-        placeholder="제목, 이름, 태그"
+        placeholder="제목, 태그, 유사어"
         type="text"
         onKeyUp={changeURL}
+        id="search-contents-input"
+        autoFocus
       ></input>
       {userInput && <Redirect to={`/search/${userInput}`} />}
+      {userInput === false && <Redirect to={'/'} />}
     </StyledInputBox>
   );
 };
