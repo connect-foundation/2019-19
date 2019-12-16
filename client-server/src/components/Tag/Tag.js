@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Container = styled.h5`
@@ -19,7 +20,17 @@ const Container = styled.h5`
 `;
 
 const Tag = ({ name }) => {
-  return <Container>{`#${name}`}</Container>;
+  const [tagClicked, setTagClicked] = useState(false);
+
+  const searchByTagName = () => {
+    setTagClicked(true);
+  };
+  return (
+    <>
+      <Container onClick={searchByTagName}>{`#${name}`}</Container>)
+      {tagClicked && <Redirect to={`/search/${name}`} />}
+    </>
+  );
 };
 
 Tag.propTypes = {
