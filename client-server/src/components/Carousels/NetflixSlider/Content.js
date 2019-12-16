@@ -15,7 +15,6 @@ const apiServer = ENV.apiServer;
 
 const Content = ({ movie, onClose }) => {
   const { userInfo } = useContext(LoginContext);
-
   return (
     <div className="content">
       <div className="content__background">
@@ -39,7 +38,7 @@ const Content = ({ movie, onClose }) => {
             Praesent sollicitudin
           </div>
           <div className="content__btns__container">
-            <PlayButton name="▶  재생" />
+            <PlayButton name="▶  재생" videoId={movie.video_id} />
             {userInfo && [
               <LikeBtn userId={userInfo} thumbNailId={movie.video_id} />,
               <MylistBtn userId={userInfo} thumbNailId={movie.video_id} />,

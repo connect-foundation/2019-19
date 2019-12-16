@@ -5,11 +5,10 @@ import PlayBtn from './StyledComponents/CheckBoxLabel';
 import CheckBox from './StyledComponents/CheckBox';
 import LoginContext from '../loginContextApi/context';
 
-const PlayButton = ({ name }) => {
+const PlayButton = ({ name, videoId }) => {
   const { userInfo } = useContext(LoginContext);
   const [userTryPlay, setUserTryPlay] = useState(false);
   const [alertUserToLogin, setAlertUserToLogin] = useState(false);
-
   const handlePlayClicked = () => {
     userInfo ? setUserTryPlay(true) : showMsgToLogin();
   };
@@ -29,13 +28,14 @@ const PlayButton = ({ name }) => {
         )}
       </PlayBtn>
 
-      {userTryPlay && <Redirect to={`/Player/${1}`} />}
+      {userTryPlay && <Redirect to={`/Player/${videoId}`} />}
     </>
   );
 };
 
 PlayButton.propTypes = {
   name: PropTypes.string.isRequired,
+  videoId: PropTypes.string.isRequired,
 };
 
 export default PlayButton;

@@ -43,7 +43,10 @@ const InfinityScroll = ({ categoryList }) => {
           });
       });
 
-      if (categoryList.slice(presentView, presentView + sliceamount) === [])
+      if (
+        categoryList.slice(presentView, presentView + sliceamount).length <
+        sliceamount
+      )
         setIsEnd(true);
       presentView += sliceamount;
       document.documentElement.scrollTop = currentScroll;

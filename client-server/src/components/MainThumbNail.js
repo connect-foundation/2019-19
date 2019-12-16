@@ -61,7 +61,6 @@ const MainThumbNail = () => {
 
   useEffect(() => {
     axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
-      console.log(thumbNailData);
       setThumbNailId(thumbNailData.data.video_id);
       setThumbNailTitle(thumbNailData.data.name);
       setThumbNailImg(thumbNailData.data.thumbnail_img_url);
@@ -84,7 +83,7 @@ const MainThumbNail = () => {
       <StyledThumbNail bg={thumbNailImg} hide={hide}>
         <MainText name={thumbNailTitle} />
         <StyledButtonsContainer>
-          <PlayButton name="▶  재생" />
+          <PlayButton name="▶  재생" videoId={thumbNailId} />
           {userInfo && [
             <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
             <MylistBtn userId={userInfo} thumbNailId={thumbNailId} />,
