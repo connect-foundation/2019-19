@@ -6,7 +6,10 @@ import logo from '../../dist/white.png';
 import PageBtn from './PageBtn';
 import SearchInput from './Search/SearchInput';
 import SearchBox from './StyledComponents/SearchBox';
+import Toast from './StyledComponents/Toast';
 import SearchIcon from './Search/SearchIcon';
+import Dropdown from './Recommender/Dropdown';
+import RecommendContainer from './Recommender/RecommendContainer';
 import LoginContext from '../loginContextApi/context';
 import ENV from '../../env';
 
@@ -45,11 +48,13 @@ const StyledLink = {
 const Navbar = () => {
   const { username, setUsername } = useContext(LoginContext);
   const [searchBoxVisible, setSearchBoxVisible] = useState(false);
+  const [recommenderVisible, setRecommenderVisible] = useState(false);
+  const [alertToLogin, setAlertToLogin] = useState(false);
 
-  const searchBoxOutClickHandler = ref => {
+  const outClickHandler = (ref, stateSetter) => {
     const handleClickOutside = event => {
       if (ref.current && !ref.current.contains(event.target)) {
-        setSearchBoxVisible(false);
+        stateSetter(false);
       }
     };
     useEffect(() => {
@@ -62,7 +67,9 @@ const Navbar = () => {
     });
   };
   const searchBoxRef = useRef(null);
-  searchBoxOutClickHandler(searchBoxRef);
+  const recommenderRef = useRef(null);
+  outClickHandler(searchBoxRef, setSearchBoxVisible);
+  outClickHandler(recommenderRef, setRecommenderVisible);
 
   const Logout = () => {
     Cookies.remove('user_info');
@@ -74,6 +81,15 @@ const Navbar = () => {
     setSearchBoxVisible(true);
   };
 
+  const showRecommender = () => {
+    if (!username) {
+      setAlertToLogin(true);
+      setTimeout(() => {
+        setAlertToLogin(false);
+      }, 2500);
+    }
+    setRecommenderVisible(true);
+  };
   return (
     <StyledNavbarContainer>
       <Link to="/" style={StyledLink}>
@@ -98,7 +114,15 @@ const Navbar = () => {
           <SearchIcon />
           {searchBoxVisible && <SearchInput />}
         </SearchBox>
-        <PageBtn name="추천" />
+        <RecommendContainer onClick={showRecommender} ref={recommenderRef}>
+          <PageBtn name="추천" />
+          {username && recommenderVisible && <Dropdown />}
+          {alertToLogin && (
+            <Toast marginTop="1.5rem" marginRight="1rem">
+              로그인이 필요합니다.
+            </Toast>
+          )}
+        </RecommendContainer>
         {username ? (
           <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (

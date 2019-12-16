@@ -51,7 +51,7 @@ const StyledButtonsContainer = styled.div`
   margin-left: 5%;
 `;
 
-const MainThumbNail = () => {
+const MainThumbNail = ({ requestUrl }) => {
   const [onLoading, setOnLoading] = useState(true);
   const [thumbNailImg, setThumbNailImg] = useState(null);
   const [hide, setHide] = useState(0);
@@ -60,7 +60,10 @@ const MainThumbNail = () => {
   const { userInfo } = useContext(LoginContext);
 
   useEffect(() => {
-    axios.get(`${apiServer}/video/main-thumbnail-video`).then(thumbNailData => {
+    axios.get(`${apiServer}/video/${requestUrl}`).then(thumbNailData => {
+      if (thumbNailData.data._source) {
+        thumbNailData.data = thumbNailData.data._source;
+      }
       setThumbNailId(thumbNailData.data.video_id);
       setThumbNailTitle(thumbNailData.data.name);
       setThumbNailImg(thumbNailData.data.thumbnail_img_url);

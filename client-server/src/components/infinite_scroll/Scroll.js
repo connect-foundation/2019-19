@@ -7,7 +7,7 @@ import Slider from '../Carousels/NetflixSlider';
 
 import ENV from '../../../env';
 
-const InfinityScroll = ({ categoryList }) => {
+const InfinityScroll = ({ categoryList, contentsType }) => {
   let currentScroll = 0; // 현재 스크롤 위치
   let presentView = 0; // 현재까지 보여진 케로셀 갯수
   const sliceamount = 3; // 새로 만들 케로셀 갯수
@@ -33,7 +33,7 @@ const InfinityScroll = ({ categoryList }) => {
 
       sliceCategory.forEach((e, i) => {
         axios
-          .get(`${ENV.apiServer}/video/${sliceCategory[i]}`)
+          .get(`${ENV.apiServer}/video/${sliceCategory[i]}${contentsType}`)
           .then(response => {
             setArr2(prevState => {
               return { ...prevState, [e]: response.data };
