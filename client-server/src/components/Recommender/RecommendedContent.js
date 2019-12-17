@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -47,7 +47,7 @@ const RecommendedContent = ({ id, category, title, date, thumbnailImg }) => {
   const handleTagClick = () => {
     setUserClicked(true);
   };
-
+  const history = useHistory();
   return (
     <ContentContainer onClick={handleTagClick}>
       <ContentImage src={thumbnailImg} />
@@ -56,7 +56,7 @@ const RecommendedContent = ({ id, category, title, date, thumbnailImg }) => {
         <div className="title">{title}</div>
         <div className="date">{date}</div>
       </TextArea>
-      {userClicked && <Redirect to={`/Player/${id}}`} />}
+      {userClicked && history.push(`/Player/${id}}`)}
     </ContentContainer>
   );
 };

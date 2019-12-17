@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Container = styled.h5`
@@ -25,10 +25,11 @@ const Tag = ({ name }) => {
   const searchByTagName = () => {
     setTagClicked(true);
   };
+  const history = useHistory();
   return (
     <>
       <Container onClick={searchByTagName}>{`#${name}`}</Container>
-      {tagClicked && <Redirect to={`/search/${name}`} />}
+      {tagClicked && history.push(`/search/${name}`)}
     </>
   );
 };
