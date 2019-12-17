@@ -36,10 +36,7 @@ async function get_category(category_list, order, size, sort) {
     .search({
       index: process.env.index,
       type: '_doc',
-<<<<<<< HEAD
-=======
       sort: [`${column}:${order}`],
->>>>>>> 4b0421fac1cef363bd71130e6eea9c9650d24505
       body: {
         sort: sort,
         size: size,
@@ -68,11 +65,7 @@ async function get_search(column, target, order, size) {
     .search({
       index: process.env.index,
       type: '_doc',
-<<<<<<< HEAD
-      sort: [`${column} : ${order}`],
-=======
       sort: [`${column}:${order}`],
->>>>>>> 4b0421fac1cef363bd71130e6eea9c9650d24505
       body: {
         size: size,
         query: {
