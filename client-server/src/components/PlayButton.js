@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PlayBtn from './StyledComponents/CheckBoxLabel';
 import CheckBox from './StyledComponents/CheckBox';
 import LoginContext from '../loginContextApi/context';
@@ -20,12 +19,13 @@ const PlayButton = ({ name, videoId }) => {
       setAlertUserToLogin(false);
     }, 1500);
   };
+  const history = useHistory();
   return (
     <>
       <CheckBox />
       <PlayBtn onClick={handlePlayClicked}>{name}</PlayBtn>
       {alertUserToLogin && <Toast>로그인이 필요합니다.</Toast>}
-      {userTryPlay && <Redirect to={`/Player/${videoId}`} />}
+      {userTryPlay && history.push(`/Player/${videoId}`)}
     </>
   );
 };

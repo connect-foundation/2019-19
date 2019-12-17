@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import logo from '../../dist/white.png';
 import PageBtn from './PageBtn';
 import SearchInput from './Search/SearchInput';
 import SearchBox from './StyledComponents/SearchBox';
@@ -92,7 +91,7 @@ const Navbar = () => {
   return (
     <StyledNavbarContainer>
       <Link to="/" style={StyledLink}>
-        <StyledLogo className="logo" src={logo} />
+        <StyledLogo className="logo" src={'https://i.imgur.com/nXmZjP5.png'} />
       </Link>
       <Link to="/" style={StyledLink}>
         <PageBtn name="홈" />
