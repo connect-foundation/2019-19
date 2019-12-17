@@ -26,28 +26,22 @@ const useSliding = (elementWidth, countElements) => {
   };
 
   const handlePrev = () => {
-    setViewed(viewed - totalInViewport);
     setDistance(distance + containerWidth);
-    if (distance === -containerWidth) {
-      setDistance(-containerWidth * 4);
+    if (distance === 0) {
+      setDistance(-containerWidth * 3);
     }
   };
 
   const handleNext = () => {
     setViewed(viewed + totalInViewport);
     setDistance(distance - containerWidth);
-    if (distance === -containerWidth * 4) {
-      setDistance(-containerWidth);
+    if (distance === -containerWidth * 3) {
+      setDistance(0);
     }
   };
 
-  //   const hasNext = countElements <= 5 || distance < 0 ? false : true; // 버튼 표시 유무
-  //   const hasPrev =
-  //     countElements <= 5 || viewed + totalInViewport < countElements
-  //       ? false
-  //       : true;
-  const hasPrev = distance < 0;
-  const hasNext = viewed + totalInViewport < countElements;
+  const hasPrev = viewed !== 0;
+  const hasNext = countElements > 5;
 
   return {
     handlePrev,
