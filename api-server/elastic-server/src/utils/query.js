@@ -31,12 +31,10 @@ async function get_filtering(column, order, size) {
  * @param {*} option ex)  [{ reg_date: { order: 'desc' } }]
  */
 async function get_category(category_list, order, size, sort) {
-
   return await client
     .search({
       index: process.env.index,
       type: '_doc',
-      sort: [`${column}:${order}`],
       body: {
         sort: sort,
         size: size,
@@ -65,7 +63,7 @@ async function get_search(column, target, order, size) {
     .search({
       index: process.env.index,
       type: '_doc',
-      sort: [`${column}:${order}`],
+      sort: [`${column} : ${order}`],
       body: {
         size: size,
         query: {
@@ -154,3 +152,4 @@ module.exports.get_search = get_search;
 module.exports.get_recent_videos = get_recent_videos;
 module.exports.get_popular_videos = get_popular_videos;
 module.exports.recommend_contents = recommend_contents;
+
