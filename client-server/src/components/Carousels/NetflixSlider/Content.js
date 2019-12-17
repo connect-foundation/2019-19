@@ -31,16 +31,17 @@ const Content = ({ movie, onClose }) => {
       'loadedmetadata',
       function() {
         this.play();
-        // console.log(this.currentTime);
-        // console.log(this.currentTime);
-        // console.log(this.readyState);
-        // setTimeout(() => {
-        //   this.currentTime = this.duration / 2;
-        // }, 2000);
       },
       false,
     );
   }, []);
+
+  // 유저가 브라우저 탭이나 창을 벗어나면 재생중인 미리보기 동영상이 일시정지, 화면 복귀시 다시 재생
+  document.addEventListener('visibilitychange', e => {
+    const DetailVideo = document.getElementById(`content-${movie.video_id}`);
+    DetailVideo.paused ? DetailVideo.play() : DetailVideo.pause();
+  });
+
   return (
     <div className="content">
       <div className="content__background">

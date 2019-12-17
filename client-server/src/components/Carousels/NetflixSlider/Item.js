@@ -14,11 +14,11 @@ const Item = ({ movie }) => {
   );
 
   const playVideo = () => {
-    document.getElementById(movie.video_id).play();
+    document.getElementById(`item-${movie.video_id}`).play();
   };
 
   const pauseVideo = () => {
-    document.getElementById(movie.video_id).pause();
+    document.getElementById(`item-${movie.video_id}`).pause();
   };
   return (
     <SliderContext.Consumer>
@@ -39,12 +39,11 @@ const Item = ({ movie }) => {
               <div
                 className="video-area"
                 onMouseOver={playVideo}
-                onFocus={playVideo}
                 onMouseLeave={pauseVideo}
                 onBlur={pauseVideo}
               >
                 <video
-                  id={movie.video_id}
+                  id={`item-${movie.video_id}`}
                   src={`https://${movie.thumbnail_video_url}`} // thumbnail_video_url
                   alt="thumbnail-video"
                   poster={movie.thumbnail_img_url}
