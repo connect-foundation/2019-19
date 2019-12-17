@@ -2,6 +2,18 @@
   position: relative;
   height: 35rem;
   margin-top: 0;
+  animation: srr 250ms ease;
+  @keyframes srr {
+    0% {
+      //   opacity: 0;
+      height: 0;
+    }
+    100% {
+      height: 35rem;
+      //   opacity: 1;
+    }
+  }
+
   &__background,
   &__background__shadow,
   &__background__image,
@@ -13,6 +25,7 @@
   &__background {
     left: 0;
     right: 0;
+
     &__shadow {
       left: 0;
       right: 0;
@@ -38,6 +51,15 @@
       z-index: 1;
       right: 0;
       object-fit: fill;
+      animation: fade-in-video 5000ms ease;
+      @keyframes fade-in-video {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
     }
   }
   &__area {

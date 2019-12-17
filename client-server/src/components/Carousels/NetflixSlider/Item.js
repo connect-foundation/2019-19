@@ -46,7 +46,6 @@ const Item = ({ movie }) => {
                 <video
                   id={movie.video_id}
                   src={`https://${movie.thumbnail_video_url}`} // thumbnail_video_url
-                  //   src="https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vcl4-StMGYAw.mp4"
                   alt="thumbnail-video"
                   poster={movie.thumbnail_img_url}
                 >

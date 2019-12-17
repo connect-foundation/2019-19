@@ -23,7 +23,6 @@ const PlayButton = ({ name, videoId }) => {
   return (
     <>
       <CheckBox />
-
       <PlayBtn onClick={handlePlayClicked}>{name}</PlayBtn>
       {alertUserToLogin && <Toast>로그인이 필요합니다.</Toast>}
       {userTryPlay && <Redirect to={`/Player/${videoId}`} />}

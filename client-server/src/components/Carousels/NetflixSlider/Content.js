@@ -1,29 +1,50 @@
 /* eslint-disable react/button-has-type */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import IconCross from '../Icons/IconCross';
 import PlayButton from '../../PlayButton';
 import LikeBtn from '../../like/like';
 import MylistBtn from '../../like/mylist';
 import LoginContext from '../../../loginContextApi/context';
+import TagsContainer from '../../StyledComponents/TagsContainer';
+import Tag from '../../Tag/Tag';
 import ENV from '../../../../env';
 import './Content.scss';
-
-const axios = require('axios');
 
 const apiServer = ENV.apiServer;
 
 const Content = ({ movie, onClose }) => {
   const { userInfo } = useContext(LoginContext);
+  const [tags, setTags] = useState(null);
+  useEffect(() => {
+    axios.get(`${apiServer}/video/tags/${movie.video_id}`).then(tagsData => {
+      setTags(tagsData.data);
+    });
+    // Bind the event listener
+    document.getElementById(`content-${movie.video_id}`).addEventListener(
+      'loadedmetadata',
+      function() {
+        this.play();
+        // console.log(this.currentTime);
+        // console.log(this.currentTime);
+        // console.log(this.readyState);
+        // setTimeout(() => {
+        //   this.currentTime = this.duration / 2;
+        // }, 2000);
+      },
+      false,
+    );
+  }, []);
   return (
     <div className="content">
       <div className="content__background">
         <div className="content__background__shadow" />
         <video
+          id={`content-${movie.video_id}`}
           src={`https://${movie.thumbnail_video_url}`}
-          //   src="https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vcl4-StMGYAw.mp4"
           className="content__background__image"
-          autoPlay
+          poster={movie.thumbnail_img_url}
         >
           <track kind="captions" />
         </video>
@@ -31,13 +52,9 @@ const Content = ({ movie, onClose }) => {
       <div className="content__area">
         <div className="content__area__container">
           <div className="content__title">{movie.name}</div>
-          <div className="content__description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque et euismod ligula. Morbi mattis pretium eros, ut mollis
-            leo tempus eget. Sed in dui ac ipsum feugiat ultricies. Phasellus
-            vestibulum enim quis quam congue, non fringilla orci placerat.
-            Praesent sollicitudin
-          </div>
+          <TagsContainer>
+            {tags && tags.map(tag => <Tag name={tag.name} />)}
+          </TagsContainer>
           <div className="content__btns__container">
             <PlayButton name="▶  재생" videoId={movie.video_id} />
             {userInfo && [
