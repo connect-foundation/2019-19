@@ -2,6 +2,7 @@ import React from 'react';
 // import './index.css';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { NavbarProvider } from './contexts/NavbarContext';
+import { PreviewPlayProvider } from './contexts/PreviewPlayContext';
 import Routes from './components/Routes';
 import Login from './loginContextApi/login';
 import theme from './styles/css/theme';
@@ -38,9 +39,11 @@ const Root = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <NavbarProvider>
-        <Login>
-          <Routes />
-        </Login>
+        <PreviewPlayProvider>
+          <Login>
+            <Routes />
+          </Login>
+        </PreviewPlayProvider>
       </NavbarProvider>
     </ThemeProvider>
   );

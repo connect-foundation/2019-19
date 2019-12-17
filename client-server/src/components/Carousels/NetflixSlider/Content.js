@@ -6,10 +6,10 @@ import { ClipLoader } from 'react-spinners';
 import { css } from '@emotion/core';
 import IconCross from '../Icons/IconCross';
 import PlayButton from '../../PlayButton';
-
 import LikeBtn from '../../like/like';
 import MylistBtn from '../../like/mylist';
 import LoginContext from '../../../loginContextApi/context';
+import { PreviewPlayContext } from '../../../contexts/PreviewPlayContext';
 import TagsContainer from '../../StyledComponents/TagsContainer';
 import Tag from '../../Tag/Tag';
 import ENV from '../../../../env';
@@ -18,9 +18,12 @@ import './Content.scss';
 const apiServer = ENV.apiServer;
 
 const Content = ({ movie, onClose }) => {
+  const { setDetailPreviewPlaying } = useContext(PreviewPlayContext);
+  setDetailPreviewPlaying(true);
   const { userInfo } = useContext(LoginContext);
   const [tags, setTags] = useState(null);
   const [tagsOnLoading, setTagsOnLoading] = useState(true);
+
   useEffect(() => {
     axios.get(`${apiServer}/video/tags/${movie.video_id}`).then(tagsData => {
       setTags(tagsData.data);
