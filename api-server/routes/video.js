@@ -84,5 +84,4 @@ router.get('/tags/:video_id', async (req, res) => {
   const data = await Tag.getAllTagsAboutVideo(videoId);
   return res.json(data);
 });
-
 module.exports = router;
