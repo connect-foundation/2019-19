@@ -12,7 +12,7 @@ module.exports = {
       process.env.JWT_SECRET_KEY,
     );
     res.cookie('user_info', token, {
-      httpOnly: true,
+      httpOnly: false,
     });
   },
   decodeUserToken(req) {

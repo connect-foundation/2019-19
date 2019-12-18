@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
 import CheckBoxLabel from '../StyledComponents/CheckBoxLabel';
 import CheckBox from '../StyledComponents/CheckBox';
 import ENV from '../../../env';
@@ -19,6 +21,7 @@ const PostData = (userId, videoId, URL) => {
 const MylistBtn = ({ userId, thumbNailId }) => {
   const [Clicked, setClicked] = useState(false);
   const [mylist, setMylist] = useState(false);
+  const [zzimedOnLoading, setZzimedOnLoading] = useState(true);
   const contentText = mylist ? '✔ 찜한 컨텐츠 취소' : '✚ 내가 찜한 컨텐츠';
 
   useEffect(() => {
@@ -33,8 +36,13 @@ const MylistBtn = ({ userId, thumbNailId }) => {
         .then(res => {
           if (res.data.my_video_id) {
             setMylist(true);
+            setZzimedOnLoading(false);
             document.getElementById(`${thumbNailId}jjim`).checked = true;
+            return;
           }
+          setMylist(false);
+          setZzimedOnLoading(false);
+          document.getElementById(`${thumbNailId}jjim`).checked = false;
         });
     }
   }, [userId, thumbNailId]);
@@ -49,6 +57,18 @@ const MylistBtn = ({ userId, thumbNailId }) => {
     setMylist(!mylist);
   };
 
+  if (zzimedOnLoading)
+    return (
+      <ClipLoader
+        css={css`
+          margin: 2% 2%;
+        `}
+        sizeUnit="rem"
+        size={2}
+        color="lightgray"
+        loading={zzimedOnLoading}
+      />
+    );
   return (
     <div>
       <CheckBox

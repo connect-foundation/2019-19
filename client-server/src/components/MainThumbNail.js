@@ -60,6 +60,7 @@ const MainThumbNail = ({ requestUrl }) => {
   const [thumbNailTitle, setThumbNailTitle] = useState('로딩중');
   const [thumbNailTags, setThumbNailTags] = useState(null);
   const [thumbNailId, setThumbNailId] = useState();
+
   const { userInfo } = useContext(LoginContext);
 
   useEffect(() => {
