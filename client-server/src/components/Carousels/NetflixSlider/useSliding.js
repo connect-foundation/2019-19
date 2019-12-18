@@ -26,6 +26,7 @@ const useSliding = (elementWidth, countElements) => {
     },
   };
 
+
   const handlePrev = debounce(
     () => {
       setDistance(distance + containerWidth);
