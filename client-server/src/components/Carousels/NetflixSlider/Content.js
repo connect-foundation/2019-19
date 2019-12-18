@@ -19,40 +19,53 @@ const apiServer = ENV.apiServer;
 
 const Content = ({ movie, onClose }) => {
   const { setDetailPreviewPlaying } = useContext(PreviewPlayContext);
-  setDetailPreviewPlaying(true);
   const { userInfo } = useContext(LoginContext);
   const [tags, setTags] = useState(null);
   const [tagsOnLoading, setTagsOnLoading] = useState(true);
   const [videoId, setVideoId] = useState(movie.video_id);
 
   useEffect(() => {
-    // 유저가 브라우저 탭이나 창을 벗어나면 재생중인 미리보기 동영상이 일시정지, 화면 복귀시 다시 재생
-    document.addEventListener('visibilitychange', e => {
-      const contentVideo = document.getElementById(`content-${videoId}`);
-      contentVideo.paused ? contentVideo.play() : contentVideo.pause();
-    });
-    axios.get(`${apiServer}/video/tags/${videoId}`).then(tagsData => {
-      setTags(tagsData.data);
-      setTagsOnLoading(false);
-    });
-    // Bind the event listener
-    document.getElementById(`content-${videoId}`).addEventListener(
-      'loadedmetadata',
-      function() {
-        this.play();
-      },
-      false,
-    );
+    setDetailPreviewPlaying(true);
   }, []);
 
   useEffect(() => {
-    setTagsOnLoading(true);
-    axios.get(`${apiServer}/video/tags/${movie.video_id}`).then(tagsData => {
-      setVideoId(movie.video_id);
-      setTags(tagsData.data);
-      setTagsOnLoading(false);
+    document.addEventListener('visibilitychange', e => {
+      const contentVideo = document.getElementById(`content-${movie.video_id}`);
+      if (contentVideo.paused) contentVideo.play();
+      else if (contentVideo.paused === false) contentVideo.pause();
     });
+    setTagsOnLoading(true);
+    if (sessionStorage.getItem(`tag-${movie.video_id}`)) {
+      // sessionStorage에서 태그 정보 가져옴
+      const TEN_MIN = 10 * 60 * 1000;
+      const now = new Date(Date.now());
+      const tags = JSON.parse(sessionStorage.getItem(`tag-${movie.video_id}`));
+      const elapsedTime = Date.parse(now) - Date.parse(tags.timeStamp);
+      if (elapsedTime > TEN_MIN) {
+        sessionStorage.removeItem(`tag-${movie.video_id}`);
+      } else {
+        setRenderingTag(tags);
+      }
+    }
+    if (sessionStorage.getItem(`tag-${movie.video_id}`) === null) {
+      // axios 요청
+      axios.get(`${apiServer}/video/tags/${movie.video_id}`).then(response => {
+        response.timeStamp = new Date(Date.now());
+        setRenderingTag(response);
+        sessionStorage.setItem(
+          `tag-${movie.video_id}`,
+          JSON.stringify(response),
+        );
+      });
+    }
   }, [movie]);
+
+  // 유저가 브라우저 탭이나 창을 벗어나면 재생중인 미리보기 동영상이 일시정지, 화면 복귀시 다시 재생
+
+  const setRenderingTag = tags => {
+    setTags(tags.data);
+    setTagsOnLoading(false);
+  };
 
   return (
     <div className="content">
@@ -63,6 +76,7 @@ const Content = ({ movie, onClose }) => {
           src={`https://${movie.thumbnail_video_url}`}
           className="content__background__image"
           poster={movie.thumbnail_img_url}
+          autoPlay
         >
           <track kind="captions" />
         </video>
@@ -86,17 +100,17 @@ const Content = ({ movie, onClose }) => {
             )}
           </TagsContainer>
           <div className="content__btns__container">
-            <PlayButton name="▶  재생" videoId={videoId} />
+            <PlayButton name="▶  재생" videoId={movie.video_id} />
             {userInfo && [
-              <LikeBtn userId={userInfo} thumbNailId={videoId} />,
-              <MylistBtn userId={userInfo} thumbNailId={videoId} />,
+              <LikeBtn userId={userInfo} thumbNailId={movie.video_id} />,
+              <MylistBtn userId={userInfo} thumbNailId={movie.video_id} />,
             ]}
           </div>
         </div>
         <button
           className="content__close"
           onClick={() => {
-            document.getElementById(`content-${videoId}`).pause();
+            document.getElementById(`content-${movie.video_id}`).pause();
             onClose();
           }}
         >

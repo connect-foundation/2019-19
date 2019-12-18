@@ -63,6 +63,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
       })
       .then(res => {
         setLikedOnLoading(false);
+        document.getElementById(`like-${thumbNailId}`).checked = Like;
       })
       .catch(error => {
         console.log(error);
@@ -72,10 +73,22 @@ const LikeBtn = ({ userId, thumbNailId }) => {
 
   const handleLikeClicked = () => {
     if (likedOnLoading) return;
-    document.getElementById(`like-${thumbNailId}`).checked = !Like;
     if (!Clicked) setClicked(true);
     setLike(!Like);
   };
+
+  if (likedOnLoading)
+    return (
+      <ClipLoader
+        css={css`
+          margin: 2% 2%;
+        `}
+        sizeUnit="rem"
+        size={2}
+        color="lightgray"
+        loading={likedOnLoading}
+      />
+    );
 
   return (
     <>

@@ -20,7 +20,7 @@ const StyledNavbarContainer = styled.div`
   top: 0;
   position: sticky;
   font-family: 'Nanum Gothic', sans-serif;
-  background-color: rgb(20, 20, 20);
+  background-color: rgba(20, 20, 20, 0.4);
   z-index: 10;
 `;
 const StyledLogo = styled.img`
@@ -126,7 +126,10 @@ const Navbar = () => {
           <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (
           <a href={`${ENV.apiServer}/oauth/google`} style={StyledLink}>
-            <PageBtn name="로그인" />
+            <PageBtn
+              name="로그인"
+              iconUrl="https://icon-library.net/images/google-g-icon/google-g-icon-26.jpg"
+            />
           </a>
         )}
       </StyledNavRight>

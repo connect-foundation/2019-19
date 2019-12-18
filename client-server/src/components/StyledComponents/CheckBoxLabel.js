@@ -15,7 +15,7 @@ const CheckBoxLabel = styled.label`
   max-width: 15rem;
 
   .num-of-likes {
-    font-size: x-small;
+    font-size: small;
     margin: 0;
     text-align: center;
   }
