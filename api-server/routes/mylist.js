@@ -24,6 +24,7 @@ router.post('/my-videos', async (req, res) => {
   Myvideos.findAll({
     where: { fk_user_id: req.body.id },
     include: [Video],
+    order: [['my_video_id', 'DESC']],
   }).then(rawData => {
     const resultData = rawData.map(data => data.dataValues.Video);
     return res.json(resultData);

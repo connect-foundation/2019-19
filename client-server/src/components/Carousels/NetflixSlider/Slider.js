@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import SliderContext from './context';
+import { PreviewPlayContext } from '../../../contexts/PreviewPlayContext';
 import Content from './Content';
 import SlideButton from './SlideButton';
 import SliderWrapper from './SliderWrapper';
@@ -11,6 +12,7 @@ import useSizeElement from './useSizeElement';
 import './Slider.scss';
 
 const Slider = ({ categoryName, children, activeSlide }) => {
+  const { setDetailPreviewPlaying } = useContext(PreviewPlayContext);
   const [currentSlide, setCurrentSlide] = useState(activeSlide);
   const { width, elementRef } = useSizeElement();
   const {
@@ -28,6 +30,7 @@ const Slider = ({ categoryName, children, activeSlide }) => {
 
   const handleClose = () => {
     setCurrentSlide(null);
+    setDetailPreviewPlaying(false);
   };
 
   const contextValue = {

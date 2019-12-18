@@ -2,11 +2,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
 import IconCross from '../Icons/IconCross';
 import PlayButton from '../../PlayButton';
 import LikeBtn from '../../like/like';
 import MylistBtn from '../../like/mylist';
 import LoginContext from '../../../loginContextApi/context';
+import { PreviewPlayContext } from '../../../contexts/PreviewPlayContext';
 import TagsContainer from '../../StyledComponents/TagsContainer';
 import Tag from '../../Tag/Tag';
 import ENV from '../../../../env';
@@ -15,27 +18,55 @@ import './Content.scss';
 const apiServer = ENV.apiServer;
 
 const Content = ({ movie, onClose }) => {
+  const { setDetailPreviewPlaying } = useContext(PreviewPlayContext);
   const { userInfo } = useContext(LoginContext);
   const [tags, setTags] = useState(null);
+  const [tagsOnLoading, setTagsOnLoading] = useState(true);
+  const [videoId, setVideoId] = useState(movie.video_id);
+
   useEffect(() => {
-    axios.get(`${apiServer}/video/tags/${movie.video_id}`).then(tagsData => {
-      setTags(tagsData.data);
-    });
-    // Bind the event listener
-    document.getElementById(`content-${movie.video_id}`).addEventListener(
-      'loadedmetadata',
-      function() {
-        this.play();
-        // console.log(this.currentTime);
-        // console.log(this.currentTime);
-        // console.log(this.readyState);
-        // setTimeout(() => {
-        //   this.currentTime = this.duration / 2;
-        // }, 2000);
-      },
-      false,
-    );
+    setDetailPreviewPlaying(true);
   }, []);
+
+  useEffect(() => {
+    document.addEventListener('visibilitychange', e => {
+      const contentVideo = document.getElementById(`content-${movie.video_id}`);
+      if (contentVideo.paused) contentVideo.play();
+      else if (contentVideo.paused === false) contentVideo.pause();
+    });
+    setTagsOnLoading(true);
+    if (sessionStorage.getItem(`tag-${movie.video_id}`)) {
+      // sessionStorage에서 태그 정보 가져옴
+      const TEN_MIN = 10 * 60 * 1000;
+      const now = new Date(Date.now());
+      const tags = JSON.parse(sessionStorage.getItem(`tag-${movie.video_id}`));
+      const elapsedTime = Date.parse(now) - Date.parse(tags.timeStamp);
+      if (elapsedTime > TEN_MIN) {
+        sessionStorage.removeItem(`tag-${movie.video_id}`);
+      } else {
+        setRenderingTag(tags);
+      }
+    }
+    if (sessionStorage.getItem(`tag-${movie.video_id}`) === null) {
+      // axios 요청
+      axios.get(`${apiServer}/video/tags/${movie.video_id}`).then(response => {
+        response.timeStamp = new Date(Date.now());
+        setRenderingTag(response);
+        sessionStorage.setItem(
+          `tag-${movie.video_id}`,
+          JSON.stringify(response),
+        );
+      });
+    }
+  }, [movie]);
+
+  // 유저가 브라우저 탭이나 창을 벗어나면 재생중인 미리보기 동영상이 일시정지, 화면 복귀시 다시 재생
+
+  const setRenderingTag = tags => {
+    setTags(tags.data);
+    setTagsOnLoading(false);
+  };
+
   return (
     <div className="content">
       <div className="content__background">
@@ -45,6 +76,7 @@ const Content = ({ movie, onClose }) => {
           src={`https://${movie.thumbnail_video_url}`}
           className="content__background__image"
           poster={movie.thumbnail_img_url}
+          autoPlay
         >
           <track kind="captions" />
         </video>
@@ -53,7 +85,19 @@ const Content = ({ movie, onClose }) => {
         <div className="content__area__container">
           <div className="content__title">{movie.name}</div>
           <TagsContainer>
-            {tags && tags.map(tag => <Tag name={tag.name} />)}
+            {tagsOnLoading ? (
+              <ClipLoader
+                css={css`
+                  margin: 2% 48%;
+                `}
+                sizeUnit="rem"
+                size={3}
+                color="lightgray"
+                loading={tagsOnLoading}
+              />
+            ) : (
+              tags.slice(0, 30).map(tag => <Tag name={tag.name} />)
+            )}
           </TagsContainer>
           <div className="content__btns__container">
             <PlayButton name="▶  재생" videoId={movie.video_id} />
@@ -63,7 +107,13 @@ const Content = ({ movie, onClose }) => {
             ]}
           </div>
         </div>
-        <button className="content__close" onClick={onClose}>
+        <button
+          className="content__close"
+          onClick={() => {
+            document.getElementById(`content-${movie.video_id}`).pause();
+            onClose();
+          }}
+        >
           <IconCross />
         </button>
       </div>

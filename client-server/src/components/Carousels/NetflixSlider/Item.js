@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import SliderContext from './context';
 import ShowDetailsButton from './ShowDetailsButton';
+import { PreviewPlayContext } from '../../../contexts/PreviewPlayContext';
 import Mark from './Mark';
 import './Item.scss';
 import Axios from 'axios';
 
 const Item = ({ movie }) => {
+  const { detailPreviewPlaying } = useContext(PreviewPlayContext);
   const [hover, setHover] = useState(false);
   const [imageUrl, setImageUrl] = useState(
     'https://mir-s3-cdn-cf.behance.net/project_modules/disp/b6e0b072897469.5bf6e79950d23.gif',
   );
 
   const playVideo = () => {
-    document.getElementById(movie.video_id).play();
+    detailPreviewPlaying
+      ? null
+      : document.getElementById(`item-${movie.video_id}`).play();
   };
 
   const pauseVideo = () => {
-    document.getElementById(movie.video_id).pause();
+    document.getElementById(`item-${movie.video_id}`).pause();
   };
   return (
     <SliderContext.Consumer>
@@ -39,12 +43,11 @@ const Item = ({ movie }) => {
               <div
                 className="video-area"
                 onMouseOver={playVideo}
-                onFocus={playVideo}
                 onMouseLeave={pauseVideo}
                 onBlur={pauseVideo}
               >
                 <video
-                  id={movie.video_id}
+                  id={`item-${movie.video_id}`}
                   src={`https://${movie.thumbnail_video_url}`} // thumbnail_video_url
                   alt="thumbnail-video"
                   poster={movie.thumbnail_img_url}

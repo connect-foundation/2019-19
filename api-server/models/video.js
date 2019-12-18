@@ -80,16 +80,24 @@ module.exports = (sequelize, DataTypes) => {
     return data;
   };
   Video.increaseLike = async videoId => {
-    const data = await Video.increment('likes', {
-      where: { video_id: videoId },
-    });
-    return data;
+    try {
+      const data = await Video.increment('likes', {
+        where: { video_id: videoId },
+      });
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
   };
   Video.decreaseLike = async videoId => {
-    const data = await Video.decrement('likes', {
-      where: { video_id: videoId },
-    });
-    return data;
+    try {
+      const data = await Video.decrement('likes', {
+        where: { video_id: videoId },
+      });
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
   };
   Video.recommendationQuery = (userId, videoId) => {
     const queryStatement = `
