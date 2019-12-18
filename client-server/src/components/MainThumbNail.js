@@ -30,15 +30,15 @@ const StyledThumbNail = styled.div`
 
   @keyframes fade-in-thumbnail {
     0% {
-      //  -webkit-filter: blur(1.17rem);
-      //  -o-filter: blur(1.17rem);
-      //  -ms-filter: blur(1.17rem);
+      -webkit-filter: blur(1.17rem);
+      -o-filter: blur(1.17rem);
+      -ms-filter: blur(1.17rem);
       filter: blur(1.17rem);
     }
     100% {
-      // -webkit-filter: blur(0);
-      // -o-filter: blur(0);
-      // -ms-filter: blur(0);
+      -webkit-filter: blur(0);
+      -o-filter: blur(0);
+      -ms-filter: blur(0);
       filter: blur(0);
     }
   }
@@ -60,6 +60,7 @@ const MainThumbNail = ({ requestUrl }) => {
   const [thumbNailTitle, setThumbNailTitle] = useState('로딩중');
   const [thumbNailTags, setThumbNailTags] = useState(null);
   const [thumbNailId, setThumbNailId] = useState();
+
   const { userInfo } = useContext(LoginContext);
 
   useEffect(() => {

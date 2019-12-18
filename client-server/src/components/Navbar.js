@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import logo from '../../dist/white.png';
 import PageBtn from './PageBtn';
 import SearchInput from './Search/SearchInput';
 import SearchBox from './StyledComponents/SearchBox';
@@ -20,7 +19,7 @@ const StyledNavbarContainer = styled.div`
   top: 0;
   position: sticky;
   font-family: 'Nanum Gothic', sans-serif;
-  background-color: rgb(20, 20, 20);
+  background-color: rgba(20, 20, 20, 0.4);
   z-index: 10;
 `;
 const StyledLogo = styled.img`
@@ -92,7 +91,7 @@ const Navbar = () => {
   return (
     <StyledNavbarContainer>
       <Link to="/" style={StyledLink}>
-        <StyledLogo className="logo" src={logo} />
+        <StyledLogo className="logo" src={'https://i.imgur.com/nXmZjP5.png'} />
       </Link>
       <Link to="/" style={StyledLink}>
         <PageBtn name="홈" />
@@ -126,7 +125,10 @@ const Navbar = () => {
           <PageBtn name={`${username} 로그아웃`} onClick={Logout} />
         ) : (
           <a href={`${ENV.apiServer}/oauth/google`} style={StyledLink}>
-            <PageBtn name="로그인" />
+            <PageBtn
+              name="로그인"
+              iconUrl="https://icon-library.net/images/google-g-icon/google-g-icon-26.jpg"
+            />
           </a>
         )}
       </StyledNavRight>

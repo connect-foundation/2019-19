@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import debounce from 'lodash.debounce';
 
 const StyledInputBox = styled.div`
   width: 15rem;
@@ -37,17 +38,14 @@ const inputStyle = {
 const SearchInput = () => {
   const [userInput, setUserInput] = useState(null);
 
-  const changeURL = e => {
-    //   document.getElementById('realbody').innerHTML = e.target.value;
-    //   location.pathname = e.target.value;
-    setUserInput(e.target.value);
-
+  const changeURL = debounce(() => {
+    const value = document.getElementById('search-contents-input').value;
+    setUserInput(value);
     // 유저가 검색창에 단어를 모두 지우면 홈으로 리다이렉트하기 위함
-    if (e.target.value === '') {
+    if (value === '') {
       setUserInput(false);
     }
-    console.log(e.target.value);
-  };
+  }, 700);
   return (
     <StyledInputBox>
       <input

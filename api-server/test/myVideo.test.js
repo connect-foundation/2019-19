@@ -6,7 +6,6 @@ const vid = 6;
 
 const registerMyVideo = async (userId, videoId) => {
   const created = await Myvideos.registerMyVideo(userId, videoId);
-  console.log(created);
   return created;
 };
 

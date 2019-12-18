@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import { useState, useRef, useEffect } from 'react';
+import debounce from 'lodash.debounce';
 
 const PADDINGS = 110;
 
@@ -25,20 +26,29 @@ const useSliding = (elementWidth, countElements) => {
     },
   };
 
-  const handlePrev = () => {
-    setDistance(distance + containerWidth);
-    if (distance === 0) {
-      setDistance(-containerWidth * 3);
-    }
-  };
 
-  const handleNext = () => {
-    setViewed(viewed + totalInViewport);
-    setDistance(distance - containerWidth);
-    if (distance === -containerWidth * 3) {
-      setDistance(0);
-    }
-  };
+  const handlePrev = debounce(
+    () => {
+      setDistance(distance + containerWidth);
+      if (distance === 0) {
+        setDistance(-containerWidth * 3);
+      }
+    },
+    500,
+    { leading: false, trailing: true },
+  );
+
+  const handleNext = debounce(
+    () => {
+      setViewed(viewed + totalInViewport);
+      setDistance(distance - containerWidth);
+      if (distance === -containerWidth * 3) {
+        setDistance(0);
+      }
+    },
+    500,
+    { leading: false, trailing: true },
+  );
 
   const hasPrev = viewed !== 0;
   const hasNext = countElements > 5;

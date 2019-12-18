@@ -10,6 +10,10 @@
   margin: 40px 0;
   z-index: 4;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   span {
     width: 25px;
     color: #fff;
