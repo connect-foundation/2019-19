@@ -56,7 +56,7 @@ const RecommendedContent = ({ id, category, title, date, thumbnailImg }) => {
         <div className="title">{title}</div>
         <div className="date">{date}</div>
       </TextArea>
-      {userClicked && <Redirect to={`/Player/${id}}`} />}
+      {userClicked && <Redirect to={`/Player/${id}`} />}
     </ContentContainer>
   );
 };
