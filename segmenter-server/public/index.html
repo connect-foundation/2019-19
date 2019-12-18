@@ -8,14 +8,19 @@
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <div id="display"></div>
   <video id="video"></video>
+  <video id="video-mp4" src="https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vLCFaSm1uA0Y.mp4"></video>
   <button id="play">플레이</button>
   <script>
     var video = document.getElementById('video');
+    var mp4video = document.getElementById('video-mp4');
+    video.setAttribute("controls","controls");
+    mp4video.setAttribute("controls","controls"); 
     if(Hls.isSupported()) {
       document.getElementById('display').innerHTML = 'HLS is Supported for this browser!!';
       var hls = new Hls();
       // hls.loadSource('/test.m3u8');
-      hls.loadSource('https://saltsyffjqrf3006180.cdn.ntruss.com/videos/test.m3u8');
+      hls.loadSource('https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vLCFaSm1uA0Y/720p.stream.m3u8');
+      //saltsyffjqrf3006180.cdn.ntruss.com//root/videos/vYgKmZvAHJ0U.mp4
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED,function() {
         console.log("해석완료!");
