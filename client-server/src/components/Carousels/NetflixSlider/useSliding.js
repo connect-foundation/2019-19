@@ -36,7 +36,6 @@ const useSliding = (elementWidth, countElements) => {
     200,
     { leading: false, trailing: true },
   );
-
   const handleNext = debounce(
     () => {
       setViewed(viewed + totalInViewport);

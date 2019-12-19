@@ -9,6 +9,7 @@ import Toast from './StyledComponents/Toast';
 const PlayButton = ({ name, videoId }) => {
   const { userInfo } = useContext(LoginContext);
   const [alertUserToLogin, setAlertUserToLogin] = useState(false);
+  const history = useHistory();
   const handlePlayClicked = () => {
     userInfo ? history.push(`/Player/${videoId}`) : showMsgToLogin();
   };
@@ -18,7 +19,6 @@ const PlayButton = ({ name, videoId }) => {
       setAlertUserToLogin(false);
     }, 1500);
   };
-  const history = useHistory();
   return (
     <>
       <CheckBox />

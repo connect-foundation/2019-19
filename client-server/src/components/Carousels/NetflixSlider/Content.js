@@ -21,7 +21,6 @@ const Content = ({ movie, onClose }) => {
   const { setDetailPreviewPlaying } = useContext(PreviewPlayContext);
   const { userInfo } = useContext(LoginContext);
   const [tags, setTags] = useState(null);
-
   const [tagsOnLoading, setTagsOnLoading] = useState(true);
   const [videoId, setVideoId] = useState(movie.video_id);
 
@@ -98,7 +97,7 @@ const Content = ({ movie, onClose }) => {
               />
             ) : (
               {tags &&
-              tags.map((tag, index) => <Tag name={tag.name} key={index} />)}
+              tags.slice(0, 30).map((tag, index) => <Tag name={tag.name} key={index} />)}
             )}
           </TagsContainer>
           <div className="content__btns__container">
