@@ -18,7 +18,11 @@ const ControlPigselWrapper = styled.ul`
   text-decoration: none;
   &:hover ul {
     display: block;
+    background-color: transparent;
     cursor: pointer;
+  }
+  &:hover .current-quality {
+    opacity: 0;
   }
 `;
 
@@ -59,7 +63,7 @@ const PigselModal = ({
             720p &nbsp;
           </ControlPigselList>
         </ControlPigsel>
-        {pigsel}
+        <div className="current-quality">{pigsel}</div>
       </ControlPigselWrapper>
     </>
   );
