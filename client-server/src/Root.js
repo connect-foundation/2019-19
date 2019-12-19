@@ -12,14 +12,12 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Noto Sans KR';
     font-weight: 400;
     font-style: normal;
-    src: url("./styles/fonts/NotoSansKR-Regular.otf");
   }
 
   @font-face {
     font-family: 'Noto Sans KR';
     font-weight: 700;
     font-style: bold;
-    src: url("./styles/fonts/NotoSansKR-Bold.otf");
   }
 
   body {

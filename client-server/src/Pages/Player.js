@@ -1,4 +1,10 @@
-import React, { createRef, useState, useContext, useEffect } from 'react';
+import React, {
+  createRef,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
@@ -102,12 +108,36 @@ const BottomButtons = styled.div`
   align-items: center;
 `;
 
+const CenterEffect = styled.div`
+  position: absolute;
+  opacity: 0;
+  left: ${props => props.left}%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: comes-and-goes 400ms ease;
+  @keyframes comes-and-goes {
+    0% {
+      opacity: 0;
+      transform: scale(1);
+      transform: translate(-50%, -50%);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(3);
+      transform: translate(-50%, -50%);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(5);
+      transform: translate(-50%, -50%);
+    }
+  }
+`;
 /* Seeking Variable */
 let seeking = false; // seeking slider를 움직이는 중인지?
 const toggleSeeking = () => {
   seeking = !seeking;
 };
-
 /* Hover Variable */
 let countdown;
 const changeCountdown = (callback, hoverName) => {
@@ -124,38 +154,77 @@ const changeCountdown = (callback, hoverName) => {
 
 /* Component */
 const Player = ({ match }) => {
+  let player;
   /* Context */
   const { showNav, setShowNav } = useContext(NavbarContext);
   /* History */
   const history = useHistory();
   history.listen(() => {
+    window.onkeyup = null;
     if (!showNav) {
       setShowNav(true);
     }
   });
 
   /* Reference */
-  const player = createRef();
+  const ReactPlayerRef = createRef();
 
   /* State */
   const [isActive, setIsActive] = useState(true);
   const [duration, setDuration] = useState(0); // 영상의 총 길이
   const [playing, setPlaying] = useState(false); // 재생중 여부
+  const [effectVisible, setEffectVisible] = useState(false);
   const [playedSeconds, setPlayedSeconds] = useState(0); // playedSeconds는 0 ~ duration 사이의 값
   const [loadedSeconds, setLoadedSeconds] = useState(0); // loadedSeconds는 0 ~ duration 사이의 값
   const [volume, setVolume] = useState(0.8);
+  const [effectLeft, setEffectLeft] = useState(50);
   const [prevVolume, setPrevVolume] = useState(0);
+  const [effectContext, setEffectContext] = useState();
   const [hoverName, setHoverName] = useState('');
   const videoId = window.location.href.split('Player/')[1];
   const [pigsel, setPigsel] = useState('720p');
   const [videoUrl, setVideoUrl] = useState(
     `https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/${videoId}/${pigsel}.stream.m3u8`,
   );
+  const [altVideoUrl, setAltVideoUrl] = useState(
+    `https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/${videoId}.mp4`,
+  );
   const [videoTitle, setVideoTitle] = useState(null);
-
   /* Lifecycle method */
   // Hide, Show Navbar & 비디오 타이틀 불러오기
   useEffect(() => {
+    player = document.getElementById('video-player').children[0];
+    window.onkeyup = function(e) {
+      //   console.log(player.current);
+      //   e.preventDefault();
+      switch (e.keyCode) {
+        case CharCode.leftArrowCode:
+          handleSeekButtonBackward();
+          break;
+        case CharCode.rightArrowCode:
+          handleSeekButtonForward();
+          break;
+        case CharCode.upArrodCode:
+          handleVolumeUp();
+          break;
+        case CharCode.downArrowCode:
+          handleVolumeDown();
+          break;
+        case CharCode.enterCode:
+        case CharCode.spaceCode:
+          handlePlayAndPause();
+          break;
+        case CharCode.FCode:
+        case CharCode.fCode:
+          handleClickFullscreen();
+          break;
+        case CharCode.MCode:
+        case CharCode.mCode:
+          handleMute();
+          break;
+        default:
+      }
+    };
     setShowNav(false);
     axios
       .post(`${apiServer}/video/get-name-by-vid`, {
@@ -169,8 +238,7 @@ const Player = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    console.log(playedSeconds, videoUrl);
-    player.current.seekTo(playedSeconds);
+    ReactPlayerRef.current.seekTo(playedSeconds);
     setPlaying(!playing);
   }, [pigsel]);
 
@@ -192,7 +260,11 @@ const Player = ({ match }) => {
 
   // Play(Pause) Button
   const handlePlayAndPause = () => {
-    setPlaying(!playing);
+    const player = document.getElementById('video-player').children[0];
+    setEffectLeft(50);
+    player.paused ? fireEffect('►') : fireEffect('||');
+    player.paused ? player.play() : player.pause();
+    setPlaying(!player.paused);
   };
 
   const handleWrapperPlayAndPause = e => {
@@ -227,24 +299,35 @@ const Player = ({ match }) => {
   };
 
   const handleSeekSliderMouseUp = e => {
-    player.current.seekTo(e.target.value);
+    ReactPlayerRef.current.seekTo(e.target.value);
     toggleSeeking();
   };
 
   // Seeking Button
   const handleSeekButtonBackward = () => {
+    setEffectLeft(10);
+    fireEffect('<<');
+    const player = document.getElementById('video-player').children[0];
+    handleMouseMove();
+    const playedSeconds = player.currentTime;
     toggleSeeking();
-    const next = playedSeconds - 10 <= 0 ? 0 : playedSeconds - 10;
-    player.current.seekTo(next);
-    setPlayedSeconds(next);
+    const prev = playedSeconds - 10 <= 0 ? 0 : playedSeconds - 10;
+    player.currentTime = prev;
+    setPlayedSeconds(prev);
     toggleSeeking();
   };
 
   const handleSeekButtonForward = () => {
+    setEffectLeft(90);
+    fireEffect('>>');
+    const player = document.getElementById('video-player').children[0];
+    handleMouseMove();
+    const duration = player.duration;
+    const playedSeconds = player.currentTime;
     toggleSeeking();
     const next = playedSeconds + 10 >= duration ? duration : playedSeconds + 10;
+    player.currentTime = next;
     setPlayedSeconds(next);
-    player.current.seekTo(next);
     toggleSeeking();
   };
 
@@ -254,18 +337,34 @@ const Player = ({ match }) => {
   };
 
   const handleVolumeUp = () => {
-    if (volume + 0.1 >= 1) setVolume(1);
-    else setVolume(volume + 0.1);
+    setEffectLeft(50);
+    fireEffect('Volume Up');
+    if (player.volumne + 0.1 >= 1) player.volume = 1;
+    else player.volume += 0.1;
+    setVolume(player.volume);
   };
 
   const handleVolumeDown = () => {
-    if (volume - 0.1 <= 0) setVolume(0);
-    else setVolume(volume - 0.1);
+    setEffectLeft(50);
+    fireEffect('Volume Down');
+    if (player.volume - 0.1 <= 0) player.volumne = 0;
+    else player.volume -= 0.1;
+    setVolume(player.volume);
   };
 
   const handleMute = () => {
-    setPrevVolume(volume);
-    setVolume(prevVolume);
+    const player = document.getElementById('video-player').children[0];
+    if (player.volume > 0) {
+      setEffectLeft(50);
+      fireEffect('Mute');
+      player.volume = 0;
+      setVolume(0);
+      return;
+    }
+    setEffectLeft(50);
+    fireEffect('Volume On');
+    player.volume = 0.5;
+    setVolume(0.5);
   };
 
   // Fullscreen Button
@@ -275,62 +374,28 @@ const Player = ({ match }) => {
     }
   };
 
-  /* Keyboard Event Handler */
-  const handleKeyDownEvent = e => {
-    e.preventDefault();
-    switch (e.keyCode) {
-      case CharCode.leftArrowCode:
-        handleSeekButtonBackward();
-        break;
-      case CharCode.rightArrowCode:
-        handleSeekButtonForward();
-        break;
-      case CharCode.upArrodCode:
-        handleVolumeUp();
-        break;
-      case CharCode.downArrowCode:
-        handleVolumeDown();
-        break;
-      case CharCode.enterCode:
-        handlePlayAndPause();
-        break;
-      case CharCode.FCode:
-      case CharCode.fCode:
-        handleClickFullscreen();
-        break;
-      case CharCode.MCode:
-      case CharCode.mCode:
-        handleMute();
-        break;
-      default:
-    }
-  };
-
-  const handleKeyUpEvent = e => {
-    e.preventDefault();
-    switch (e.keyCode) {
-      case CharCode.spaceCode:
-        handlePlayAndPause();
-        break;
-      default:
-    }
+  const fireEffect = symbolString => {
+    setEffectVisible(true);
+    setEffectContext(symbolString);
+    setTimeout(() => {
+      setEffectVisible(false);
+    }, 200);
   };
 
   /* Render */
   return (
     <Wrapper
-      onKeyDown={handleKeyDownEvent}
-      onKeyUp={handleKeyUpEvent}
-      onMouseMove={handleMouseMove}
-      isActive={isActive}
       onClick={handleWrapperPlayAndPause}
+      isActive={isActive}
+      onMouseMove={handleMouseMove}
     >
       <ReactPlayer
-        ref={player}
+        id="video-player"
+        ref={ReactPlayerRef}
         width="100%"
         height="100vh"
         style={{ display: 'flex', position: 'relative' }}
-        url={videoUrl}
+        url={[videoUrl, altVideoUrl]}
         playing={playing}
         volume={volume}
         onDuration={handleDuration}
@@ -422,6 +487,21 @@ const Player = ({ match }) => {
           </BottomButtons>
         </BottomControllerWrapper>
       </ControllerWrapper>
+      {effectVisible && (
+        <CenterEffect left={effectLeft}>
+          <div
+            style={{
+              backgroundColor: 'rgba(20,20,20,0.5)',
+              borderRadius: '2rem',
+              padding: '2rem',
+              fontWeight: '30rem',
+              fontSize: 'xx-large',
+            }}
+          >
+            {effectContext}
+          </div>
+        </CenterEffect>
+      )}
     </Wrapper>
   );
 };

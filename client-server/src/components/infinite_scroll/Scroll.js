@@ -11,7 +11,7 @@ import ENV from '../../../env';
 
 const InfinityScroll = ({ categoryList, contentsType }) => {
   let currentScroll = 0; // 현재 스크롤 위치
-  let presentView = 0; // 현재까지 보여진 케로셀 갯수
+  let presentView = 1; // 현재까지 보여진 케로셀 갯수
   const sliceamount = 3; // 새로 만들 케로셀 갯수
 
   const [curList, setCurList] = useState([]);
@@ -19,11 +19,8 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
   const [isEnd, setIsEnd] = useState(false);
   const [arr2, setArr2] = useState({});
 
-  useEffect(() => {}, document.documentElement.scrollTop);
-
   const handleInfinity = debounce(() => {
     if (isEnd) {
-      alert('end');
       return;
     }
     if (
@@ -61,10 +58,9 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
   useEffect(() => {
     window.addEventListener('scroll', handleInfinity);
     return () => {
-      window.addEventListener('scroll', handleInfinity);
+      window.removeEventListener('scroll', handleInfinity);
     };
   }, []);
-
   return (
     <>
       <ClipLoader
@@ -80,11 +76,11 @@ const InfinityScroll = ({ categoryList, contentsType }) => {
         <>
           {curList.map((e, i) => {
             return (
-              <Slider categoryName={e}>
-                {Object.values(arr2)[i].map(content => (
+              <Slider categoryName={e} key={i}>
+                {Object.values(arr2)[i].map((content, index) => (
                   <Slider.Item
                     movie={content._source}
-                    key={content._source.video_id}
+                    key={content._source.video_id + index}
                   />
                 ))}
               </Slider>

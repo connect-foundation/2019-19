@@ -56,13 +56,14 @@ const Dropdown = () => {
     <>
       {RecommendedContent.length && (
         <DropdownContainer>
-          {recommededContents.map(content => (
+          {recommededContents.map((content, index) => (
             <RecommendedContent
               id={content.video_id}
               category={content.category}
               title={content.name}
               date={content.reg_date.slice(0, 10)}
               thumbnailImg={content.thumbnail_img_url}
+              key={index}
             />
           ))}
         </DropdownContainer>

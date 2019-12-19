@@ -98,14 +98,22 @@ const MainThumbNail = ({ requestUrl }) => {
         <StyledButtonsContainer>
           <PlayButton name="▶  재생" videoId={thumbNailId} />
           {userInfo && [
-            <LikeBtn userId={userInfo} thumbNailId={thumbNailId} />,
-            <MylistBtn userId={userInfo} thumbNailId={thumbNailId} />,
+            <LikeBtn
+              userId={userInfo}
+              thumbNailId={thumbNailId}
+              key={`${thumbNailId}1`}
+            />,
+            <MylistBtn
+              userId={userInfo}
+              thumbNailId={thumbNailId}
+              key={`${thumbNailId}2`}
+            />,
           ]}
         </StyledButtonsContainer>
         {thumbNailTags && (
           <TagsContainer marginLeft={5}>
-            {thumbNailTags.map(tagObject => (
-              <Tag name={tagObject.name} />
+            {thumbNailTags.map((tagObject, index) => (
+              <Tag name={tagObject.name} key={index} />
             ))}
           </TagsContainer>
         )}

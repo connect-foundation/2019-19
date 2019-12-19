@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import MainThumbNail from '../components/MainThumbNail';
-import { ClipLoader } from 'react-spinners';
-import { css } from '@emotion/core';
 import Scroll from '../components/infinite_scroll/Scroll';
 import Slider from '../components/Carousels/NetflixSlider';
 import axios from 'axios';
 import ENV from '../../env';
+import { PreviewPlayContext } from '../contexts/PreviewPlayContext';
 
 const Home = () => {
-  const [sportsData, setSportsData] = useState(null);
+  const { detailPreviewPlaying, setDetailPreviewPlaying } = useContext(
+    PreviewPlayContext,
+  );
+  const [movieData, setMovieData] = useState(null);
   const [onLoading, setOnLoading] = useState(true);
+
   useEffect(() => {
+    if (detailPreviewPlaying) setDetailPreviewPlaying(false);
     axios.get(`${ENV.apiServer}/video/영화애니메이션`).then(res => {
-      setSportsData(res.data);
+      setMovieData(res.data);
       setOnLoading(false);
     });
   }, []);
@@ -35,10 +39,10 @@ const Home = () => {
   return (
     <>
       <MainThumbNail requestUrl={'popular-thumbnail-video'} />
-      {sportsData.length && (
+      {movieData.length && (
         <>
           <Slider categoryName={'영화애니메이션'}>
-            {sportsData.map(content => (
+            {movieData.map(content => (
               <Slider.Item
                 movie={content._source}
                 key={content._source.video_id}

@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Slider from '../components/Carousels/NetflixSlider';
 import FakeUI from '../components/infinite_scroll/ScrollFakeUI';
 import ENV from '../../env';
+import { PreviewPlayContext } from '../contexts/PreviewPlayContext';
 
 const { apiServer } = ENV;
 
 const Popular = () => {
+  const { detailPreviewPlaying, setDetailPreviewPlaying } = useContext(
+    PreviewPlayContext,
+  );
   const [popularVideoList, setPopularVideoList] = useState([]);
   const [onLoading, setOnLoading] = useState(true);
   const [numOfContentsInEachRaw, setNumOfContentsInEachRaw] = useState(5);
   const [sliceIndexArray, setSliceIndexArray] = useState([]);
 
   useEffect(() => {
+    if (detailPreviewPlaying) setDetailPreviewPlaying(false);
     if (sessionStorage.getItem('popular-contents')) {
       const FIVE_MIN = 5 * 60 * 1000;
       const now = new Date(Date.now());
@@ -53,9 +58,9 @@ const Popular = () => {
 
   return (
     <>
-      {sliceIndexArray.map(e => {
+      {sliceIndexArray.map((e, index) => {
         return (
-          <Slider>
+          <Slider key={index}>
             {popularVideoList
               .slice(
                 e * numOfContentsInEachRaw,

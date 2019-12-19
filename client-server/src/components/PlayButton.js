@@ -8,10 +8,10 @@ import Toast from './StyledComponents/Toast';
 
 const PlayButton = ({ name, videoId }) => {
   const { userInfo } = useContext(LoginContext);
-  const [userTryPlay, setUserTryPlay] = useState(false);
   const [alertUserToLogin, setAlertUserToLogin] = useState(false);
+  const history = useHistory();
   const handlePlayClicked = () => {
-    userInfo ? setUserTryPlay(true) : showMsgToLogin();
+    userInfo ? history.push(`/Player/${videoId}`) : showMsgToLogin();
   };
   const showMsgToLogin = () => {
     setAlertUserToLogin(true);
@@ -19,20 +19,17 @@ const PlayButton = ({ name, videoId }) => {
       setAlertUserToLogin(false);
     }, 1500);
   };
-  const history = useHistory();
   return (
     <>
       <CheckBox />
       <PlayBtn onClick={handlePlayClicked}>{name}</PlayBtn>
       {alertUserToLogin && <Toast>로그인이 필요합니다.</Toast>}
-      {userTryPlay && history.push(`/Player/${videoId}`)}
     </>
   );
 };
 
 PlayButton.propTypes = {
   name: PropTypes.string.isRequired,
-  videoId: PropTypes.string.isRequired,
 };
 
 export default PlayButton;

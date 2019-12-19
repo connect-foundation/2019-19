@@ -46,20 +46,20 @@ const SearchResults = props => {
       {noContents || !myVideoList.length ? (
         <MessageOnCenter>검색 결과가 없습니다.</MessageOnCenter>
       ) : (
-        sliceIndexArray.map(e => {
+        sliceIndexArray.map((content1, index1) => {
           return (
-            <Slider>
+            <Slider key={index1}>
               {myVideoList
                 .slice(
-                  e * numOfContentsInEachRaw,
-                  (e + 1) * numOfContentsInEachRaw,
+                  content1 * numOfContentsInEachRaw,
+                  (content1 + 1) * numOfContentsInEachRaw,
                 )
-                .map(content => {
-                  if (content)
+                .map((content2, index2) => {
+                  if (content2)
                     return (
                       <Slider.Item
-                        movie={content._source}
-                        key={content._source.video_id}
+                        movie={content2._source}
+                        key={content2._source.video_id + index2}
                       />
                     );
                 })}

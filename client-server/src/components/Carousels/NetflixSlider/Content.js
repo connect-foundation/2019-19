@@ -29,6 +29,7 @@ const Content = ({ movie, onClose }) => {
   }, []);
 
   useEffect(() => {
+    // 유저가 브라우저 탭이나 창을 벗어나면 재생중인 미리보기 동영상이 일시정지, 화면 복귀시 다시 재생
     document.addEventListener('visibilitychange', e => {
       const contentVideo = document.getElementById(`content-${movie.video_id}`);
       if (contentVideo.paused) contentVideo.play();
@@ -60,8 +61,6 @@ const Content = ({ movie, onClose }) => {
     }
   }, [movie]);
 
-  // 유저가 브라우저 탭이나 창을 벗어나면 재생중인 미리보기 동영상이 일시정지, 화면 복귀시 다시 재생
-
   const setRenderingTag = tags => {
     setTags(tags.data);
     setTagsOnLoading(false);
@@ -85,6 +84,7 @@ const Content = ({ movie, onClose }) => {
         <div className="content__area__container">
           <div className="content__title">{movie.name}</div>
           <TagsContainer>
+
             {tagsOnLoading ? (
               <ClipLoader
                 css={css`
@@ -96,7 +96,8 @@ const Content = ({ movie, onClose }) => {
                 loading={tagsOnLoading}
               />
             ) : (
-              tags.slice(0, 30).map(tag => <Tag name={tag.name} />)
+              {tags &&
+              tags.slice(0, 30).map((tag, index) => <Tag name={tag.name} key={index} />)}
             )}
           </TagsContainer>
           <div className="content__btns__container">

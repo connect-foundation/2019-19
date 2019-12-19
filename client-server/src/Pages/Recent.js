@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { PreviewPlayContext } from '../contexts/PreviewPlayContext';
 import MainThumbNail from '../components/MainThumbNail';
 import Scroll from '../components/infinite_scroll/Scroll';
 import Slider from '../components/Carousels/NetflixSlider';
@@ -6,9 +7,13 @@ import axios from 'axios';
 import ENV from '../../env';
 
 const Recent = () => {
+  const { detailPreviewPlaying, setDetailPreviewPlaying } = useContext(
+    PreviewPlayContext,
+  );
   const [musicContentsData, setMusicContentsData] = useState(null);
   const [onLoading, setOnLoading] = useState(true);
   useEffect(() => {
+    if (detailPreviewPlaying) setDetailPreviewPlaying(false);
     axios.get(`${ENV.apiServer}/video/음악/recent`).then(res => {
       setMusicContentsData(res.data);
       setOnLoading(false);
