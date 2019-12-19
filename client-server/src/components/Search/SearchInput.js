@@ -45,7 +45,7 @@ const SearchInput = () => {
     if (value === '') {
       setUserInput(false);
     }
-  }, 700);
+  }, 500);
   return (
     <StyledInputBox>
       <input
