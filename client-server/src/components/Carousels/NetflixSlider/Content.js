@@ -21,6 +21,7 @@ const Content = ({ movie, onClose }) => {
   const { setDetailPreviewPlaying } = useContext(PreviewPlayContext);
   const { userInfo } = useContext(LoginContext);
   const [tags, setTags] = useState(null);
+
   const [tagsOnLoading, setTagsOnLoading] = useState(true);
   const [videoId, setVideoId] = useState(movie.video_id);
 
@@ -84,6 +85,7 @@ const Content = ({ movie, onClose }) => {
         <div className="content__area__container">
           <div className="content__title">{movie.name}</div>
           <TagsContainer>
+
             {tagsOnLoading ? (
               <ClipLoader
                 css={css`
@@ -95,7 +97,8 @@ const Content = ({ movie, onClose }) => {
                 loading={tagsOnLoading}
               />
             ) : (
-              tags.slice(0, 30).map(tag => <Tag name={tag.name} />)
+              {tags &&
+              tags.map((tag, index) => <Tag name={tag.name} key={index} />)}
             )}
           </TagsContainer>
           <div className="content__btns__container">

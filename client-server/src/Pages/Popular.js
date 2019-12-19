@@ -58,9 +58,9 @@ const Popular = () => {
 
   return (
     <>
-      {sliceIndexArray.map(e => {
+      {sliceIndexArray.map((e, index) => {
         return (
-          <Slider>
+          <Slider key={index}>
             {popularVideoList
               .slice(
                 e * numOfContentsInEachRaw,

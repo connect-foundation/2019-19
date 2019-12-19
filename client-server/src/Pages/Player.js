@@ -138,7 +138,6 @@ let seeking = false; // seeking slider를 움직이는 중인지?
 const toggleSeeking = () => {
   seeking = !seeking;
 };
-
 /* Hover Variable */
 let countdown;
 const changeCountdown = (callback, hoverName) => {
@@ -169,7 +168,6 @@ const Player = ({ match }) => {
 
   /* Reference */
   const ReactPlayerRef = createRef();
-  //   const player = document.getElementById('video-player');
 
   /* State */
   const [isActive, setIsActive] = useState(true);
@@ -188,8 +186,10 @@ const Player = ({ match }) => {
   const [videoUrl, setVideoUrl] = useState(
     `https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/${videoId}/${pigsel}.stream.m3u8`,
   );
+  const [altVideoUrl, setAltVideoUrl] = useState(
+    `https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/${videoId}.mp4`,
+  );
   const [videoTitle, setVideoTitle] = useState(null);
-
   /* Lifecycle method */
   // Hide, Show Navbar & 비디오 타이틀 불러오기
   useEffect(() => {
@@ -385,9 +385,9 @@ const Player = ({ match }) => {
   /* Render */
   return (
     <Wrapper
-      onMouseMove={handleMouseMove}
-      isActive={isActive}
       onClick={handleWrapperPlayAndPause}
+      isActive={isActive}
+      onMouseMove={handleMouseMove}
     >
       <ReactPlayer
         id="video-player"
@@ -395,7 +395,7 @@ const Player = ({ match }) => {
         width="100%"
         height="100vh"
         style={{ display: 'flex', position: 'relative' }}
-        url={videoUrl}
+        url={[videoUrl, altVideoUrl]}
         playing={playing}
         volume={volume}
         onDuration={handleDuration}

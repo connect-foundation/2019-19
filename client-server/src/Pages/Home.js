@@ -10,12 +10,13 @@ const Home = () => {
   const { detailPreviewPlaying, setDetailPreviewPlaying } = useContext(
     PreviewPlayContext,
   );
-  const [sportsData, setSportsData] = useState(null);
+  const [movieData, setMovieData] = useState(null);
   const [onLoading, setOnLoading] = useState(true);
+
   useEffect(() => {
     if (detailPreviewPlaying) setDetailPreviewPlaying(false);
     axios.get(`${ENV.apiServer}/video/영화애니메이션`).then(res => {
-      setSportsData(res.data);
+      setMovieData(res.data);
       setOnLoading(false);
     });
   }, []);
@@ -38,10 +39,10 @@ const Home = () => {
   return (
     <>
       <MainThumbNail requestUrl={'popular-thumbnail-video'} />
-      {sportsData.length && (
+      {movieData.length && (
         <>
           <Slider categoryName={'영화애니메이션'}>
-            {sportsData.map(content => (
+            {movieData.map(content => (
               <Slider.Item
                 movie={content._source}
                 key={content._source.video_id}
