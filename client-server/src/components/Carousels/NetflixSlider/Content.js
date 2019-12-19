@@ -17,6 +17,7 @@ const apiServer = ENV.apiServer;
 const Content = ({ movie, onClose }) => {
   const { userInfo } = useContext(LoginContext);
   const [tags, setTags] = useState(null);
+
   useEffect(() => {
     axios.get(`${apiServer}/video/tags/${movie.video_id}`).then(tagsData => {
       setTags(tagsData.data);
@@ -26,16 +27,11 @@ const Content = ({ movie, onClose }) => {
       'loadedmetadata',
       function() {
         this.play();
-        // console.log(this.currentTime);
-        // console.log(this.currentTime);
-        // console.log(this.readyState);
-        // setTimeout(() => {
-        //   this.currentTime = this.duration / 2;
-        // }, 2000);
       },
       false,
     );
   }, []);
+
   return (
     <div className="content">
       <div className="content__background">
@@ -53,7 +49,8 @@ const Content = ({ movie, onClose }) => {
         <div className="content__area__container">
           <div className="content__title">{movie.name}</div>
           <TagsContainer>
-            {tags && tags.map(tag => <Tag name={tag.name} />)}
+            {tags &&
+              tags.map((tag, index) => <Tag name={tag.name} key={index} />)}
           </TagsContainer>
           <div className="content__btns__container">
             <PlayButton name="▶  재생" videoId={movie.video_id} />

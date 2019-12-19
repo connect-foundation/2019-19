@@ -69,6 +69,7 @@ const LikeBtn = ({ userId, thumbNailId }) => {
 LikeBtn.propTypes = {
   userId: PropTypes.string,
   thumbNailId: PropTypes.string,
+  URL: PropTypes.string,
 };
 
 export default LikeBtn;

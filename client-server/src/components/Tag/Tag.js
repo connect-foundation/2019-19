@@ -20,16 +20,13 @@ const Container = styled.h5`
 `;
 
 const Tag = ({ name }) => {
-  const [tagClicked, setTagClicked] = useState(false);
-
-  const searchByTagName = () => {
-    setTagClicked(true);
-  };
   const history = useHistory();
+  const searchByTagName = () => {
+    history.push(`/search/${name}`);
+  };
   return (
     <>
       <Container onClick={searchByTagName}>{`#${name}`}</Container>
-      {tagClicked && history.push(`/search/${name}`)}
     </>
   );
 };

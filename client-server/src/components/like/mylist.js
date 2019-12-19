@@ -65,7 +65,6 @@ const MylistBtn = ({ userId, thumbNailId }) => {
 
 MylistBtn.propTypes = {
   userId: PropTypes.string.isRequired,
-  thumbNailId: PropTypes.number.isRequired,
 };
 
 export default MylistBtn;
