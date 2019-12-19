@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -42,22 +42,29 @@ const TextArea = styled.div`
   }
 `;
 
+const StyledLink = {
+  display: 'contents',
+  textDecoration: 'none',
+  padding: '0',
+  color: 'inherit',
+};
+
 const RecommendedContent = ({ id, category, title, date, thumbnailImg }) => {
   const [userClicked, setUserClicked] = useState(false);
   const handleTagClick = () => {
     setUserClicked(true);
   };
-  const history = useHistory();
   return (
-    <ContentContainer onClick={handleTagClick}>
-      <ContentImage src={thumbnailImg} />
-      <TextArea>
-        <div className="commentary">{`취향저격 ${category} 컨텐츠`}</div>
-        <div className="title">{title}</div>
-        <div className="date">{date}</div>
-      </TextArea>
-      {userClicked && history.push(`/Player/${id}}`)}
-    </ContentContainer>
+    <Link to={`/Player/${id}`} style={StyledLink}>
+      <ContentContainer onClick={handleTagClick}>
+        <ContentImage src={thumbnailImg} />
+        <TextArea>
+          <div className="commentary">{`취향저격 ${category} 컨텐츠`}</div>
+          <div className="title">{title}</div>
+          <div className="date">{date}</div>
+        </TextArea>
+      </ContentContainer>
+    </Link>
   );
 };
 

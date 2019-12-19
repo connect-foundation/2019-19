@@ -18,10 +18,10 @@ const VolumeModalWrapper = styled.div`
 
 const VolumeBackground = styled.div`
   width: 8em;
-  height: 1.3em;
+  height: 4em;
   position: absolute;
   margin: 0;
-  background: black;
+  background: rgba(20, 20, 20, 0.3);
   border-radius: 0.3em;
 `;
 
@@ -55,9 +55,9 @@ const VolumeInput = styled.input`
 
   ::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 1.1em;
-    height: 1.1em;
-    margin-top: -4px;
+    width: 1.5em;
+    height: 1.5em;
+    margin-top: -3.6px;
     border: none;
     border-radius: 10px;
     background: ${props => props.theme.MainColor};
@@ -66,7 +66,7 @@ const VolumeInput = styled.input`
 
   ::-webkit-slider-runnable-track {
     -webkit-appearance: none;
-    height: 0.5em;
+    height: 1em;
     transition: all ease 0.25s;
     background: ${props => props.theme.SliderColor2};
   }

@@ -33,7 +33,7 @@ const useSliding = (elementWidth, countElements) => {
         setDistance(-containerWidth * 3);
       }
     },
-    500,
+    200,
     { leading: false, trailing: true },
   );
 
@@ -45,7 +45,7 @@ const useSliding = (elementWidth, countElements) => {
         setDistance(0);
       }
     },
-    500,
+    200,
     { leading: false, trailing: true },
   );
 

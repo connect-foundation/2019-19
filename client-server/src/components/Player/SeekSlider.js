@@ -46,7 +46,7 @@ const Slider = styled.input`
     -webkit-appearance: none
     width: 1.1em;
     height: 1.1em;
-    margin-top: -5.25px;
+    margin-top: -0.1em;
     border: none;
     border-radius: 10px;
     background: ${props => props.theme.MainColor};
@@ -58,42 +58,15 @@ const Slider = styled.input`
     height: 1.35em;
   }
 
-  ::-webkit-slider-runnable-track {
-    height: 0.25em;
-    transition: all ease 0.25s;
-    border: none;
-    border-radius: 10px;
-    background: ${props => props.theme.MainColor};
-    transition: all ease 0.25s;
-  }
-
-  :hover::-webkit-slider-thumb {
-    width: 1.35em;
-    height: 1.35em;
-  }
 
   ::-webkit-slider-runnable-track {
-    height: 0.25em;
-    transition: all ease 0.25s;
-    border: none;
-    border-radius: 10px;
-    background: ${props => props.theme.MainColor};
-    transition: all ease 0.25s;
-  }
-
-  :hover::-webkit-slider-thumb {
-    width: 1.35em;
-    height: 1.35em;
-  }
-
-  ::-webkit-slider-runnable-track {
-    height: 0.25em;
+    height: 0.5em;
     transition: all ease 0.25s;
     background: ${props => props.theme.SliderColor2};
   }
 
   :hover::-webkit-slider-runnable-track {
-    height: 0.5em;
+    height: 1em;
   }
 
   ::-ms-thumb {
