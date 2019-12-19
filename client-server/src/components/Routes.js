@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Recent from '../Pages/Recent';
 import Home from '../Pages/Home';
 import Popular from '../Pages/Popular';
-import Policy from '../Pages/Policy';
 import MyVideos from '../Pages/MyVideos';
 import SearchResults from '../Pages/SearchResults';
 // eslint-disable-next-line import/no-cycle
@@ -21,7 +20,6 @@ const Routes = () => {
       <Route path="/Recent" component={Recent} />
       <Route path="/my-videos" component={MyVideos} />
       <Route exact path="/" component={Home} />
-      <Route path="/privacy-policy" component={Policy} />
       <Route path="/Player/:videoId" component={Player} />
       <Route path="/search/:keyword" component={SearchResults} />
     </Router>

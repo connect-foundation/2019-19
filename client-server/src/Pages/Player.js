@@ -107,7 +107,6 @@ let seeking = false; // seeking slider를 움직이는 중인지?
 const toggleSeeking = () => {
   seeking = !seeking;
 };
-
 /* Hover Variable */
 let countdown;
 const changeCountdown = (callback, hoverName) => {
@@ -135,7 +134,7 @@ const Player = ({ match }) => {
   });
 
   /* Reference */
-  const player = createRef();
+  const player = createRef(null);
 
   /* State */
   const [isActive, setIsActive] = useState(true);
@@ -151,8 +150,10 @@ const Player = ({ match }) => {
   const [videoUrl, setVideoUrl] = useState(
     `https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/${videoId}/${pigsel}.stream.m3u8`,
   );
+  const [altVideoUrl, setAltVideoUrl] = useState(
+    `https://saltsyffjqrf3006180.cdn.ntruss.com//root/videos/${videoId}.mp4`,
+  );
   const [videoTitle, setVideoTitle] = useState(null);
-
   /* Lifecycle method */
   // Hide, Show Navbar & 비디오 타이틀 불러오기
   useEffect(() => {
@@ -166,10 +167,18 @@ const Player = ({ match }) => {
       .then(res => {
         setVideoTitle(res.data[0].name);
       });
+
+    // document.addEventListener('keydown', handleKeyDownEvent, false);
+    // document.addEventListener('keyUp', handleKeyUpEvent, false);
+    // document.addEventListener('mousemove', handleMouseMove, false);
+    // return () => {
+    //   document.removeEventListener('keydown', handleKeyDownEvent, false);
+    //   document.removeEventListener('keyUp', handleKeyUpEvent, false);
+    //   document.removeEventListener('mousemove', handleMouseMove, false);
+    // };
   }, []);
 
   useEffect(() => {
-    console.log(playedSeconds, videoUrl);
     player.current.seekTo(playedSeconds);
     setPlaying(!playing);
   }, [pigsel]);
@@ -319,18 +328,18 @@ const Player = ({ match }) => {
   /* Render */
   return (
     <Wrapper
+      onClick={handleWrapperPlayAndPause}
+      isActive={isActive}
       onKeyDown={handleKeyDownEvent}
       onKeyUp={handleKeyUpEvent}
       onMouseMove={handleMouseMove}
-      isActive={isActive}
-      onClick={handleWrapperPlayAndPause}
     >
       <ReactPlayer
         ref={player}
         width="100%"
         height="100vh"
         style={{ display: 'flex', position: 'relative' }}
-        url={videoUrl}
+        url={[videoUrl, altVideoUrl]}
         playing={playing}
         volume={volume}
         onDuration={handleDuration}

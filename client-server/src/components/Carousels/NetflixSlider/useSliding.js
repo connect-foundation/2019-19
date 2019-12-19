@@ -26,7 +26,6 @@ const useSliding = (elementWidth, countElements) => {
     },
   };
 
-
   const handlePrev = debounce(
     () => {
       setDistance(distance + containerWidth);
@@ -51,7 +50,7 @@ const useSliding = (elementWidth, countElements) => {
   );
 
   const hasPrev = viewed !== 0;
-  const hasNext = countElements > 5;
+  const hasNext = countElements > 5; // 5개 이하일 경우 화살표 표시 안함
 
   return {
     handlePrev,

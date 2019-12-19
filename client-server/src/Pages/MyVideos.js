@@ -23,7 +23,6 @@ const MyVideos = () => {
           id: userInfo,
         })
         .then(res => {
-          console.log(res.data);
           if (res.data.length) {
             setMyVideoList(res.data);
             const numOfMyVideos = res.data.length;
@@ -38,7 +37,7 @@ const MyVideos = () => {
           setOnLoading(false);
         });
     }
-  }, userInfo);
+  }, [userInfo]);
 
   if (onLoading)
     return (
@@ -56,9 +55,9 @@ const MyVideos = () => {
   return (
     <>
       {myVideoList.length ? (
-        sliceIndexArray.map(e => {
+        sliceIndexArray.map((e, index) => {
           return (
-            <Slider>
+            <Slider key={index}>
               {myVideoList
                 .slice(
                   e * numOfContentsInEachRaw,
