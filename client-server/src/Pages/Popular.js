@@ -13,19 +13,41 @@ const Popular = () => {
   const [sliceIndexArray, setSliceIndexArray] = useState([]);
 
   useEffect(() => {
-    axios.get(`${apiServer}/video/popular-videos`).then(res => {
-      setPopularVideoList(res.data);
-      const numOfMyVideos = res.data.length;
-      if (res.data.length === 0) return; // 유저가 찜한 컨텐츠가 없다는 view 표시해야
-      const raws = Math.ceil(numOfMyVideos / numOfContentsInEachRaw);
-      const temp = [];
-      for (let i = 0; i < raws; i++) {
-        temp.push(i);
+    if (sessionStorage.getItem('popular-contents')) {
+      const FIVE_MIN = 5 * 60 * 1000;
+      const now = new Date(Date.now());
+      const popularContents = JSON.parse(
+        sessionStorage.getItem('popular-contents'),
+      );
+      const elapsedTime =
+        Date.parse(now) - Date.parse(popularContents.timeStamp);
+      if (elapsedTime > FIVE_MIN) {
+        sessionStorage.removeItem('popular-contents');
+      } else {
+        setRenderingContents(popularContents);
       }
-      setSliceIndexArray(temp);
-      setOnLoading(false);
-    });
+    }
+    if (sessionStorage.getItem('popular-contents') === null) {
+      axios.get(`${apiServer}/video/popular-videos`).then(response => {
+        response.timeStamp = new Date(Date.now());
+        sessionStorage.setItem('popular-contents', JSON.stringify(response));
+        setRenderingContents(response);
+      });
+    }
   }, []);
+
+  const setRenderingContents = contents => {
+    setPopularVideoList(contents.data);
+    const numOfMyVideos = contents.data.length;
+    if (contents.data.length === 0) return; // 유저가 찜한 컨텐츠가 없다는 view 표시해야
+    const raws = Math.ceil(numOfMyVideos / numOfContentsInEachRaw);
+    const temp = [];
+    for (let i = 0; i < raws; i++) {
+      temp.push(i);
+    }
+    setSliceIndexArray(temp);
+    setOnLoading(false);
+  };
 
   if (onLoading) return <FakeUI numOfContents={5} />;
 

@@ -24,6 +24,7 @@ const Tag = ({ name }) => {
   const searchByTagName = () => {
     history.push(`/search/${name}`);
   };
+  const history = useHistory();
   return (
     <>
       <Container onClick={searchByTagName}>{`#${name}`}</Container>

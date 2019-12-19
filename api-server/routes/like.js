@@ -9,7 +9,7 @@ router.post('/like-video', async (req, res) => {
   const { videoId } = reqData;
   const data = await Like.registerLike(userId, videoId);
   const data2 = await Video.increaseLike(videoId);
-  return res.json(data, data2);
+  return res.json({ data, data2 });
 });
 
 router.post('/unlike-video', async (req, res) => {
@@ -18,7 +18,7 @@ router.post('/unlike-video', async (req, res) => {
   const { videoId } = reqData;
   const data = await Like.deregisterLike(userId, videoId);
   const data2 = await Video.decreaseLike(videoId);
-  return res.json(data, data2);
+  return res.json({ data, data2 });
 });
 
 router.post('/isLiked', async (req, res) => {
@@ -26,8 +26,13 @@ router.post('/isLiked', async (req, res) => {
   const { userId } = reqData;
   const { videoId } = reqData;
   const data = await Like.didUserLiked(userId, videoId);
-  if (!data) return res.json({});
-  return res.json(data);
+  const likesData = await Video.findAll({
+    attributes: ['likes'],
+    where: { video_id: videoId },
+  });
+  const result = Object.assign({}, data, likesData);
+  //   if (!data) return res.json({});
+  return res.json(result);
 });
 
 module.exports = router;

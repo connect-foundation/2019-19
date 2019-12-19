@@ -27,6 +27,16 @@ const apiServer = ENV.apiServer;
 /* Styled Component */
 const Wrapper = styled.div`
   color: white;
+  cursor: ${props => (props.isActive ? '' : 'none')};
+  animation: player-fade-in 2000ms ease;
+  @keyframes player-fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const ControllerWrapper = styled.div`
