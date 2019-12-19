@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const ControlPigsel = styled.ul`
-  background-color:black;
-  text-decoration:none;
-  display:none;  
-  height:auto;
-  padding:0px;
-  margin:auto;
-  border:none
-  position:absolute;
-  width:150px;
-  z-index:99;
+  text-decoration: none;
+  display: none;
+  height: auto;
+  padding: 0.5rem;
+  margin: auto;
+  margin-left: 3rem;
+  position: absolute;
+  width: 150px;
+  z-index: 99;
 `;
 
 const ControlPigselWrapper = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   &:hover ul {
     display: block;
@@ -28,6 +30,9 @@ const ControlPigselWrapper = styled.ul`
 
 const ControlPigselList = styled.span`
   list-style: none;
+  &:hover {
+    color: gray;
+  }
 `;
 
 const PigselModal = ({
