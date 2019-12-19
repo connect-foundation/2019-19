@@ -56,7 +56,7 @@ const RecommendedContent = ({ id, category, title, date, thumbnailImg }) => {
         <div className="title">{title}</div>
         <div className="date">{date}</div>
       </TextArea>
-      {userClicked && history.push(`/Player/${id}}`)}
+      {userClicked && history.push(`/Player/${id}`)}
     </ContentContainer>
   );
 };

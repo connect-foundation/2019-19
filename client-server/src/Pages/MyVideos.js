@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 import { css } from '@emotion/core';
 import LoginContext from '../loginContextApi/context';
+import { PreviewPlayContext } from '../contexts/PreviewPlayContext';
 import Slider from '../components/Carousels/NetflixSlider';
 import MessageOnCenter from '../components/StyledComponents/MessageOnCenter';
 import ENV from '../../env';
@@ -11,12 +12,16 @@ const { apiServer } = ENV;
 
 const MyVideos = () => {
   const { userInfo } = useContext(LoginContext);
+  const { detailPreviewPlaying, setDetailPreviewPlaying } = useContext(
+    PreviewPlayContext,
+  );
   const [myVideoList, setMyVideoList] = useState([]);
   const [onLoading, setOnLoading] = useState(true);
   const [numOfContentsInEachRaw, setNumOfContentsInEachRaw] = useState(5);
   const [sliceIndexArray, setSliceIndexArray] = useState([]);
 
   useEffect(() => {
+    if (detailPreviewPlaying) setDetailPreviewPlaying(false);
     if (userInfo) {
       axios
         .post(`${apiServer}/mylist/my-videos`, {
