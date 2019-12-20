@@ -4,13 +4,13 @@
 <br>
 <center>
 <p align="center">
-          <img src="https://img.shields.io/badge/github-GIVEME--STAR-red">
         <a href="https://github.com/connect-foundation/2019-19/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
         <img src="https://img.shields.io/github/issues/connect-foundation/2019-19"/>
         </a>
         <a href="https://github.com/connect-foundation/2019-19/wiki">
         <img src="https://img.shields.io/badge/documentation-yes-brightgreen"/>
         </a>
+        <img src="https://img.shields.io/badge/License-MIT-brightgreen"/>
 </p>
 </center>
 
