@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.20",
-    "aws-sdk": "^2.569.0",
+    "aws-sdk": "^2.1354.0",
     "dotenv": "^8.2.0",
     "express-generator": "^4.16.1",
     "fluent-ffmpeg": "^2.1.2",
